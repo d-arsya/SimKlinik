@@ -45,6 +45,10 @@ class UserController extends Controller
     {
         return view('pages.user.edit');
     }
+    public function dashboard()
+    {
+        return view('pages.user.dashboard');
+    }
 
     /**
      * Update the specified resource in storage.
