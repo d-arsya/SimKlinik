@@ -12,8 +12,30 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
+            colors:{
+                primary:{
+                    DEFAULT:"#1B84FF",
+                    "filter":"#E9F3FF",
+                },
+                success:{
+                    DEFAULT:"#2DBF3C",
+                    "filter":"#DFFFEA",
+                },
+                danger:{
+                    DEFAULT:"#D81A48",
+                    "filter":"#F8285A",
+                },
+                warning:{
+                    DEFAULT:"#EFA006",
+                    "filter":"#FFF8DD",
+                },
+                cadet:{
+                    DEFAULT:"#3F4254",
+                    "grey":"#99A1B9",
+                },
+            }
         },
     },
     plugins: [],
