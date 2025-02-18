@@ -9,5 +9,11 @@
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
+  },
+  "resources/js/flowbite.js": {
+    "file": "assets/flowbite-Dv3jqTNf.js",
+    "name": "flowbite",
+    "src": "resources/js/flowbite.js",
+    "isEntry": true
   }
 }
