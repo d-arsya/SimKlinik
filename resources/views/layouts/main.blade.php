@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <title>@yield('title', 'SimKlinik')</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/flowbite.js'])
 </head>
+
 <body>
     <div class="flex h-screen">
         <div>
@@ -17,9 +18,10 @@
             <main class="pb-[60px]">
                 @yield('container')
             </main>
+            <x-dev-login></x-dev-login>
         </div>
     </div>
     @yield('scripts')
 </body>
-</html>
 
+</html>

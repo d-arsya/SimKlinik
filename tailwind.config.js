@@ -35,6 +35,10 @@ export default {
                     DEFAULT:"#3F4254",
                     "grey":"#99A1B9",
                 },
+                white:{
+                    DEFAULT:"#FFFFFF",
+                    "hover":"rgba(255, 255, 255, 0.3)",
+                },
             }
         },
     },
