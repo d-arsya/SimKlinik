@@ -7,6 +7,8 @@
             class="rounded-md bg-primary py-1 px-2 text-xs {{ auth()->user()->role == 'doctor' ? 'text-primary bg-white' : 'hover:bg-white hover:text-primary text-white' }}">Doctor</a>
         <a href="login/admin"
             class="rounded-md bg-primary py-1 px-2 text-xs {{ auth()->user()->role == 'admin' ? 'text-primary bg-white' : 'hover:bg-white hover:text-primary text-white' }}">Admin</a>
+        <a href="login/super"
+            class="rounded-md bg-primary py-1 px-2 text-xs {{ auth()->user()->role == 'super' ? 'text-primary bg-white' : 'hover:bg-white hover:text-primary text-white' }}">Super</a>
 
     </div>
 </div>

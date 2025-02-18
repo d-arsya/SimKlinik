@@ -34,15 +34,17 @@
                         <span class="flex-1 ms-3 whitespace-nowrap">Pasien</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('invoice.index') }}"
-                        class="flex items-center p-2 rounded-lg {{ request()->routeIs('invoice*') ? 'bg-white text-primary' : 'hover:text-white hover:bg-white-hover text-white' }} group">
-                        <x-icons.invoice
-                            class="{{ request()->routeIs('invoice*') ? 'text-primary' : 'text-white group-hover:text-white' }}" />
+                @if (in_array(auth()->user()->role, ['super', 'admin']))
+                    <li>
+                        <a href="{{ route('invoice.index') }}"
+                            class="flex items-center p-2 rounded-lg {{ request()->routeIs('invoice*') ? 'bg-white text-primary' : 'hover:text-white hover:bg-white-hover text-white' }} group">
+                            <x-icons.invoice
+                                class="{{ request()->routeIs('invoice*') ? 'text-primary' : 'text-white group-hover:text-white' }}" />
 
-                        <span class="flex-1 ms-3 whitespace-nowrap">Invoice</span>
-                    </a>
-                </li>
+                            <span class="flex-1 ms-3 whitespace-nowrap">Invoice</span>
+                        </a>
+                    </li>
+                @endif
                 <li>
                     <a href="{{ route('inpatient.index') }}"
                         class="flex items-center p-2 rounded-lg {{ request()->routeIs('inpatient*') ? 'bg-white text-primary' : 'hover:text-white hover:bg-white-hover text-white' }} group">
@@ -63,7 +65,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Profil</span>
                 </a>
             </li>
-            @if (auth()->user()->role == 'admin')
+            @if (auth()->user()->role == 'super')
                 <li>
                     <button type="button"
                         class="flex items-center w-full p-2 rounded-lg hover:text-white hover:bg-white-hover text-white group"

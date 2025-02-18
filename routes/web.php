@@ -14,7 +14,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dashboard');
-Route::redirect('login', 'login/admin')->name('login');
+Route::redirect('login', 'login/super')->name('login');
 Route::get('login/{role}', [AuthController::class, 'login']);
 Route::middleware('guest')->group(function () {
     Route::controller(AuthController::class)->group(function () {
