@@ -35,7 +35,7 @@ class InpatientController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('pages.inpatient.show');
     }
 
     /**

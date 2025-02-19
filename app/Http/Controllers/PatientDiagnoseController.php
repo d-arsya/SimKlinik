@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PatientController extends Controller
+class PatientDiagnoseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pages.patient.index');
+        //
     }
 
     /**
@@ -19,7 +19,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return view('pages.patient.create');
+        //
     }
 
     /**
@@ -35,15 +35,15 @@ class PatientController extends Controller
      */
     public function show(string $id)
     {
-        return view('pages.patient.show');
+        return view('pages.patient.diagnose.show');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
-        return view('pages.patient.edit');
+        return view('pages.patient.diagnose.add.' . $request->type);
     }
 
     /**

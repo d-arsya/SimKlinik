@@ -49,6 +49,14 @@ class UserController extends Controller
     {
         return view('pages.user.dashboard');
     }
+    public function profile()
+    {
+        return view('pages.user.profile');
+    }
+    public function profileEdit()
+    {
+        return view('pages.user.profileEdit');
+    }
 
     /**
      * Update the specified resource in storage.

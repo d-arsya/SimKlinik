@@ -13,6 +13,10 @@ class AuthController extends Controller
         $user = User::where('role', $role)->first();
         Auth::login($user);
         $request->session()->regenerate();
+        if ($request->url) {
+            return redirect()->intended($request->url);
+            # code...
+        }
         return redirect()->intended('/');
         // return view('pages.auth.login');
     }
@@ -23,5 +27,11 @@ class AuthController extends Controller
     public function showResetForm()
     {
         return view('pages.auth.reset');
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->regenerate();
+        return redirect()->route('login');
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'SimKlinik')
+@section('title','SimKlinik')
 @section('container')
     halo
 @endsection

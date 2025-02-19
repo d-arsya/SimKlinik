@@ -35,7 +35,7 @@ class InvoiceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('pages.invoice.show');
     }
 
     /**

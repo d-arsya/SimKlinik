@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PatientController extends Controller
+class OwnerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pages.patient.index');
+        //
     }
 
     /**
@@ -19,7 +19,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return view('pages.patient.create');
+        //
     }
 
     /**
@@ -35,7 +35,7 @@ class PatientController extends Controller
      */
     public function show(string $id)
     {
-        return view('pages.patient.show');
+        return view('pages.owner.show');
     }
 
     /**
@@ -43,7 +43,7 @@ class PatientController extends Controller
      */
     public function edit(string $id)
     {
-        return view('pages.patient.edit');
+        return view('pages.owner.edit');
     }
 
     /**

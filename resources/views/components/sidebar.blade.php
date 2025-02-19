@@ -28,9 +28,9 @@
                 </li>
                 <li>
                     <a href="{{ route('patient.index') }}"
-                        class="flex items-center p-2 rounded-lg {{ request()->routeIs('patient*') ? 'bg-white text-primary' : 'hover:text-white hover:bg-white-hover text-white' }} group">
+                        class="flex items-center p-2 rounded-lg {{ request()->routeIs(['patient*', 'owner*']) ? 'bg-white text-primary' : 'hover:text-white hover:bg-white-hover text-white' }} group">
                         <x-icons.patient
-                            class="{{ request()->routeIs('patient*') ? 'text-primary' : 'text-white group-hover:text-white' }}" />
+                            class="{{ request()->routeIs(['patient*', 'owner*']) ? 'text-primary' : 'text-white group-hover:text-white' }}" />
                         <span class="flex-1 ms-3 whitespace-nowrap">Pasien</span>
                     </a>
                 </li>

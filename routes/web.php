@@ -8,7 +8,10 @@ use App\Http\Controllers\MasterColorController;
 use App\Http\Controllers\MasterDiagnoseController;
 use App\Http\Controllers\MasterServiceController;
 use App\Http\Controllers\MasterTypeController;
+use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PatientDiagnose;
+use App\Http\Controllers\PatientDiagnoseController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +28,7 @@ Route::middleware('guest')->group(function () {
     });
 });
 Route::middleware('auth')->group(function () {
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('diagnose', MasterDiagnoseController::class);
     Route::resource('type', MasterTypeController::class);
     Route::resource('color', MasterColorController::class);
@@ -33,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('queue', QueueController::class);
     Route::resource('patient', PatientController::class);
+    Route::resource('patient.diagnose', PatientDiagnoseController::class);
+    Route::resource('owner', OwnerController::class);
     Route::resource('inpatient', InpatientController::class);
     Route::resource('invoice', InvoiceController::class);
     Route::controller(UserController::class)->group(function () {
