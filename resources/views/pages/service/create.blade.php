@@ -1,33 +1,29 @@
-@extends('layouts.main')
-@section('title', 'SimKlinik')
-@section('container')
-    <div class="flex-row px-6 py-3 m-4 border-2 rounded-xl">
-        <div class="flex"><b>Tambah Pelayanan</b></div>
-    </div>
+@extends('layouts.layout-create-edit-masterdata');
 
+<!-- Header -->
+@section('title', 'Tambah Warna')
+
+<!-- Container -->
+@section('form')
     <form action="{{ route('service.store') }}" method="POST">
         @csrf
-        <div class="grid grid-cols-1 gap-4 px-6 py-3 m-4 border-2 rounded-xl">
-
-            <div class="grid items-center grid-cols-4 gap-4">
-                <label for="" class="text-sm font-medium leading-6 text-gray-700">Nama Pelayanan</label>
-                <input type="text" id="" name="jenis_hewan"
-                    class="col-span-3 py-2 pl-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    required>
-            </div>
-            <div class="grid items-center grid-cols-4 gap-4">
-                <label for="pulsus" class="text-sm font-medium leading-6 text-gray-700">Harga Pelayanan</label>
-                <input type="number" id="pulsus" name="pulsus"
-                    class="col-span-3 py-2 pl-3 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            <!-- Service Name -->
+            <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
+                <label for="" class="text-sm font-medium leading-6 text-gray-700">Nama Layanan</label>
+                <input type="text" id="" class="py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm"
                     required>
             </div>
 
-            <div class="flex justify-end mt-4">
-                <button color="blue" type="submit"
-                    class="font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none">Submit</button>
+            <!-- Price Field -->
+            <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 mb-4">
+                <label for="" class="text-sm font-medium leading-6 text-gray-700">Harga Layanan</label>
+                <input type="number" id="" name=""
+                    class="py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" required>
             </div>
-        </div>
 
+            <!-- Submit button -->
+           <x-icons.submit/>
     </form>
+
 @endsection
 @section('scripts')
