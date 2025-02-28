@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Animal;
 use Illuminate\Http\Request;
 
 class MasterAnimalController extends Controller
@@ -11,7 +12,8 @@ class MasterAnimalController extends Controller
      */
     public function index()
     {
-        return view('pages.animal.index');
+        $animals = Animal::all();
+        return view('pages.animal.index', compact('animals'));
     }
 
     /**
@@ -41,9 +43,9 @@ class MasterAnimalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Animal $animal)
     {
-        return view('pages.animal.edit');
+        return view('pages.animal.edit', compact('animal'));
     }
 
     /**

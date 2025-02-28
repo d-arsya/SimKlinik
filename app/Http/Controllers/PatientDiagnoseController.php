@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checkup;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class PatientDiagnoseController extends Controller
@@ -33,17 +35,20 @@ class PatientDiagnoseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $diagnose)
     {
-        return view('pages.patient.diagnose.show');
+        $diagnose = Checkup::find($diagnose);
+        $patient = $diagnose->patient;
+        return view('pages.patient.diagnose.show', compact('diagnose', 'patient'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, string $id)
+    public function edit(Request $request, Patient $patient, string $diagnose)
     {
-        return view('pages.patient.diagnose.add.' . $request->type);
+        $diagnose = Checkup::find($diagnose);
+        return view('pages.patient.diagnose.add.' . $request->type, compact('diagnose', 'patient'));
     }
 
     /**

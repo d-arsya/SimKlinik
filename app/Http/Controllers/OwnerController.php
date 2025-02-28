@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Owner;
 use Illuminate\Http\Request;
 
 class OwnerController extends Controller
@@ -33,17 +34,17 @@ class OwnerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Owner $owner)
     {
-        return view('pages.owner.show');
+        return view('pages.owner.show', compact('owner'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Owner $owner)
     {
-        return view('pages.owner.edit');
+        return view('pages.owner.edit', compact('owner'));
     }
 
     /**

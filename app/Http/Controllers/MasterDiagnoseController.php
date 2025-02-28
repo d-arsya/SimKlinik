@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Animal;
+use App\Models\Diagnose;
 use Illuminate\Http\Request;
 
 class MasterDiagnoseController extends Controller
@@ -11,15 +13,17 @@ class MasterDiagnoseController extends Controller
      */
     public function index()
     {
-        return view('pages.diagnose.index');
+        $diagnoses = Diagnose::with('animal')->get();
+        return view('pages.diagnose.index', compact('diagnoses'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('pages.diagnose.create');
+        $animals = Animal::all();
+        return view('pages.diagnose.create', compact('animals'));
     }
 
     /**
@@ -41,9 +45,9 @@ class MasterDiagnoseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Diagnose $diagnose)
     {
-        return view('pages.diagnose.edit');
+        return view('pages.diagnose.edit', compact('diagnose'));
     }
 
     /**

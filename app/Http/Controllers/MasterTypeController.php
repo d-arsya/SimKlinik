@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Animal;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class MasterTypeController extends Controller
@@ -11,7 +13,8 @@ class MasterTypeController extends Controller
      */
     public function index()
     {
-        return view('pages.type.index');
+        $types = Type::all();
+        return view('pages.type.index', compact('types'));
     }
 
     /**
@@ -19,7 +22,8 @@ class MasterTypeController extends Controller
      */
     public function create()
     {
-        return view('pages.type.create');
+        $animals = Animal::all();
+        return view('pages.type.create', compact('animals'));
     }
 
     /**
@@ -41,9 +45,9 @@ class MasterTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Type $type)
     {
-        return view('pages.type.edit');
+        return view('pages.type.edit', compact('type'));
     }
 
     /**

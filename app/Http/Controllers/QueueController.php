@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checkup;
 use Illuminate\Http\Request;
 
 class QueueController extends Controller
@@ -11,7 +12,8 @@ class QueueController extends Controller
      */
     public function index()
     {
-        return view('pages.queue.index');
+        $queues = Checkup::where('queued', true)->with(['patient', 'doctor'])->get();
+        return view('pages.queue.index', compact('queues'));
     }
 
     /**

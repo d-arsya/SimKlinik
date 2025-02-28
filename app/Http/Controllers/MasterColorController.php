@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Color;
 use Illuminate\Http\Request;
 
 class MasterColorController extends Controller
@@ -11,7 +12,8 @@ class MasterColorController extends Controller
      */
     public function index()
     {
-        return view('pages.color.index');
+        $colors = Color::all();
+        return view('pages.color.index', compact('colors'));
     }
 
     /**
@@ -41,9 +43,9 @@ class MasterColorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Color $color)
     {
-        return view('pages.color.edit');
+        return view('pages.color.edit', compact('color'));
     }
 
     /**

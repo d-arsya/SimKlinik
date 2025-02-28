@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class MasterServiceController extends Controller
@@ -11,7 +12,8 @@ class MasterServiceController extends Controller
      */
     public function index()
     {
-        return view('pages.service.index');
+        $services = Service::all();
+        return view('pages.service.index', compact('services'));
     }
 
     /**
@@ -41,9 +43,9 @@ class MasterServiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Service $service)
     {
-        return view('pages.service.edit');
+        return view('pages.service.edit', compact('service'));
     }
 
     /**
