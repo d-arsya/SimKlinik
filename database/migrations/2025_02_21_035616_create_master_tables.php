@@ -24,7 +24,6 @@ return new class extends Migration
         Schema::create('colors', function (Blueprint $table) {
             $table->id();
             $table->char('code', 8)->unique();
-            $table->foreignIdFor(Animal::class)->constrained()->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
         });

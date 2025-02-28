@@ -14,9 +14,6 @@ class ColorSeeder extends Seeder
      */
     public function run(): void
     {
-        $number = Animal::all()->count();
-        for ($i = 1; $i <= $number; $i++) {
-            Color::factory(2)->create(["animal_id" => $i]);
-        }
+        Color::factory(10)->create();
     }
 }
