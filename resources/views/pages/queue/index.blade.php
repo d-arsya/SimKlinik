@@ -1,192 +1,150 @@
-@extends('layouts.main')
-@section('title', 'SimKlinik')
-@section('container')
-    <div class="flex items-center justify-between">
-        <div class="py-5">
-            <h2 class="text-xl font-semibold">Tabel Antrian Pasien</h2>
-            <div class="flex">
-                <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">49,053</span></p>
-                <p class="text-cadet font-medium">Jumlah Dokter: <span class="text-[#252F4A]">724</span></p>
-            </div>
-        </div>
-        <div class="flex gap-2">
-            <button class="font-bold text-md py-2 px-3 rounded-md text-white bg-primary">Pasien Baru</button>
+@extends('layouts.layout-index')
 
-            <button class="font-bold text-md py-2 px-3 rounded-md text-primary bg-primary-filter">Pasien Lama</button>
-        </div>
-    </div>
-    <x-table id="dataTable">
-        <thead class="text-cadet text-sm font-semibold bg-gray-50 border-b border-[#F1F1F4]">
-            <tr>
-                <th scope="col" class="px-5 py-3 border-b">
-                    <div class="flex items-center">
-                        No Antrian
-                        <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                            </svg></a>
-                    </div>
-                </th>
-                <th scope="col" class="px-5 py-3 border">
-                    <div class="flex items-center">
-                        Tanggal
-                        <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                            </svg></a>
-                    </div>
-                </th>
-                <th scope="col" class="px-5 py-3 border">
-                    <div class="flex items-center">
-                        No RM
-                        <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                            </svg></a>
-                    </div>
-                </th>
-                <th scope="col" class="px-5 py-3 border">
-                    <div class="flex items-center">
-                        Pasien
-                        <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                            </svg></a>
-                    </div>
-                </th>
-                <th scope="col" class="px-5 py-3 border">
-                    <div class="flex items-center">
-                        Owner Pasien
-                        <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                            </svg></a>
-                    </div>
-                </th>
-                <th scope="col" class="px-5 py-3 border">
-                    <div class="flex items-center">
-                        Nomor Telepon
-                        <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                            </svg></a>
-                    </div>
-                </th>
-                <th scope="col" class="px-5 py-3 border">
-                    <div class="flex items-center">
-                        Status
-                        <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                            </svg></a>
-                    </div>
-                </th>
-                <th scope="col" class="px-5 py-3 border">
-                    <div class="flex items-center">
-                        Dokter
-                        <a href="#"><svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                            </svg></a>
-                    </div>
-                </th>
-                <th scope="col" class="px-5 py-3 border">Aksi</th>
-            </tr>
-        </thead>
-        <tbody class="text-gray-700">
-            <tr>
-                <td class="px-5 py-4 border-y">
-                    1
-                </td>
-                <td class="px-5 py-4 border">
-                    08/01/24
-                </td>
-                <td scope="row" class="px-6 py-4 border font-semibold text-gray-900 whitespace-nowrap dark:text-white">
-                    1
-                </td>
-                <td class="px-5 py-4 border">
-                    <div>
-                        <a href="{{ route('patient.show', 1) }}" class="text-primary underline font-bold">Guguk</a>
-                        <div class="text-cadet">Anjing</div>
-                    </div>
-                </td>
-                <td class="px-5 py-4 border">
-                    <a href="{{ route('owner.show', 1) }}" class="text-primary underline font-medium">Andi</a>
-                </td>
-                <td class="px-5 py-4 border">
-                    0812182930100
-                </td>
-                <td class="px-5 py-4 border">
-                    <div
-                        class="text-center text-[11px] font-semibold py-1 px-2 border border-success rounded-lg bg-success-filter text-success">
-                        Diperiksa
-                    </div>
-                </td>
-                <td class="text-sm font-semibold px-5 py-4 border">
-                    Sandi
-                </td>
-                <td class="px-5 py-4 border">
-                    <button class="bg-danger-filter hover:bg-danger p-1 rounded-md">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M14.964 12.4319L10.5321 8.00002L14.964 3.56811C15.049 3.48214 15.0966 3.36618 15.0966 3.24535C15.0966 3.12451 15.049 3.00855 14.964 2.92258L12.8704 0.828976C12.7848 0.743391 12.6687 0.695312 12.5477 0.695312C12.4266 0.695312 12.3105 0.743391 12.2249 0.828976L7.79299 5.26089L3.36107 0.828976C3.27546 0.743391 3.15937 0.695312 3.03831 0.695312C2.91726 0.695312 2.80116 0.743391 2.71555 0.828976L0.621945 2.92258C0.53636 3.00819 0.488281 3.12429 0.488281 3.24535C0.488281 3.3664 0.53636 3.4825 0.621945 3.56811L5.05386 8.00002L0.621945 12.4319C0.53636 12.5175 0.488281 12.6336 0.488281 12.7547C0.488281 12.8757 0.53636 12.9918 0.621945 13.0775L2.71555 15.1711C2.80116 15.2566 2.91726 15.3047 3.03831 15.3047C3.15937 15.3047 3.27546 15.2566 3.36107 15.1711L7.79299 10.7392L12.2249 15.1711C12.3105 15.2566 12.4266 15.3047 12.5477 15.3047C12.6687 15.3047 12.7848 15.2566 12.8704 15.1711L14.964 13.0775C15.0496 12.9918 15.0977 12.8757 15.0977 12.7547C15.0977 12.6336 15.0496 12.5175 14.964 12.4319Z"
-                                fill="#F8F8F8" />
-                        </svg>
-                    </button>
-                </td>
-            </tr>
-            <tr class="bg-white">
-                <td class="px-5 py-4 border-y">
-                    2
-                </td>
-                <td class="px-5 py-4 border">
-                    08/01/24
-                </td>
-                <td scope="row" class="px-6 py-4 border font-semibold text-gray-900 whitespace-nowrap dark:text-white">
-                    2
-                </td>
-                <td class="px-5 py-4 border">
-                    <div>
-                        <a href="#" class="text-primary underline font-bold">Blacky</a>
-                        <p class="text-cadet">Anjing</p>
-                    </div>
-                </td>
-                <td class="px-5 py-4 border">
-                    <a class="text-primary underline font-medium">Andi</a>
-                </td>
-                <td class="px-5 py-4 border">
-                    0812182930100
-                </td>
-                <td class="px-5 py-4 border">
-                    <div
-                        class="text-center text-[11px] font-semibold py-1 px-2 border border-danger rounded-lg bg-red-200 text-danger">
-                        Menunggu
-                    </div>
-                </td>
-                <td class="text-sm font-semibold px-5 py-4 border">
-                    Sandi
-                </td>
-                <td class="px-5 py-4 border">
-                    <button class="bg-danger-filter hover:bg-danger p-1 rounded-md">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M14.964 12.4319L10.5321 8.00002L14.964 3.56811C15.049 3.48214 15.0966 3.36618 15.0966 3.24535C15.0966 3.12451 15.049 3.00855 14.964 2.92258L12.8704 0.828976C12.7848 0.743391 12.6687 0.695312 12.5477 0.695312C12.4266 0.695312 12.3105 0.743391 12.2249 0.828976L7.79299 5.26089L3.36107 0.828976C3.27546 0.743391 3.15937 0.695312 3.03831 0.695312C2.91726 0.695312 2.80116 0.743391 2.71555 0.828976L0.621945 2.92258C0.53636 3.00819 0.488281 3.12429 0.488281 3.24535C0.488281 3.3664 0.53636 3.4825 0.621945 3.56811L5.05386 8.00002L0.621945 12.4319C0.53636 12.5175 0.488281 12.6336 0.488281 12.7547C0.488281 12.8757 0.53636 12.9918 0.621945 13.0775L2.71555 15.1711C2.80116 15.2566 2.91726 15.3047 3.03831 15.3047C3.15937 15.3047 3.27546 15.2566 3.36107 15.1711L7.79299 10.7392L12.2249 15.1711C12.3105 15.2566 12.4266 15.3047 12.5477 15.3047C12.6687 15.3047 12.7848 15.2566 12.8704 15.1711L14.964 13.0775C15.0496 12.9918 15.0977 12.8757 15.0977 12.7547C15.0977 12.6336 15.0496 12.5175 14.964 12.4319Z"
-                                fill="#F8F8F8" />
-                        </svg>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </x-table>
+<!-- Header -->
+@section('title', 'Tabel Antrian Pasien')
+@section('desc')
+    <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">49,053</span></p>
+    <p class="text-cadet font-medium">Jumlah Dokter: <span class="text-[#252F4A]">724</span></p>
 @endsection
-@section('scripts')
+@section('buttons')
+    <a href="#"
+        class="font-bold text-md px-3 py-2 rounded-md text-white bg-primary flex items-center justify-center text-center h-9">Pasien
+        Baru</a>
+    <a href="#"
+        class="font-bold text-md px-3 py-2 rounded-md text-primary bg-primary-filter flex items-center justify-center text-center h-9">Pasien
+        Lama</a>
+@endsection
+
+<!-- Table -->
+@section('table')
+    <thead class="border-y border-gray-200 bg-[#FCFCFC]">
+        <tr>
+            <th scope="col" class="px-6 py-3 border-r border-gray-200">No. Antrian</th>
+            <th scope="col" class="px-6 py-3 border-r border-gray-200">No. RM</th>
+            <th scope="col" class="px-6 py-3 border-r border-gray-200">Pasien</th>
+            <th scope="col" class="px-6 py-3 border-r border-gray-200">Owner Pasien</th>
+            <th scope="col" class="px-6 py-3 border-r border-gray-200">Umur</th>
+            <th scope="col" class="px-6 py-3 border-r border-gray-200">No. Telp</th>
+            @if (auth()->user()->role != 'doctor')
+                <th scope="col" class="px-6 py-3 font-semibold border-r border-gray-200">Status</th>
+                <th scope="col" class="px-6 py-3 font-semibold border-r border-gray-200" style="font-size: 0.81rem">
+                    Dokter</th>
+            @endif
+            <th scope="col" class="px-6 py-3 font-semibold border-r border-gray-100 text-center">Aksi</th>
+        </tr>
+    </thead>
+    <tbody class="font-medium">
+        <tr>
+            <td class="px-6 py-3 border-b border-r border-gray-200 text-center">1</td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">RM-2</td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">
+                <div>
+                    <p class="font-semibold">Kimo</p>
+                    <p>Kucing</p>
+                </div>
+            </td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">Hendra</td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">2 Tahun</td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
+
+            @if (auth()->user()->role != 'doctor')
+                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">
+                    <x-icons.checking />
+                </td>
+                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">Agus</td>
+            @endif
+
+            <td class="px-6 py-3 border-b border-gray-200 text-center">
+                <div class="flex justify-center items-center gap-2">
+                    @if (auth()->user()->role == 'doctor')
+                        <x-icons.stethoscope2 />
+                    @endif
+                    <x-icons.view />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="px-6 py-3 border-b border-r border-gray-200 text-center">1</td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">RM-2</td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">
+                <div>
+                    <p class="font-semibold">imo</p>
+                    <p>Kucing</p>
+                </div>
+            </td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">Hendra</td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">2 Tahun</td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
+
+            @if (auth()->user()->role != 'doctor')
+                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">
+                    <x-icons.waiting />
+                </td>
+                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">Agus</td>
+            @endif
+
+            <td class="px-6 py-3 border-b border-gray-200 text-center">
+                <div class="flex justify-center items-center gap-2">
+                    @if (auth()->user()->role == 'doctor')
+                        <x-icons.stethoscope2 />
+                    @endif
+                    <x-icons.view />
+                </div>
+            </td>
+        </tr>
+    @endsection
+
+    @section('pagination')
+        <div class="flex items-center justify-between mx-4 my-2 text-sm text-gray-700">
+            <!-- Rows Per Page Selector -->
+            <select id="rowsPerPage" onchange="changeRowsPerPage()"
+                class="p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            {{-- paginate --}}
+            {{-- <div class="flex flex-row">
+
+            <span class="m-2">
+                {{ ($users->currentPage() - 1) * $users->perPage() + 1 }} -
+                {{ min($users->currentPage() * $users->perPage(), $users->total()) }}
+                dari {{ $users->total() }}
+            </span>
+
+            <div class="flex items-center">
+                <!-- Tombol Sebelumnya -->
+                <button
+                    class="px-2 py-1 mx-1 text-gray-500 bg-white border border-gray-300 rounded hover:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed"
+                    @if ($users->onFirstPage()) disabled @endif
+                    onclick="window.location='{{ $users->previousPageUrl() }}'">
+                    &lt;
+                </button>
+
+                <!-- Nomor Halaman -->
+                @foreach (range(1, $users->lastPage()) as $page)
+                    @if ($page == $users->currentPage())
+                        <button class="px-3 py-1 mx-1 text-white bg-blue-600 border border-blue-600 rounded">
+                            {{ $page }}
+                        </button>
+                    @else
+                        <button
+                            class="px-3 py-1 mx-1 text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-100"
+                            onclick="window.location='{{ $users->url($page) }}'">
+                            {{ $page }}
+                        </button>
+                    @endif
+                @endforeach
+
+                <!-- Tombol Berikutnya -->
+                <button
+                    class="px-2 py-1 mx-1 text-gray-500 bg-white border border-gray-300 rounded hover:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed"
+                    @if (!$users->hasMorePages()) disabled @endif
+                    onclick="window.location='{{ $users->nextPageUrl() }}'">
+                    &gt;
+                </button>
+            </div>
+        </div> --}}
+        </div>
+    @endsection

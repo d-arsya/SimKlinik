@@ -16,7 +16,7 @@ export default {
             },
             colors: {
                 primary: {
-                    DEFAULT: "#1B84FF",
+                    DEFAULT: "#036CA1",
                     "filter": "#E9F3FF",
                 },
                 success: {
