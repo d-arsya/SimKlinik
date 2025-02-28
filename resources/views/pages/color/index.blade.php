@@ -23,19 +23,25 @@
         </tr>
     </thead>
     <tbody class="font-medium">
-        <tr>
-            <td class="px-6 py-3 border-b border-r border-gray-200 text-center">1</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">COL-1</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 text-[#000]">Merah</td>
-            <td class="flex justify-center px-6 py-3 space-x-2 text-center border-b border-gray-200">
-                <a href="{{ route('color.edit', 1) }}">
-                    <x-icons.edit />
-                </a>    
-                <span onclick="confirmDelete('')" class="cursor-pointer">
-                    <x-icons.delete />
-                </span>
-            </td>
-        </tr>
+        @foreach ($colors as $item)
+            <tr>
+                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">1</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->code }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200 text-[#000]">{{ $item->name }}</td>
+                <td class="flex justify-center px-6 py-3 space-x-2 text-center border-b border-gray-200">
+                    <a href="{{ route('color.edit', $item->id) }}">
+                        <x-icons.edit />
+                    </a>
+                    <form action="{{ route('color.destroy', $item->id) }}" method="post">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit">
+                            <x-icons.delete />
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
     @endsection
 
     @section('pagination')

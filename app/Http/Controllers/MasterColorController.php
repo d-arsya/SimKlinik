@@ -29,7 +29,12 @@ class MasterColorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            Color::create($request->all());
+            return redirect()->route('color.index');
+        } catch (\Throwable $th) {
+            return abort(500);
+        }
     }
 
     /**
@@ -51,16 +56,25 @@ class MasterColorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Color $color)
     {
-        //
+        try {
+            $color->update($request->all());
+            return redirect()->route('color.index');
+        } catch (\Throwable $th) {
+            return abort(500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Color $color)
     {
-        //
+        try {
+            $color->delete();
+        } catch (\Throwable $th) {
+        }
+        return redirect()->back();
     }
 }
