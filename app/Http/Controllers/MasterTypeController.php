@@ -31,9 +31,10 @@ class MasterTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Type::create($request->all());
+        return redirect()->route('type.index');
     }
-
+    
     /**
      * Display the specified resource.
      */
@@ -41,7 +42,7 @@ class MasterTypeController extends Controller
     {
         //
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
@@ -49,20 +50,23 @@ class MasterTypeController extends Controller
     {
         return view('pages.type.edit', compact('type'));
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Type $type)
     {
-        //
+        $type->update($request->all());
+        return redirect()->route('type.index');
+        
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Type $type)
     {
-        //
+        $type->delete();
+        return redirect()->back();
     }
 }

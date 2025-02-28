@@ -29,7 +29,8 @@ class MasterServiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Service::create($request->all());
+        return redirect()->route('service.index');
     }
 
     /**
@@ -51,16 +52,18 @@ class MasterServiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Service $service)
     {
-        //
+        $service->update($request->all());
+        return redirect()->route('service.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Service $service)
     {
-        //
+        $service->delete();
+        return redirect()->back();
     }
 }

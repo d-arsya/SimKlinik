@@ -30,13 +30,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            User::create($request->all());
+            return redirect()->route('user.index');
+        } catch (\Throwable $th) {
+            return abort(400);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
         //
     }
@@ -66,16 +71,26 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        try {
+            $user->update($request->all);
+            return redirect()->route('user.index');
+        } catch (\Throwable $th) {
+            return abort(500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        try {
+            $user->delete();
+            return redirect()->route('user.index');
+        } catch (\Throwable $th) {
+            return abort(400);
+        }
     }
 }

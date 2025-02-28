@@ -31,7 +31,8 @@ class MasterDiagnoseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Diagnose::create($request->all());
+        return redirect()->route('diagnose.index');
     }
 
     /**
@@ -53,16 +54,18 @@ class MasterDiagnoseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Diagnose $diagnose)
     {
-        //
+        $diagnose->update($request->all());
+        return redirect()->route('diagnose.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Diagnose $diagnose)
     {
-        //
+        $diagnose->delete();
+        return redirect()->route('diagnose.index');
     }
 }
