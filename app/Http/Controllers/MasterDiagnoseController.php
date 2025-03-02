@@ -31,9 +31,21 @@ class MasterDiagnoseController extends Controller
      */
     public function store(Request $request)
     {
-        Diagnose::create($request->all());
+        // Pastikan ada jenis hewan yang dipilih
+        if ($request->has('animal_id')) {
+            foreach ($request->animal_id as $animalId) {
+                Diagnose::create([
+                    'name' => $request->name,
+                    'code' => $request->code,
+                    'animal_id' => $animalId,
+                ]);
+            }
+        }
+
         return redirect()->route('diagnose.index');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -48,7 +60,9 @@ class MasterDiagnoseController extends Controller
      */
     public function edit(Diagnose $diagnose)
     {
-        return view('pages.diagnose.edit', compact('diagnose'));
+        $animals = Animal::all();
+        $selectedAnimal = $diagnose->animal_id;
+        return view('pages.diagnose.edit', compact('diagnose', 'animals', 'selectedAnimal'));
     }
 
     /**

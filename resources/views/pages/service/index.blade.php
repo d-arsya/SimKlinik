@@ -24,22 +24,30 @@
         </tr>
     </thead>
     <tbody class="font-medium">
-        <tr>
-            <td class="px-6 py-3 border-b border-r border-gray-200 text-center">1</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">SER-1</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">UGD</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">
-                Rp {{ number_format(18000, 2, ',', '.') }}
-            </td>
-            <td class="flex justify-center px-6 py-3 space-x-2 text-center border-b border-gray-200">
-                <a href="{{ route('service.edit', 1) }}">
-                    <x-icons.edit />
-                </a>
-                <span onclick="confirmDelete('')" class="cursor-pointer">
-                    <x-icons.delete />
-                </span>
-            </td>
-        </tr>
+        @foreach ($services as $index => $item)
+            <tr>
+                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">{{ $index + 1 }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->code }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->name }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">
+                    Rp {{ number_format($item->price, 2, ',', '.') }}
+                </td>
+                <td class="flex justify-center px-6 py-3 space-x-2 text-center border-b border-gray-200">
+                    <a href="{{ route('service.edit', $item->id) }}">
+                        <x-icons.edit />
+                    </a>
+                    <form id="delete-form-{{ $item->id }}" action="{{ route('service.destroy', $item->id) }}"
+                        method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" onclick="confirmDelete({{ $item->id }})"
+                            class="text-red-500 cursor-pointer">
+                            <x-icons.delete />
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
     @endsection
 
     @section('pagination')

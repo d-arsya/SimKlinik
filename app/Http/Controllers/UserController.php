@@ -28,15 +28,21 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        try {
-            User::create($request->all());
-            return redirect()->route('user.index');
-        } catch (\Throwable $th) {
-            return abort(400);
-        }
+   public function store(Request $request)
+{
+    try {
+        // Hash password sebelum menyimpan
+        $data = $request->all();
+        $data['password'] = bcrypt($request->password);
+
+        User::create($data);
+
+        return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan');
+    } catch (\Throwable $th) {
+        return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $th->getMessage()]);
     }
+}
+
 
     /**
      * Display the specified resource.

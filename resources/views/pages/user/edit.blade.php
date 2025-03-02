@@ -5,13 +5,13 @@
 
 <!-- Container -->
 @section('form')
-    <form action="{{ route('user.update',1) }}" method="POST">
+    <form action="{{ route('user.update', $user->id) }}" method="POST">
         @csrf
         @method('PUT')
         <!-- Username Field -->
         <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
             <label for="name" class="text-sm font-medium leading-6 text-gray-700">Username</label>
-            <input type="text" id="name" name="name"
+            <input type="text" id="name" name="name" value="{{ $user->name }}"
                 class="py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" required>
         </div>
 
@@ -20,18 +20,27 @@
             <label for="role" class="text-sm font-medium leading-6 text-gray-700">Role</label>
             <select id="role" name="role" class="py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm w-48"
                 required>
-                <option class="text-sm font-medium leading-6 text-gray-700" value="">-</option>
-                <option class="text-sm font-medium leading-6 text-gray-700" value="owner">Owner</option>
-                <option class="text-sm font-medium leading-6 text-gray-700" value="superadmin">Superadmin</option>
-                <option class="text-sm font-medium leading-6 text-gray-700" value="admin">Admin</option>
-                <option class="text-sm font-medium leading-6 text-gray-700" value="dokter">Dokter</option>
+                <option class="text-sm font-medium leading-6 text-gray-700" value="{{ $user->role }}">
+                    {{ ucfirst($user->role) }}</option>
+                @if ($user->role !== 'owner')
+                    <option class="text-sm font-medium leading-6 text-gray-700" value="owner">Owner</option>
+                @endif
+                @if ($user->role !== 'super')
+                    <option class="text-sm font-medium leading-6 text-gray-700" value="super">Superadmin</option>
+                @endif
+                @if ($user->role !== 'admin')
+                    <option class="text-sm font-medium leading-6 text-gray-700" value="admin">Admin</option>
+                @endif
+                @if ($user->role !== 'doctor')
+                    <option class="text-sm font-medium leading-6 text-gray-700" value="doctor">Dokter</option>
+                @endif
             </select>
         </div>
 
         <!-- Email Field -->
         <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 mb-4">
             <label for="email" class="text-sm font-medium leading-6 text-gray-700">Email</label>
-            <input type="email" id="email" name="email"
+            <input type="email" id="email" name="email" value="{{ $user->email }}"
                 class="py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" required>
         </div>
 
@@ -40,8 +49,7 @@
             <label for="password" class="text-sm font-medium leading-6 text-gray-700">Password</label>
             <div class="relative w-full">
                 <input type="password" id="password" name="password"
-                    class="w-full py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" required
-                    oninput="validatePassword()">
+                    class="w-full py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
                 <!-- eyeicon -->
                 <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
                     onclick="togglePasswordVisibility('password', 'eyeIcon1')">
@@ -56,12 +64,10 @@
 
         <!-- Confirm Password Field -->
         <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 mb-4">
-            <label for="confirm_password" class="text-sm font-medium leading-6 text-gray-700">Konfirmasi
-                Password</label>
+            <label for="confirm_password" class="text-sm font-medium leading-6 text-gray-700">Konfirmasi Password</label>
             <div class="relative w-full">
                 <input type="password" id="confirm_password" name="confirm_password"
-                    class="w-full py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" required
-                    oninput="validatePassword()">
+                    class="w-full py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
                 <!-- eyeicon -->
                 <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
                     onclick="togglePasswordVisibility('confirm_password', 'eyeIcon2')">
@@ -75,8 +81,9 @@
                 <p id="error-message" class="hidden mt-1 text-red-500 text-xs">Password tidak cocok.</p>
             </div>
         </div>
+
         <!-- Submit Button -->
-        <x-icons.submit/>
+        <x-icons.submit />
     </form>
 @endsection
 

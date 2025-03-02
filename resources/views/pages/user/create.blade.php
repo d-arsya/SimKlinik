@@ -15,15 +15,15 @@
         </div>
 
         <!-- Role Choice -->
-        <div class="grid items-start w-full grid-cols-[1fr_3fr] gap-4 mb-4">
+        <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 mb-4">
             <label for="role" class="text-sm font-medium leading-6 text-gray-700">Role</label>
             <select id="role" name="role" class="py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm w-48"
                 required>
                 <option class="text-sm font-medium leading-6 text-gray-700" value="">-</option>
                 <option class="text-sm font-medium leading-6 text-gray-700" value="owner">Owner</option>
-                <option class="text-sm font-medium leading-6 text-gray-700" value="superadmin">Superadmin</option>
+                <option class="text-sm font-medium leading-6 text-gray-700" value="super">Superadmin</option>
                 <option class="text-sm font-medium leading-6 text-gray-700" value="admin">Admin</option>
-                <option class="text-sm font-medium leading-6 text-gray-700" value="dokter">Dokter</option>
+                <option class="text-sm font-medium leading-6 text-gray-700" value="doctor">Dokter</option>
             </select>
         </div>
 

@@ -71,10 +71,7 @@ class MasterColorController extends Controller
      */
     public function destroy(Color $color)
     {
-        try {
-            $color->delete();
-        } catch (\Throwable $th) {
-        }
+        $color->delete();
         return redirect()->back();
     }
 }
