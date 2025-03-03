@@ -17,11 +17,15 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dashboard');
-Route::redirect('login', 'login/super')->name('login');
-Route::get('login/{role}', [AuthController::class, 'login']);
+if (env('APP_ENV') == 'local') {
+    Route::redirect('login', 'login/super')->name('login');
+    Route::get('login/{role}', [AuthController::class, 'login']);
+}
 Route::middleware('guest')->group(function () {
     Route::controller(AuthController::class)->group(function () {
-        // Route::match(['get', 'post'], 'login', 'login')->name('login');
+        if (env('APP_ENV') != 'local') {
+            Route::match(['get', 'post'], 'login', 'login')->name('login');
+        }
         Route::match(['get', 'post'], 'forgot', 'forgot')->name('forgot');
         Route::get('reset-password/{token}', 'showResetForm')->name('password.reset');
         Route::post('reset-password', 'resetPassword')->name('user.password');
@@ -45,5 +49,6 @@ Route::middleware('auth')->group(function () {
         Route::get('dashboard', 'dashboard')->name('dashboard');
         Route::get('profile', 'profile')->name('profile');
         Route::get('profile/edit', 'profileEdit')->name('profile.edit');
+        Route::put('profile/edit', 'profileUpdate')->name('profile.update');
     });
 });

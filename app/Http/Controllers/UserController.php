@@ -28,20 +28,20 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-   public function store(Request $request)
-{
-    try {
-        // Hash password sebelum menyimpan
-        $data = $request->all();
-        $data['password'] = bcrypt($request->password);
+    public function store(Request $request)
+    {
+        try {
+            // Hash password sebelum menyimpan
+            $data = $request->all();
+            $data['password'] = bcrypt($request->password);
 
-        User::create($data);
+            User::create($data);
 
-        return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan');
-    } catch (\Throwable $th) {
-        return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $th->getMessage()]);
+            return to_route('user.index')->with('success', 'User berhasil ditambahkan');
+        } catch (\Throwable $th) {
+            return to_route('user.index')->with('error', 'User gagal ditambahkan');
+        }
     }
-}
 
 
     /**
@@ -81,9 +81,9 @@ class UserController extends Controller
     {
         try {
             $user->update($request->all);
-            return redirect()->route('user.index');
+            return to_route('user.index')->with('success', 'Berhasil mengubah data user');
         } catch (\Throwable $th) {
-            return abort(500);
+            return to_route('user.index')->with('error', 'Gagal mengubah data user');
         }
     }
 
@@ -94,9 +94,9 @@ class UserController extends Controller
     {
         try {
             $user->delete();
-            return redirect()->route('user.index');
+            return to_route('user.index')->with('success', 'Berhasil menghapus data user');
         } catch (\Throwable $th) {
-            return abort(400);
+            return to_route('user.index')->with('error', 'Gagal menghapus data user');
         }
     }
 }
