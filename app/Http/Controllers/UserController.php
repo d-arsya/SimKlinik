@@ -73,6 +73,12 @@ class UserController extends Controller
         $user = Auth::user();
         return view('pages.user.profileEdit', compact('user'));
     }
+    public function profileUpdate(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+        $user->update($request->only(['specialization', 'name']));
+        return to_route('profile')->with('success', 'Berhasil mengubah profile');
+    }
 
     /**
      * Update the specified resource in storage.

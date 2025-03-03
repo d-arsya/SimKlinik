@@ -3,7 +3,7 @@
         <nav class="navbar flex items-center space-x-4">
             <button type="button" class="flex items-center focus:outline-none" id="profile-menu-button"
                 aria-expanded="false" data-dropdown-toggle="profile-menu">
-                <img class="w-9 h-9 rounded-full border border-1 border-greenProfile" src="img/profile.png"
+                <img class="w-9 h-9 rounded-full border border-1 border-greenProfile" src="{{ asset('img/profile.png') }}"
                     alt="Foto Profil">
             </button>
             <div id="profile-menu" class="hidden z-10 w-20 border border-1 bg-white rounded divide-y divide-gray-100">
