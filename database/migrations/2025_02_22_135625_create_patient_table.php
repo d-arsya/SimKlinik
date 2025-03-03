@@ -54,7 +54,7 @@ return new class extends Migration
             $table->foreignIdFor(Checkup::class)->constrained()->onDelete('restrict');
             $table->char('code', 13)->unique();
             $table->integer('discount');
-            $table->date('paid')->nullable();
+            $table->dateTime('paid')->nullable();
             $table->enum('method', ['cash', 'credit', 'transfer']);
             $table->timestamps();
         });

@@ -29,8 +29,10 @@ class Invoice extends Model
     public function total()
     {
         $checkup = $this->checkup;
-        $services = $checkup->servicesData();
-        $drugs = $checkup->drugsData();
-        return [$services->sum('price'), $drugs];
+
+        $service = collect($checkup->servicesData())->sum(fn($service) => $service['price'] * $service['days']);
+        $drug = collect($checkup->drugsData())->sum(fn($drug) => $drug->price * $drug->amount);
+
+        return $service + $drug;
     }
 }

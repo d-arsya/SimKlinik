@@ -2,22 +2,21 @@
 @section('title', 'SimKlinik')
 @section('container')
     <div class="flex justify-between mb-[20px]">
-        <h3 class="text-sm text-cadet font-semibold">INV-26773</h3>
-        <div class="text-xs text-cadet">10 Januari 2024</div>
+        <h3 class="text-sm text-cadet font-semibold">{{ $invoice->code }}</h3>
     </div>
     <div class="flex justify-between mb-[20px]">
         <div class="space-y-[40px]">
             <div class="flex justify-start space-x-[87px] mt-7">
                 <div>
                     <p class="text-[11px] text-cadet">Kepada:</p>
-                    <div class="text-lg font-semibold text-primary">Esther Howard</div>
-                    <div class="text-[11px] font-semibold text-cadet">0812182930100</div>
+                    <div class="text-lg font-semibold text-primary">{{ $checkup->patient->owner->name }}</div>
+                    <div class="text-[11px] font-semibold text-cadet">{{ $checkup->patient->owner->phone }}</div>
                 </div>
                 <div>
                     <p class="text-[11px] text-cadet">Pasien:</p>
-                    <div class="text-lg font-semibold text-primary">Blacky</div>
-                    <div class="text-[11px] font-semibold text-cadet">Anjing</div>
-                    <div class="text-[11px] font-semibold text-cadet">No. RM : 2</div>
+                    <div class="text-lg font-semibold text-primary">{{ $checkup->patient->name }}</div>
+                    <div class="text-[11px] font-semibold text-cadet">{{ $checkup->patient->animal->name }}</div>
+                    <div class="text-[11px] font-semibold text-cadet">No. RM : {{ $checkup->patient->record }}</div>
                 </div>
             </div>
 
@@ -41,62 +40,44 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b font-semibold text-sm text-[#252F4A]">
-                            <th scope="row" class="px-6 py-4">
-                                Servis 1
-                            </th>
-                            <td class="px-6 py-4">
-                                Rp 18,000
-                            </td>
-                            <td class="px-6 py-4">
-                                -
-                            </td>
-                            <td class="px-6 py-4">
-                                Rp 18,000
-                            </td>
+                        <tr class="bg-white border-b font-semibold text-sm text-[#252F4A]"">
+                            <td class="px-6 py-4 text-center" colspan="4">Layanan</td>
                         </tr>
-                        <tr class="bg-white border-b font-semibold text-sm text-[#252F4A]">
-                            <th scope="row" class="px-6 py-4">
-                                Servis 2
-                            </th>
-                            <td class="px-6 py-4">
-                                Rp 18,000
-                            </td>
-                            <td class="px-6 py-4">
-                                -
-                            </td>
-                            <td class="px-6 py-4">
-                                Rp 18,000
-                            </td>
+                        @foreach ($checkup->servicesData() as $item)
+                            <tr class="bg-white border-b font-semibold text-sm text-[#252F4A]">
+                                <th scope="row" class="px-6 py-4">
+                                    {{ $item['name'] }}
+                                </th>
+                                <td class="px-6 py-4">
+                                    Rp {{ $item['price'] }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $item['days'] }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    Rp {{ $item['days'] * $item['price'] }}
+                                </td>
+                            </tr>
+                        @endforeach
+                        <tr class="bg-white border-b font-semibold text-sm text-[#252F4A]"">
+                            <td class="px-6 py-4 text-center" colspan="4">Obat</td>
                         </tr>
-                        <tr class="bg-white border-b font-semibold text-sm text-[#252F4A]">
-                            <th scope="row" class="px-6 py-4">
-                                Obat 1
-                            </th>
-                            <td class="px-6 py-4">
-                                Rp 18,000
-                            </td>
-                            <td class="px-6 py-4">
-                                2
-                            </td>
-                            <td class="px-6 py-4">
-                                Rp 36,000
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b font-semibold text-sm text-[#252F4A]">
-                            <th scope="row" class="px-6 py-4">
-                                Obat 2
-                            </th>
-                            <td class="px-6 py-4">
-                                Rp 18,000
-                            </td>
-                            <td class="px-6 py-4">
-                                2
-                            </td>
-                            <td class="px-6 py-4">
-                                Rp 36,000
-                            </td>
-                        </tr>
+                        @foreach ($checkup->drugsData() as $item)
+                            <tr class="bg-white border-b font-semibold text-sm text-[#252F4A]">
+                                <th scope="row" class="px-6 py-4">
+                                    {{ $item->name }}
+                                </th>
+                                <td class="px-6 py-4">
+                                    Rp {{ $item->price }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $item->amount }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    Rp {{ $item->price * $item->amount }}
+                                </td>
+                            </tr>
+                        @endforeach
 
                     </tbody>
                 </table>
@@ -204,7 +185,7 @@
                             Subtotal
                         </span>
                         <span>
-                            Rp 108,000
+                            Rp {{ $invoice->total() }}
                         </span>
                     </div>
                     <div class="flex justify-between font-semibold">
@@ -212,7 +193,7 @@
                             Diskon
                         </span>
                         <span>
-                            10%
+                            {{ $invoice->discount ?? 0 }}%
                         </span>
                     </div>
                     <hr class="my-4 border-white" />
@@ -221,7 +202,7 @@
                             Total Harga
                         </span>
                         <span class="text-2xl font-bold">
-                            Rp 90,000
+                            Rp {{ ($invoice->total() * (100 - $invoice->discount)) / 100 }}
                         </span>
                     </div>
                 </div>
@@ -229,7 +210,7 @@
         </div>
     </div>
     <div class="place-self-end">
-        <a href="{{ route('invoice.show', 1) }}" class="w-[172px]">Cetak Invoice</a>
+        <a href="{{ route('invoice.show', 1) }}" class="bg-primary py-2 px-4 text-whites rounded-md">Cetak Invoice</a>
     </div>
 @endsection
 @section('scripts')

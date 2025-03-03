@@ -22,8 +22,21 @@ class Checkup extends Model
     }
     public function servicesData()
     {
-        $ids = array_map(fn($item) => $item->id, json_decode($this->services));
-        return Service::whereIn('id', $ids)->get();
+        $all = json_decode($this->services);
+        $ids = array_map(fn($item) => $item->id, $all);
+        $services = Service::whereIn('id', $ids)->get()->toArray();
+
+        // Tambahkan nilai "days" dari JSON ke array hasil query
+        foreach ($services as $index => &$service) {
+            foreach ($all as $item) {
+                if ($service['id'] == $item->id) {
+                    $service['days'] = $item->days;
+                    break;
+                }
+            }
+        }
+
+        return $services;
     }
     public function drugsData()
     {

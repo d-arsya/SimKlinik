@@ -12,7 +12,10 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::all();
+        $invoices = Invoice::with([
+            'checkup.patient.animal',
+            'checkup.patient.owner'
+        ])->get();
         return view('pages.invoice.index', compact('invoices'));
     }
 
@@ -35,17 +38,19 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Invoice $invoice)
     {
-        return view('pages.invoice.show');
+        $checkup = $invoice->checkup()->with(['patient.owner', 'patient.animal'])->first();
+        return view('pages.invoice.show', compact('invoice', 'checkup'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Invoice $invoice)
     {
-        return view('pages.invoice.edit');
+        $checkup = $invoice->checkup()->with(['patient.owner', 'patient.animal'])->first();
+        return view('pages.invoice.edit', compact('invoice', 'checkup'));
     }
 
     /**

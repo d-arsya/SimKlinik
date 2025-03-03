@@ -23,58 +23,45 @@
         </tr>
     </thead>
     <tbody class="font-medium">
-        <tr>
-            <td class="px-6 py-3 border-b border-r border-gray-200">INV-2667</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">10/01/24</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">2</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">
-                <div>
-                    <p class="font-semibold">Kimo</a>
-                    <p>Kucing</p>
-                </div>
-            </td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">Hendra</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">
-                Rp {{ number_format(18000, 2, ',', '.') }}
-            </td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">
-                <div class="flex items-center">
-                    <x-icons.nopaidd class="w-5 h-5" />
-                </div>
-            </td>
-            <td class="px-6 py-3 border-b border-gray-200    ">
-                <div class="flex justify-center items-center">
-                    <x-icons.invoice2 class="w-5 h-5" />
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="px-6 py-3 border-b border-r border-gray-200">INV-2667</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">10/01/24</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">2</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">
-                <div>
-                    <p class="font-semibold">Kimo</a>
-                    <p>Kucing</p>
-                </div>
-            </td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">Hendra</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">
-                Rp {{ number_format(18000, 2, ',', '.') }}
-            </td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">
-                <div class="flex items-center">
-                    <x-icons.paid class="w-5 h-5" />
-                </div>
-            </td>
-            <td class="px-6 py-3 border-b border-gray-200    ">
-                <div class="flex justify-center items-center">
-                    <x-icons.invoice2 class="w-5 h-5" />
-                </div>
-            </td>
-        </tr>
+        @foreach ($invoices as $item)
+            <tr>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->code }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200 ">
+                    {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/y') }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200 ">{{ $item->checkup->patient->record }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200 ">
+                    <div>
+                        <p class="font-semibold">{{ $item->checkup->patient->name }}</a>
+                        <p>{{ $item->checkup->patient->animal->name }}</p>
+                    </div>
+                </td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->checkup->patient->owner->name }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->checkup->patient->owner->phone }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">
+                    Rp {{ $item->total() }}
+                </td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">
+                    <div class="flex items-center">
+                        @if ($item->paid)
+                            <x-icons.paid class="w-5 h-5" />
+                        @else
+                            <x-icons.nopaidd class="w-5 h-5" />
+                        @endif
+                    </div>
+                </td>
+                <td class="px-6 py-3 border-b border-gray-200    ">
+                    @if ($item->paid)
+                        <a href="{{ route('invoice.show', $item->id) }}" class="flex justify-center items-center">
+                            <x-icons.invoice2 class="w-5 h-5" />
+                        </a>
+                    @else
+                        <a href="{{ route('invoice.edit', $item->id) }}" class="flex justify-center items-center">
+                            <x-icons.invoice2 class="w-5 h-5" />
+                        </a>
+                    @endif
+                </td>
+            </tr>
+        @endforeach
     </tbody>
 
 @endsection
