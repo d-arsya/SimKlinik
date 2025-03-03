@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
+use App\Models\Checkup;
 use App\Models\Diagnose;
 use Illuminate\Http\Request;
 
@@ -31,18 +32,20 @@ class MasterDiagnoseController extends Controller
      */
     public function store(Request $request)
     {
-        // Pastikan ada jenis hewan yang dipilih
-        if ($request->has('animal_id')) {
-            foreach ($request->animal_id as $animalId) {
-                Diagnose::create([
-                    'name' => $request->name,
-                    'code' => $request->code,
-                    'animal_id' => $animalId,
-                ]);
+        try {
+            if ($request->has('animal_id')) {
+                foreach ($request->animal_id as $animalId) {
+                    Diagnose::create([
+                        'name' => $request->name,
+                        'animal_id' => $animalId,
+                    ]);
+                }
             }
-        }
 
-        return redirect()->route('diagnose.index');
+            return to_route('diagnose.index')->with('success', 'Berhasil menambhkan data diagnosa');
+        } catch (\Throwable $th) {
+            return to_route('diagnose.index')->with('error', 'Gagal menambhkan data diagnosa');
+        }
     }
 
 
@@ -70,8 +73,12 @@ class MasterDiagnoseController extends Controller
      */
     public function update(Request $request, Diagnose $diagnose)
     {
-        $diagnose->update($request->all());
-        return redirect()->route('diagnose.index');
+        try {
+            $diagnose->update($request->all());
+            return to_route('diagnose.index')->with('success', 'Berhasil mengubah diagnosa');
+        } catch (\Throwable $th) {
+            return to_route('diagnose.index')->with('error', 'Gagal mengubah diagnosa');
+        }
     }
 
     /**
@@ -79,7 +86,11 @@ class MasterDiagnoseController extends Controller
      */
     public function destroy(Diagnose $diagnose)
     {
+        $che = Checkup::whereJsonContains('diagnoses', $diagnose->id)->count();
+        if ($che > 0) {
+            return to_route('diagnose.index')->with('error', 'Gagal menghapus diagnosa');
+        }
         $diagnose->delete();
-        return redirect()->route('diagnose.index');
+        return to_route('diagnose.index')->with('success', 'Berhasil menghapus diagnosa');
     }
 }

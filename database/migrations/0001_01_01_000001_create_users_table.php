@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('role', ['doctor', 'admin', 'owner', 'super']);
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('specialization')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

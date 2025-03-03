@@ -14,22 +14,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            AnimalSeeder::class,
-            ColorSeeder::class,
-            DiagnoseSeeder::class,
-            ServiceSeeder::class,
-            TypeSeeder::class,
-            UserSeeder::class,
-            ProvinceSeeder::class,
-            CitySeeder::class,
-            DistrictSeeder::class,
-            VillageSeeder::class,
-            OwnerSeeder::class,
-            VaccineSeeder::class,
-            PatientSeeder::class,
-            CheckupSeeder::class,
-            InvoiceSeeder::class,
-        ]);
+
+        if (env('APP_ENV') == 'local') {
+            $this->call([
+                AnimalSeeder::class,
+                ColorSeeder::class,
+                DiagnoseSeeder::class,
+                ServiceSeeder::class,
+                TypeSeeder::class,
+                UserSeeder::class,
+                ProvinceSeeder::class,
+                CitySeeder::class,
+                DistrictSeeder::class,
+                VillageSeeder::class,
+                OwnerSeeder::class,
+                VaccineSeeder::class,
+                PatientSeeder::class,
+                CheckupSeeder::class,
+                InvoiceSeeder::class,
+            ]);
+        } else {
+            $this->call([
+                UserDeploySeeder::class,
+            ]);
+        }
     }
 }

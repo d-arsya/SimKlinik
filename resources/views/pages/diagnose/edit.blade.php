@@ -24,7 +24,7 @@
             <div class="grid grid-cols-4 gap-2">
                 @foreach ($animals as $item)
                     <label class="flex items-center space-x-2 text-sm text-gray-600">
-                        <input type="checkbox" name="animal_id" value="{{ $item->id }}"
+                        <input type="radio" name="animal_id" value="{{ $item->id }}"
                             class="w-4 h-4 text-primary border-gray-300 rounded animal-checkbox"
                             {{ $selectedAnimal == $item->id ? 'checked' : '' }}>
                         <span>{{ $item->name }}</span>
@@ -35,7 +35,7 @@
 
 
         <style>
-            input[type="checkbox"]:checked+span {
+            input[type="radio"]:checked+span {
                 color: #036CA1;
                 font-weight: 600;
             }
@@ -48,13 +48,13 @@
 
 @endsection
 @section('scripts')
-<script>
-    document.querySelectorAll('.animal-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            document.querySelectorAll('.animal-checkbox').forEach(cb => {
-                if (cb !== this) cb.checked = false;
+    <script>
+        document.querySelectorAll('.animal-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                document.querySelectorAll('.animal-checkbox').forEach(cb => {
+                    if (cb !== this) cb.checked = false;
+                });
             });
         });
-    });
-</script>
+    </script>
 @endsection

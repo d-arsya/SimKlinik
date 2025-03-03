@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
+use App\Models\Diagnose;
 use Illuminate\Http\Request;
 
 class MasterAnimalController extends Controller
@@ -21,7 +22,8 @@ class MasterAnimalController extends Controller
      */
     public function create()
     {
-        return view('pages.animal.create');
+        $diagnoses = Diagnose::all()->unique('name');
+        return view('pages.animal.create', compact('diagnoses'));
     }
 
     /**
@@ -29,8 +31,14 @@ class MasterAnimalController extends Controller
      */
     public function store(Request $request)
     {
-        Animal::create($request->all());
-        return redirect()->route('animal.index');
+        $animal = Animal::create($request->all());
+        if ($request->has('diagnose_name')) {
+            $diagnoses = collect($request->diagnose_name)->map(function ($name) use ($animal) {
+                return ['name' => $name];
+            })->toArray();
+            $animal->diagnoses()->createMany($diagnoses);
+        }
+        return to_route('animal.index')->with('success', 'Berhasil menambahkan hewan');
     }
 
     /**
@@ -46,7 +54,9 @@ class MasterAnimalController extends Controller
      */
     public function edit(Animal $animal)
     {
-        return view('pages.animal.edit', compact('animal'));
+        $diagnoses = Diagnose::all()->unique('name');
+        $animalDiagnoses = $animal->diagnoses->pluck('name')->toArray();
+        return view('pages.animal.edit', compact('animal', 'diagnoses', 'animalDiagnoses'));
     }
 
     /**
@@ -54,8 +64,14 @@ class MasterAnimalController extends Controller
      */
     public function update(Request $request, Animal $animal)
     {
+
+        $diagnoses = collect($request->diagnose_name)->map(function ($name) use ($animal) {
+            return ['name' => $name];
+        })->toArray();
+        $animal->diagnoses()->delete();
+        $animal->diagnoses()->createMany($diagnoses);
         $animal->update($request->all());
-        return redirect()->route('animal.index');
+        return to_route('animal.index')->with('success', 'Berhasil mengubah data hewan');
     }
 
     /**
@@ -63,7 +79,11 @@ class MasterAnimalController extends Controller
      */
     public function destroy(Animal $animal)
     {
-        $animal->delete();
-        return redirect()->route('animal.index');
+        try {
+            $animal->delete();
+            return to_route('animal.index')->with('success', 'Berhasil menghapus hewan');
+        } catch (\Throwable $th) {
+            return to_route('animal.index')->with('error', 'Gagal menghapus hewan');
+        }
     }
 }

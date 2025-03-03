@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checkup;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
@@ -29,8 +30,12 @@ class MasterServiceController extends Controller
      */
     public function store(Request $request)
     {
-        Service::create($request->all());
-        return redirect()->route('service.index');
+        try {
+            Service::create($request->all());
+            return to_route('service.index')->with('success', 'Berhasil menambahkan data layanan');
+        } catch (\Throwable $th) {
+            return to_route('service.index')->with('error', 'Gagal menambahkan data layanan');
+        }
     }
 
     /**
@@ -54,8 +59,12 @@ class MasterServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
-        $service->update($request->all());
-        return redirect()->route('service.index');
+        try {
+            $service->update($request->all());
+            return to_route('service.index')->with('success', 'Berhasil mengubah data layanan');
+        } catch (\Throwable $th) {
+            return to_route('service.index')->with('error', 'Gagal mengubah data layanan');
+        }
     }
 
     /**
@@ -63,7 +72,11 @@ class MasterServiceController extends Controller
      */
     public function destroy(Service $service)
     {
+        $che = Checkup::whereJsonContains('services', ['id' => $service->id])->count();
+        if ($che > 0) {
+            return redirect()->back()->with('error', 'Gagal menghapus layanan');
+        }
         $service->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Berhasil menghapus layanan');
     }
 }

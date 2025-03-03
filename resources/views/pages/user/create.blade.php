@@ -9,8 +9,13 @@
         @csrf
         <!-- Username Field -->
         <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
-            <label for="name" class="text-sm font-medium leading-6 text-gray-700">Username</label>
+            <label for="name" class="text-sm font-medium leading-6 text-gray-700">Nama</label>
             <input type="text" id="name" name="name"
+                class="py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
+        </div>
+        <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
+            <label for="specialization" class="text-sm font-medium leading-6 text-gray-700">Spesialisasi</label>
+            <input type="text" id="specialization" name="specialization"
                 class="py-3 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" required>
         </div>
 
@@ -76,41 +81,9 @@
         </div>
 
         <!-- Submit Button -->
-        <x-icons.submit/>
+        <x-icons.submit />
     </form>
 @endsection
-
-<script>
-    // Password visibility
-    function togglePasswordVisibility(fieldId, iconId) {
-        const field = document.getElementById(fieldId);
-        const icon = document.getElementById(iconId).querySelector('path');
-
-        if (field.type === "password") {
-            field.type = "text";
-            icon.setAttribute("d",
-                "M15 12a3 3 0 11-6 0 3 3 0 016 0zm-9.988-2.53A8.966 8.966 0 003 12c1.05 2.72 4.22 5 9 5 4.78 0 7.95-2.28 9-5a8.965 8.965 0 00-2.012-2.53"
-            );
-        } else {
-            field.type = "password";
-            icon.setAttribute("d",
-                "M3 3l18 18M4.22 4.22A9.956 9.956 0 003 12c1.05 2.72 4.22 5 9 5a9.96 9.96 0 005.78-1.78M9.88 9.88A3 3 0 0012 15a3 3 0 002.12-.88M12 3c4.78 0 7.95 2.28 9 5a8.966 8.966 0 01-2.012 2.53"
-            );
-        }
-    }
-
-    // Validate password
-    function validatePassword() {
-        const password = document.getElementById('password');
-        const confirmPassword = document.getElementById('confirm_password');
-        const errorMessage = document.getElementById('error-message');
-
-        if (confirmPassword.value && password.value !== confirmPassword.value) {
-            errorMessage.classList.remove("hidden");
-            confirmPassword.classList.add("border-red-500");
-        } else {
-            errorMessage.classList.add("hidden");
-            confirmPassword.classList.remove("border-red-500");
-        }
-    }
-</script>
+@section('script')
+    <x-script-password></x-script-password>
+@endsection

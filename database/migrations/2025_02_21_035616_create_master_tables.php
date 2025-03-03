@@ -66,5 +66,6 @@ return new class extends Migration
         Schema::dropIfExists('diagnoses');
         Schema::dropIfExists('services');
         Schema::dropIfExists('types');
+        Schema::dropIfExists('vaccines');
     }
 };

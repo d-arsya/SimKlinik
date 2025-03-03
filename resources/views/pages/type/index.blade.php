@@ -49,4 +49,3 @@
     @endsection
 
     @section('scripts')
-

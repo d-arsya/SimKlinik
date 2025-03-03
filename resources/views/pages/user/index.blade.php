@@ -17,8 +17,8 @@
     <thead class="border-y border-gray-200 bg-[#FCFCFC]">
         <tr>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">No.</th>
-            <th scope="col" class="px-6 py-3 border-r border-gray-200">Username</th>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">Nama</th>
+            <th scope="col" class="px-6 py-3 border-r border-gray-200">Spesialisasi</th>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">Role</th>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">Email</th>
             <th scope="col" class="px-6 py-3 font-semibold border-r border-gray-100 text-center">Aksi</th>
@@ -27,9 +27,9 @@
     <tbody class="font-medium">
         <tr>
             @foreach ($users as $index => $item)
-                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">{{ $index +1 }}</td>
-                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->code }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">{{ $index + 1 }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->name }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->specialization }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->role }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->email }}</td>
                 <td class="flex justify-center px-6 py-3 space-x-2 text-center border-b border-gray-200">

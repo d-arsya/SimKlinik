@@ -31,9 +31,9 @@ class MasterColorController extends Controller
     {
         try {
             Color::create($request->all());
-            return redirect()->route('color.index');
+            return to_route('color.index')->with('success', 'Berhasil menambahkan data warna');
         } catch (\Throwable $th) {
-            return abort(500);
+            return to_route('color.index')->with('error', 'Gagal menambahkan data warna');
         }
     }
 
@@ -60,9 +60,9 @@ class MasterColorController extends Controller
     {
         try {
             $color->update($request->all());
-            return redirect()->route('color.index');
+            return to_route('color.index')->with('success', 'Berhasil mengubah data warna');
         } catch (\Throwable $th) {
-            return abort(500);
+            return to_route('color.index')->with('error', 'Gagal mengubah data warna');
         }
     }
 
@@ -71,7 +71,11 @@ class MasterColorController extends Controller
      */
     public function destroy(Color $color)
     {
-        $color->delete();
-        return redirect()->back();
+        try {
+            $color->delete();
+            return to_route('color.index')->with('success', 'Berhasil menghapus warna');
+        } catch (\Throwable $th) {
+            return to_route('color.index')->with('error', 'Gagal menghapus warna');
+        }
     }
 }

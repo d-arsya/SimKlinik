@@ -34,64 +34,41 @@
         </tr>
     </thead>
     <tbody class="font-medium">
-        <tr>
-            <td class="px-6 py-3 border-b border-r border-gray-200 text-center">1</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">RM-2</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">
-                <div>
-                    <p class="font-semibold">Kimo</p>
-                    <p>Kucing</p>
-                </div>
-            </td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">Hendra</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">2 Tahun</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
-
-            @if (auth()->user()->role != 'doctor')
-                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">
-                    <x-icons.checking />
+        @foreach ($queues as $item)
+            <tr>
+                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">1</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->record }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">
+                    <div>
+                        <p class="font-semibold">{{ $item->patient->name }}</p>
+                        <p>{{ $item->patient->animal->name }}</p>
+                    </div>
                 </td>
-                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">Agus</td>
-            @endif
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->owner->name }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->calcAge() }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->owner->phone }}</td>
 
-            <td class="px-6 py-3 border-b border-gray-200 text-center">
-                <div class="flex justify-center items-center gap-2">
-                    @if (auth()->user()->role == 'doctor')
-                        <x-icons.stethoscope2 />
-                    @endif
-                    <x-icons.view />
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="px-6 py-3 border-b border-r border-gray-200 text-center">1</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">RM-2</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">
-                <div>
-                    <p class="font-semibold">imo</p>
-                    <p>Kucing</p>
-                </div>
-            </td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">Hendra</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">2 Tahun</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
+                @if (auth()->user()->role != 'doctor')
+                    <td class="px-6 py-3 border-b border-r border-gray-200 text-center">
+                        @if ($item->status == 'diperiksa')
+                            <x-icons.checking />
+                        @else
+                            <x-icons.waiting />
+                        @endif
+                    </td>
+                    <td class="px-6 py-3 border-b border-r border-gray-200 text-center">{{ $item->doctor->name }}</td>
+                @endif
 
-            @if (auth()->user()->role != 'doctor')
-                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">
-                    <x-icons.waiting />
+                <td class="px-6 py-3 border-b border-gray-200 text-center">
+                    <div class="flex justify-center items-center gap-2">
+                        @if (auth()->user()->role == 'doctor')
+                            <x-icons.stethoscope2 />
+                        @endif
+                        <x-icons.view />
+                    </div>
                 </td>
-                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">Agus</td>
-            @endif
-
-            <td class="px-6 py-3 border-b border-gray-200 text-center">
-                <div class="flex justify-center items-center gap-2">
-                    @if (auth()->user()->role == 'doctor')
-                        <x-icons.stethoscope2 />
-                    @endif
-                    <x-icons.view />
-                </div>
-            </td>
-        </tr>
+            </tr>
+        @endforeach
     @endsection
 
     @section('pagination')

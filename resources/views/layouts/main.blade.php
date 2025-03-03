@@ -18,10 +18,13 @@
             <main class="pb-[60px]">
                 @yield('container')
             </main>
-            <x-dev-login></x-dev-login>
+            @if (env('APP_ENV') == 'local')
+                <x-dev-login></x-dev-login>
+            @endif
         </div>
     </div>
     @yield('scripts')
+    <x-toast></x-toast>
 </body>
 
 </html>

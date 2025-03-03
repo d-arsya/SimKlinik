@@ -1,6 +1,4 @@
 @extends('layouts.layout-index')
-
-<!-- Header -->
 @section('title', 'Tabel Jenis Hewan')
 
 @section('buttons')
@@ -11,8 +9,6 @@
         class="font-bold text-md px-3 py-2 rounded-md text-primary bg-primary-filter flex items-center justify-center text-center h-9">
         Tambah Bulk</a>
 @endsection
-
-<!-- Table -->
 @section('table')
     <thead class="border-y border-gray-200 bg-[#FCFCFC]">
         <tr>

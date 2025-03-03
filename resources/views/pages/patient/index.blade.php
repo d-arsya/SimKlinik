@@ -13,50 +13,42 @@
         <tr>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">No. </th>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">No. RM</th>
-            <th scope="col" class="px-6 py-3 border-r border-gray-200">Pasien</th>
-            <th scope="col" class="px-6 py-3 border-r border-gray-200">Owner Pasien</th>
+            <th scope="col" class="px-6 py-3 border-r border-gray-200">Nama</th>
+            <th scope="col" class="px-6 py-3 border-r border-gray-200">Owner</th>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">Umur</th>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">No. Telp</th>
             <th scope="col" class="px-6 py-3 text-center border-r border-gray-100">Aksi</th>
         </tr>
     </thead>
     <tbody class="font-medium">
-        <tr>
-            <td class="px-6 py-3 border-b border-r border-gray-200">1</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">RM-2</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">
-                <div>
-                    <p class="font-semibold">Kimo</a>
-                    <p>Kucing</p>
-                </div>
-            </td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">Hendra</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">2 Tahun</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
-            <td class="px-6 py-3 border-b border-gray-200">
-                <div class="flex justify-center items-center gap-2 h-10">
-                        <x-icons.view />
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="px-6 py-3 border-b border-r border-gray-200">1</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">RM-2</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">
-                <div>
-                    <p class="font-semibold">Kimo</a>
-                    <p>Kucing</p>
-                </div>
-            </td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">Hendra</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">2 Tahun</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
-            <td class="px-6 py-3 border-b border-gray-200">
-                <div class="flex justify-center items-center gap-2 h-10">
-                        <x-icons.view />
-                </div>
-            </td>
-        </tr>
+        @foreach ($patients as $item)
+            <tr>
+                <td class="px-6 py-3 border-b border-r border-gray-200">1</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200 ">{{ $item->record }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200 ">
+                    <div>
+                        <p class="font-semibold">{{ $item->name }}</a>
+                        <p>{{ $item->animal->name }}</p>
+                    </div>
+                </td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">
+                    <a href="{{ route('owner.show', $item->owner->id) }}">
+
+                        {{ $item->owner->name }}
+                    </a>
+                </td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->calcAge() }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->owner->phone }}</td>
+                <td class="px-6 py-3 border-b border-gray-200">
+                    <div class="flex justify-center items-center gap-2 h-10">
+                        <a href="{{ route('patient.show', $item->id) }}">
+                            <x-icons.view />
+
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        @endforeach
     </tbody>
 @endsection
 

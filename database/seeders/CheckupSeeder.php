@@ -14,7 +14,7 @@ class CheckupSeeder extends Seeder
     public function run(): void
     {
         for ($i = 1; $i <= 10; $i++) {
-            Checkup::factory(1)->create(["patient_id" => $i]);
+            Checkup::factory(5)->create(["patient_id" => $i]);
         }
     }
 }

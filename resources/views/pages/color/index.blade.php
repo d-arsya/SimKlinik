@@ -32,10 +32,11 @@
                     <a href="{{ route('color.edit', $item->id) }}">
                         <x-icons.edit />
                     </a>
-                    <form action="{{ route('color.destroy', $item->id) }}" method="post">
+                    <form id="delete-form-{{ $item->id }}" action="{{ route('color.destroy', $item->id) }}"
+                        method="post">
                         @method('DELETE')
                         @csrf
-                        <button type="submit">
+                        <button type="submit" onclick="confirmDelete({{ $item->id }})">
                             <x-icons.delete />
                         </button>
                     </form>

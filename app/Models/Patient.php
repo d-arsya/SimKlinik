@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,5 +44,15 @@ class Patient extends Model
     public function checkups()
     {
         return $this->hasMany(Checkup::class);
+    }
+    public function calcAge()
+    {
+        $birthDate = Carbon::parse($this->birth);
+        $now = Carbon::now();
+
+        $years = floor($birthDate->diffInYears($now));
+        $months = floor($birthDate->copy()->addYears($years)->diffInMonths($now));
+
+        return "{$years} tahun, {$months} bulan";
     }
 }

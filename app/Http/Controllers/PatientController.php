@@ -12,7 +12,8 @@ class PatientController extends Controller
      */
     public function index()
     {
-        return view('pages.patient.index');
+        $patients = Patient::with(['animal', 'owner'])->get();
+        return view('pages.patient.index', compact('patients'));
     }
 
     /**

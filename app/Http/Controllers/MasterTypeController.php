@@ -31,8 +31,12 @@ class MasterTypeController extends Controller
      */
     public function store(Request $request)
     {
-        Type::create($request->all());
-        return redirect()->route('type.index');
+        try {
+            Type::create($request->all());
+            return to_route('type.index')->with('success', 'Berhasil menambahkan ras hewan');
+        } catch (\Throwable $th) {
+            return to_route('type.index')->with('error', 'Gagal menambahkan ras hewan');
+        }
     }
 
     /**
@@ -57,10 +61,12 @@ class MasterTypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        $type->update($request->all());
-        $animals = Animal::all();
-        return redirect()->route('type.index');
-
+        try {
+            $type->update($request->all());
+            return to_route('type.index')->with('success', 'Berhasil mengubah ras hewan');
+        } catch (\Throwable $th) {
+            return to_route('type.index')->with('error', 'Gagal mengubah ras hewan');
+        }
     }
 
     /**
@@ -68,7 +74,11 @@ class MasterTypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        $type->delete();
-        return redirect()->back();
+        try {
+            $type->delete();
+            return to_route('type.index')->with('success', 'Berhasil menghapus ras hewan');
+        } catch (\Throwable $th) {
+            return to_route('type.index')->with('error', 'Gagal menghapus ras hewan');
+        }
     }
 }
