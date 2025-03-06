@@ -33,7 +33,6 @@
                 </td>
                 <td class="px-6 py-3 border-b border-r border-gray-200">
                     <a href="{{ route('owner.show', $item->owner->id) }}">
-
                         {{ $item->owner->name }}
                     </a>
                 </td>

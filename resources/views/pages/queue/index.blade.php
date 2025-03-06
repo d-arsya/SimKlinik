@@ -6,13 +6,12 @@
     <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">49,053</span></p>
     <p class="text-cadet font-medium">Jumlah Dokter: <span class="text-[#252F4A]">724</span></p>
 @endsection
+
 @section('buttons')
-    <a href="#"
-        class="font-bold text-md px-3 py-2 rounded-md text-white bg-primary flex items-center justify-center text-center h-9">Pasien
-        Baru</a>
-    <a href="#"
-        class="font-bold text-md px-3 py-2 rounded-md text-primary bg-primary-filter flex items-center justify-center text-center h-9">Pasien
-        Lama</a>
+    <!-- Tombol Modal -->
+    @include('components.modal-add-queue.old-patient', ['buttonText' => 'Pasien Lama', 'title' => 'Pemilik Hewan Peliharaan Baru'])
+    @include('components.modal-add-queue.new-patient', ['buttonText' => 'Pasien Baru', 'title' => 'Pemilik Hewan Peliharaan Baru'])
+
 @endsection
 
 <!-- Table -->
