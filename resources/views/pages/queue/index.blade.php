@@ -9,8 +9,14 @@
 
 @section('buttons')
     <!-- Tombol Modal -->
-    @include('components.modal-add-queue.old-patient', ['buttonText' => 'Pasien Lama', 'title' => 'Pemilik Hewan Peliharaan Baru'])
-    @include('components.modal-add-queue.new-patient', ['buttonText' => 'Pasien Baru', 'title' => 'Pemilik Hewan Peliharaan Baru'])
+    @include('components.modal-add-queue.old-patient', [
+        'buttonText' => 'Pasien Lama',
+        'title' => 'Pemilik Hewan Peliharaan Baru',
+    ])
+    @include('components.modal-add-queue.new-patient', [
+        'buttonText' => 'Pasien Baru',
+        'title' => 'Pemilik Hewan Peliharaan Baru',
+    ])
 
 @endsection
 
@@ -61,8 +67,11 @@
                 <td class="px-6 py-3 border-b border-gray-200 text-center">
                     <div class="flex justify-center items-center gap-2">
                         @if (auth()->user()->role == 'doctor')
-                            <x-icons.stethoscope2 />
+                            <a href="{{ route('queue.edit',1) }}">
+                                <x-icons.stethoscope2 />
+                            </a>
                         @endif
+
                         <x-icons.view />
                     </div>
                 </td>
@@ -123,4 +132,4 @@
             </div>
         </div> --}}
         </div>
-    @endsection
+@endsection

@@ -2,7 +2,7 @@
 @section('title', 'SimKlinik')
 @section('container')
 
-    <div class="justify-between px-4 flex py-4">
+    <div class="justify-between px-4 flex py-2">
         <div>
             <h2 class="text-xl font-semibold">@yield('title')</h2>
             <div class="flex">

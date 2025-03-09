@@ -16,6 +16,7 @@ use App\Http\Controllers\QueueController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::redirect('/', '/dashboard');
 if (env('APP_ENV') == 'local') {
     Route::redirect('login', 'login/super')->name('login');
@@ -52,3 +53,7 @@ Route::middleware('auth')->group(function () {
         Route::put('profile/edit', 'profileUpdate')->name('profile.update');
     });
 });
+
+Route::get('/queue/checkup', function () {
+    return view('pages.queue.checkup');
+})->name('queue.checkup');
