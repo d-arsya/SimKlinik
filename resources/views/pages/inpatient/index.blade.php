@@ -24,11 +24,11 @@
     <tbody class="font-medium">
         <tr>
             <td class="px-6 py-3 border-b border-r border-gray-200">1</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">09/01/24</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">RM-2</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200 ">
+            <td class="px-6 py-3 border-b border-r border-gray-200">09/01/24</td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">RM-2</td>
+            <td class="px-6 py-3 border-b border-r border-gray-200">
                 <div>
-                    <p class="font-semibold">Kimo</a>
+                    <p class="font-semibold">Kimo</p>
                     <p>Kucing</p>
                 </div>
             </td>
@@ -37,71 +37,51 @@
             <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
             <td class="px-6 py-3 border-b border-gray-200">
                 <div class="flex justify-center items-center gap-2 h-10">
-                    <div class="flex items-center justify-center ">
-                        <x-icons.detail-icon />
-                    </div>
                     @if (auth()->user()->role == 'doctor')
-                        <a href=""
-                            class="font-bold text-md py-2 px-3 rounded-md text-white bg-primary flex items-center justify-center h-9">
+                        <div class="h-10 mt-2">
+                            @include('components.modal-inpatient', [
+                                'title' => 'Rawat Inap',
+                            ])
+                        </div>
+                        <button onclick="confirmSelesaiRawatInap(event)"
+                            class="font-bold text-md py-4 px-3 mt-2 rounded-md text-white bg-primary flex items-center justify-center h-9">
                             Selesai Rawat Inap
-                        </a>
+                        </button>
                     @endif
                 </div>
             </td>
+        </tr>
     </tbody>
 @endsection
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-@section('pagination')
-    <div class="flex items-center justify-between mx-4 my-2 text-sm text-gray-700">
-        <!-- Rows Per Page Selector -->
-        <select id="rowsPerPage" onchange="changeRowsPerPage()"
-            class="p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="10" selected>10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-        </select>
-        {{-- paginate --}}
-        {{-- <div class="flex flex-row">
+<script>
+    function confirmSelesaiRawatInap(event) {
+        event.preventDefault(); // Mencegah aksi default jika tombol dalam <a href>
 
-            <span class="m-2">
-                {{ ($users->currentPage() - 1) * $users->perPage() + 1 }} -
-                {{ min($users->currentPage() * $users->perPage(), $users->total()) }}
-                dari {{ $users->total() }}
-            </span>
+        Swal.fire({
+            title: "Konfirmasi",
+            text: "Yakin pasien ini sudah selesai rawat inap?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, Selesai!",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Berhasil!",
+                    text: "Pasien telah selesai rawat inap.",
+                    icon: "success",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
 
-            <div class="flex items-center">
-                <!-- Tombol Sebelumnya -->
-                <button
-                    class="px-2 py-1 mx-1 text-gray-500 bg-white border border-gray-300 rounded hover:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed"
-                    @if ($users->onFirstPage()) disabled @endif
-                    onclick="window.location='{{ $users->previousPageUrl() }}'">
-                    &lt;
-                </button>
-
-                <!-- Nomor Halaman -->
-                @foreach (range(1, $users->lastPage()) as $page)
-                    @if ($page == $users->currentPage())
-                        <button class="px-3 py-1 mx-1 text-white bg-blue-600 border border-blue-600 rounded">
-                            {{ $page }}
-                        </button>
-                    @else
-                        <button
-                            class="px-3 py-1 mx-1 text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-100"
-                            onclick="window.location='{{ $users->url($page) }}'">
-                            {{ $page }}
-                        </button>
-                    @endif
-                @endforeach
-
-                <!-- Tombol Berikutnya -->
-                <button
-                    class="px-2 py-1 mx-1 text-gray-500 bg-white border border-gray-300 rounded hover:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed"
-                    @if (!$users->hasMorePages()) disabled @endif
-                    onclick="window.location='{{ $users->nextPageUrl() }}'">
-                    &gt;
-                </button>
-            </div>
-        </div> --}}
-    </div>
-@endsection
+                setTimeout(() => {
+                    window.location.href = "{{ route('inpatient.index')}}";
+                }, 2000);
+            }
+        });
+    }
+</script>
