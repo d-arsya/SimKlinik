@@ -9,6 +9,7 @@ class Owner extends Model
 {
     /** @use HasFactory<\Database\Factories\OwnerFactory> */
     use HasFactory;
+    protected $guarded = ['id', 'created_at', 'updated_at'];
     public function patients()
     {
         return $this->hasMany(Patient::class);

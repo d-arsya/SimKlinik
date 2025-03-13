@@ -45,8 +45,8 @@ return new class extends Migration
             $table->json('drugs')->nullable();
             $table->enum('status', ['diperiksa', 'menunggu', 'dibatalkan']);
             $table->boolean('queued')->default(true);
-            $table->string('anamnesis');
-            $table->string('symptom');
+            $table->string('anamnesis')->nullable();
+            $table->string('symptom')->nullable();
             $table->timestamps();
         });
         Schema::create('invoices', function (Blueprint $table) {

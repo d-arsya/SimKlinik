@@ -20,7 +20,7 @@ class Patient extends Model
             $item->record = $code;
         });
     }
-    protected $guarded = ["id", "created_at", "updated_at"];
+    protected $guarded = ["id", "record", "created_at", "updated_at"];
     public function owner()
     {
         return $this->belongsTo(Owner::class);
