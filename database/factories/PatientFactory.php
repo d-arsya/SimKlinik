@@ -21,7 +21,7 @@ class PatientFactory extends Factory
             "animal_id" => fake()->numberBetween(1, 10),
             "type_id" => fake()->numberBetween(1, 10),
             "color_id" => fake()->numberBetween(1, 10),
-            "vaccine_id" => fake()->numberBetween(1, 10),
+            "vaccine" => fake()->words(2, true),
             "name" => fake()->name(),
             "birth" => fake()->date(),
             "gender" => fake()->randomElement(["Jantan", "Betina"]),

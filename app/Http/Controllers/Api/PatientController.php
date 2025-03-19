@@ -13,7 +13,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $patients = Patient::all();
+        $patients = Patient::with(['owner', 'animal', 'type', 'color'])->get();
         $response = [
             'success' => true,
             'code' => 200,

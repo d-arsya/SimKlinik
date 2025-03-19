@@ -28,8 +28,18 @@ class OwnerController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->validate([
+            "province_id" => 'required|integer|exists:provinces,id',
+            "city_id" => 'required|integer|exists:cities,id',
+            "district_id" => 'required|integer|exists:districts,id',
+            "village_id" => 'required|integer|exists:villages,id',
+            "name" => 'required|string|max:255',
+            "gender" => 'required|string|in:Laki-Laki,Perempuan',
+            "address" => 'required|string|max:300',
+            "phone" => 'required|unique:owners,phone',
+        ]);
         try {
-            $owner = Owner::create($request->all());
+            $owner = Owner::create($data);
             $response = [
                 'success' => true,
                 'code' => 200,
@@ -78,11 +88,21 @@ class OwnerController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $data = $request->validate([
+            "province_id" => 'required|integer|exists:provinces,id',
+            "city_id" => 'required|integer|exists:cities,id',
+            "district_id" => 'required|integer|exists:districts,id',
+            "village_id" => 'required|integer|exists:villages,id',
+            "name" => 'required|string|max:255',
+            "gender" => 'required|string|in:Laki-Laki,Perempuan',
+            "address" => 'required|string|max:300',
+            "phone" => 'required|unique:owners,phone',
+        ]);
         $owner = Owner::find($id);
         if ($owner) {
             try {
                 $old = $owner->replicate();
-                $owner->update($request->all());
+                $owner->update($data);
                 $response = [
                     'success' => true,
                     'code' => 200,

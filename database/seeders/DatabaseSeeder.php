@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
                 DistrictSeeder::class,
                 VillageSeeder::class,
                 OwnerSeeder::class,
-                VaccineSeeder::class,
                 PatientSeeder::class,
                 CheckupSeeder::class,
                 InvoiceSeeder::class,

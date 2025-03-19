@@ -48,12 +48,6 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
         });
-        Schema::create('vaccines', function (Blueprint $table) {
-            $table->id();
-            $table->char('code', 8)->unique();
-            $table->string('name');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -66,6 +60,5 @@ return new class extends Migration
         Schema::dropIfExists('diagnoses');
         Schema::dropIfExists('services');
         Schema::dropIfExists('types');
-        Schema::dropIfExists('vaccines');
     }
 };

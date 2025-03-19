@@ -10,4 +10,8 @@ class Province extends Model
     /** @use HasFactory<\Database\Factories\ProvinceFactory> */
     use HasFactory;
     protected $guarded = ["id", "created_at", "updated_at"];
+    public function cities()
+    {
+        return $this->hasMany(City::class);
+    }
 }

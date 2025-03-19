@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreignIdFor(Animal::class)->constrained()->onDelete('restrict');
             $table->foreignIdFor(Type::class)->constrained()->onDelete('restrict');
             $table->foreignIdFor(Color::class)->constrained()->onDelete('restrict');
-            $table->foreignIdFor(Vaccine::class)->constrained()->onDelete('restrict')->nullable();
+            $table->string('vaccine')->nullable();
             $table->string('name');
             $table->char('record', 8)->unique();
             $table->date('birth');

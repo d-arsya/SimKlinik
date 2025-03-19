@@ -20,10 +20,6 @@ class Animal extends Model
             $item->code = $code;
         });
     }
-    public function colors()
-    {
-        return $this->hasMany(Color::class);
-    }
     public function types()
     {
         return $this->hasMany(Type::class);
