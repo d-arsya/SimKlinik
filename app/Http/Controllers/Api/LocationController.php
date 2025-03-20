@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\District;
+use App\Models\Location;
 use App\Models\Province;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class LocationController extends Controller
 {
     public function province()
     {
-        $provinces = Province::all();
+        $provinces = Location::distinct()->pluck('province');
         $response = [
             'success' => true,
             'code' => 200,
@@ -21,9 +22,9 @@ class LocationController extends Controller
         ];
         return response()->json($response, 200);
     }
-    public function city(Province $province)
+    public function city(string $province)
     {
-        $cities = $province->cities;
+        $cities = Location::where('province', $province)->distinct()->pluck('city');
         $response = [
             'success' => true,
             'code' => 200,
@@ -32,9 +33,9 @@ class LocationController extends Controller
         ];
         return response()->json($response, 200);
     }
-    public function district(City $city)
+    public function district(string $city)
     {
-        $districts = $city->districts;
+        $districts = Location::where('city', $city)->distinct()->pluck('district');
         $response = [
             'success' => true,
             'code' => 200,
@@ -43,9 +44,9 @@ class LocationController extends Controller
         ];
         return response()->json($response, 200);
     }
-    public function village(District $district)
+    public function village(string $district)
     {
-        $villages = $district->villages;
+        $villages = Location::where('district', $district)->distinct()->pluck('village');
         $response = [
             'success' => true,
             'code' => 200,

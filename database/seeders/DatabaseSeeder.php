@@ -22,11 +22,8 @@ class DatabaseSeeder extends Seeder
                 DiagnoseSeeder::class,
                 ServiceSeeder::class,
                 TypeSeeder::class,
+                LocationSeeder::class,
                 UserSeeder::class,
-                ProvinceSeeder::class,
-                CitySeeder::class,
-                DistrictSeeder::class,
-                VillageSeeder::class,
                 OwnerSeeder::class,
                 PatientSeeder::class,
                 CheckupSeeder::class,
@@ -34,6 +31,7 @@ class DatabaseSeeder extends Seeder
             ]);
         } else {
             $this->call([
+                LocationSeeder::class,
                 UserDeploySeeder::class,
             ]);
         }

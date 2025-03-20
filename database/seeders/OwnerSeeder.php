@@ -14,14 +14,6 @@ class OwnerSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 10; $i++) {
-            $village = Village::find(fake()->numberBetween(1, Village::all()->count()));
-            Owner::factory(2)->create([
-                "province_id" => $village->district->city->province->id,
-                "city_id" => $village->district->city->id,
-                "district_id" => $village->district->id,
-                "village_id" => $village->id
-            ]);
-        }
+        Owner::factory(20)->create();
     }
 }

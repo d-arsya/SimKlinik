@@ -18,4 +18,8 @@ class Owner extends Model
     {
         return $this->hasManyThrough(Checkup::class, Patient::class)->with(['patient.animal', 'patient.type']);
     }
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'district', 'id');
+    }
 }

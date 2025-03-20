@@ -15,9 +15,9 @@ Route::get('/user', function (Request $request) {
 Route::name('api.')->group(function () {
     Route::controller(LocationController::class)->group(function () {
         Route::get('province', 'province')->name('province');
-        Route::get('province/{province}', 'city')->name('city');
-        Route::get('city/{city}', 'district')->name('district');
-        Route::get('district/{district}', 'village')->name('village');
+        Route::get('city/{province}', 'city')->name('city');
+        Route::get('district/{city}', 'district')->name('district');
+        Route::get('village/{district}', 'village')->name('village');
     });
     Route::controller(AnimalController::class)->group(function () {
         Route::get('animal', 'animal')->name('animal');

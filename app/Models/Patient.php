@@ -37,10 +37,6 @@ class Patient extends Model
     {
         return $this->belongsTo(Color::class);
     }
-    public function vaccine()
-    {
-        return $this->belongsTo(Vaccine::class);
-    }
     public function checkups()
     {
         return $this->hasMany(Checkup::class);
