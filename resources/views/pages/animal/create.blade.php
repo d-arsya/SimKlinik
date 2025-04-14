@@ -36,7 +36,11 @@
                 @endforeach
             </div>
         </div>
-        <x-icons.submit />
+        <div class="flex justify-end">
+            <button type="submit">
+                <x-icons.submit />
+            </button>
+        </div>
     </form>
 
 @endsection

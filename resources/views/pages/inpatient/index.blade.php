@@ -18,7 +18,9 @@
             <th scope="col" class="px-6 py-3 border-r border-gray-200">Owner Pasien</th>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">Umur</th>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">No. Telp</th>
-            <th scope="col" class="px-6 py-3 text-center border-r border-gray-100">Aksi</th>
+            @if (auth()->user()->role == 'doctor')
+                <th scope="col" class="px-6 py-3 text-center border-r border-gray-100">Aksi</th>
+            @endif
         </tr>
     </thead>
     <tbody class="font-medium">
@@ -35,9 +37,9 @@
             <td class="px-6 py-3 border-b border-r border-gray-200">Hendra</td>
             <td class="px-6 py-3 border-b border-r border-gray-200">2</td>
             <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
+            k@if (auth()->user()->role == 'doctor')
             <td class="px-6 py-3 border-b border-gray-200">
                 <div class="flex justify-center items-center gap-2 h-10">
-                    @if (auth()->user()->role == 'doctor')
                         <div class="h-10 mt-2">
                             @include('components.modal-inpatient', [
                                 'title' => 'Rawat Inap',
@@ -79,7 +81,7 @@
                 });
 
                 setTimeout(() => {
-                    window.location.href = "{{ route('inpatient.index')}}";
+                    window.location.href = "{{ route('inpatient.index') }}";
                 }, 2000);
             }
         });

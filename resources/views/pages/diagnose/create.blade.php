@@ -38,7 +38,11 @@
             </style>
 
             <!-- Submit button -->
-            <x-icons.submit />
+            <div class="flex justify-end">
+                <button type="submit" >
+                    <x-icons.submit />
+                </button>
+            </div>
         </div>
     </form>
 

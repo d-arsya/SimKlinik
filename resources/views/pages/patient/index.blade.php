@@ -23,7 +23,7 @@
     <tbody class="font-medium">
         @foreach ($patients as $item)
             <tr>
-                <td class="px-6 py-3 border-b border-r border-gray-200">1</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $loop->iteration }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200 ">{{ $item->record }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200 ">
                     <div>

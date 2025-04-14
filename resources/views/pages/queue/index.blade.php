@@ -24,7 +24,7 @@
 @section('table')
     <thead class="border-y border-gray-200 bg-[#FCFCFC]">
         <tr>
-            <th scope="col" class="px-6 py-3 border-r border-gray-200">No. Antrian</th>
+            <th scope="col" class="px-6 py-3 border-r border-gray-200">No.</th>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">No. RM</th>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">Pasien</th>
             <th scope="col" class="px-6 py-3 border-r border-gray-200">Owner Pasien</th>
@@ -41,7 +41,7 @@
     <tbody class="font-medium">
         @foreach ($queues as $item)
             <tr>
-                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">1</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">{{ $loop->iteration  }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->record }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200">
                     <div>
@@ -89,47 +89,6 @@
                 <option value="50">50</option>
                 <option value="100">100</option>
             </select>
-            {{-- paginate --}}
-            {{-- <div class="flex flex-row">
 
-            <span class="m-2">
-                {{ ($users->currentPage() - 1) * $users->perPage() + 1 }} -
-                {{ min($users->currentPage() * $users->perPage(), $users->total()) }}
-                dari {{ $users->total() }}
-            </span>
-
-            <div class="flex items-center">
-                <!-- Tombol Sebelumnya -->
-                <button
-                    class="px-2 py-1 mx-1 text-gray-500 bg-white border border-gray-300 rounded hover:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed"
-                    @if ($users->onFirstPage()) disabled @endif
-                    onclick="window.location='{{ $users->previousPageUrl() }}'">
-                    &lt;
-                </button>
-
-                <!-- Nomor Halaman -->
-                @foreach (range(1, $users->lastPage()) as $page)
-                    @if ($page == $users->currentPage())
-                        <button class="px-3 py-1 mx-1 text-white bg-blue-600 border border-blue-600 rounded">
-                            {{ $page }}
-                        </button>
-                    @else
-                        <button
-                            class="px-3 py-1 mx-1 text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-100"
-                            onclick="window.location='{{ $users->url($page) }}'">
-                            {{ $page }}
-                        </button>
-                    @endif
-                @endforeach
-
-                <!-- Tombol Berikutnya -->
-                <button
-                    class="px-2 py-1 mx-1 text-gray-500 bg-white border border-gray-300 rounded hover:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed"
-                    @if (!$users->hasMorePages()) disabled @endif
-                    onclick="window.location='{{ $users->nextPageUrl() }}'">
-                    &gt;
-                </button>
-            </div>
-        </div> --}}
         </div>
 @endsection

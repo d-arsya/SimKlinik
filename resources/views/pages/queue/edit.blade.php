@@ -22,12 +22,16 @@
                 <div class="grid gap-4">
                     <div>
                         <label class="block text-gray-700 font-medium">Anamnesa</label>
-                        <textarea class="w-full p-2 border rounded-lg bg-gray-100 h-24" placeholder="Ketik anamnesa..."></textarea>
+                        <textarea style="overflow-y: auto !important;"
+                            class="w-full p-2 border rounded-lg bg-gray-100 h-24 overflow-y-auto resize-none mt-2"
+                            placeholder="Ketik anamnesa..."></textarea>
                     </div>
 
                     <div>
                         <label class="block text-gray-700 font-medium">Gejala</label>
-                        <textarea class="w-full p-2 border rounded-lg bg-gray-100 h-16" placeholder="Ketik gejala..."></textarea>
+                        <textarea style="overflow-y: auto !important;"
+                            class="w-full p-2 border rounded-lg bg-gray-100 h-16 overflow-y-auto resize-none mt-2"
+                            placeholder="Ketik gejala..."></textarea>
                     </div>
                 </div>
 
@@ -65,42 +69,49 @@
                 <hr class="border-gray-200 my-4">
 
                 <!-- Add Obat -->
-                <div class="grid grid-cols-2">
-                    <div class="grid w-full">
-                        <div class="grid grid-cols-3 gap-2 w-[580px]">
+                <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-4">
+                    <!-- Kolom Kiri -->
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full">
+                            <!-- Jenis Obat -->
                             <div>
                                 <label class="block text-gray-700 font-medium">Jenis Obat</label>
-                                <div class="flex gap-2 mt-2">
-                                    <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">
-                                        <option value="">-</option>
-                                        <option value="test">Test</option>
-                                    </select>
-                                </div>
+                                <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2">
+                                    <option value="">-</option>
+                                    <option value="test">Test</option>
+                                </select>
                             </div>
+
+                            <!-- Nama Obat -->
                             <div>
                                 <label class="block text-gray-700 font-medium">Nama Obat</label>
-                                <div class="flex gap-2 mt-2">
-                                    <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">
-                                        <option value="">-</option>
-                                        <option value="test">Test</option>
-                                    </select>
-                                </div>
+                                <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2">
+                                    <option value="">-</option>
+                                    <option value="test">Test</option>
+                                </select>
                             </div>
+
+                            <!-- Jumlah & Tambah -->
                             <div>
                                 <label class="block text-gray-700 font-medium">Jumlah</label>
-                                <div class="flex gap-3 mt-2">
-                                    <input type="number" class="w-24 border rounded-lg bg-gray-100 h-10">
+                                <div class="flex">
+                                    <input
+                                        class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2 p-2 max-w-[80%]"></input>
                                     <button type="button" onclick="addObat()">
-                                        <x-icons.add />
+                                        <x-icons.add></x-icons.add>
                                     </button>
                                 </div>
                             </div>
                         </div>
+
                         <div id="obat-container"></div>
                     </div>
-                    <div>
-                        <label class="block text-gray-700 font-medium mx-2">Alternatif</label>
-                        <textarea class="w-full p-2 border rounded-lg bg-gray-100 h-24 m-2" placeholder="Ketik obat alternatif ..."></textarea>
+
+                    <!-- Kolom Kanan (Alternatif Obat) -->
+                    <div class="w-full">
+                        <label class="block text-gray-700 font-medium">Alternatif</label>
+                        <textarea class="w-full p-2 border rounded-lg bg-gray-100 h-24 mt-2 overflow-y-auto resize-none"
+                            placeholder="Ketik obat alternatif ..."></textarea>
                     </div>
                 </div>
 
@@ -126,11 +137,37 @@
             let container = document.getElementById('diagnosa-container');
             let newSelect = document.createElement('div');
             newSelect.innerHTML = `
-            <div class="flex gap-4 mt-2 justify-center">
-                <select class="w-full border rounded-lg bg-gray-100 h-10">
-                    <option value="">Pilih Diagnosa</option>
-                    <option value="test">Test</option>
-                </select>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full">
+                            <!-- Jenis Obat -->
+                            <div>
+                                <label class="block text-gray-700 font-medium">Jenis Obat</label>
+                                <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2">
+                                    <option value="">-</option>
+                                    <option value="test">Test</option>
+                                </select>
+                            </div>
+
+                            <!-- Nama Obat -->
+                            <div>
+                                <label class="block text-gray-700 font-medium">Nama Obat</label>
+                                <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2">
+                                    <option value="">-</option>
+                                    <option value="test">Test</option>
+                                </select>
+                            </div>
+
+                            <!-- Jumlah & Tambah -->
+                            <div>
+                                <label class="block text-gray-700 font-medium">Jumlah</label>
+                                <div class="flex">
+                                    <input
+                                        class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2 p-2 max-w-[80%]"></input>
+                                    <button type="button" onclick="addObat()">
+                                        <x-icons.add></x-icons.add>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                 <button type="button" onclick="removeElement(this)">
                     <x-icons.redcancel/>
                     </button>
@@ -260,5 +297,19 @@
         });
     </script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("textarea").forEach(textarea => {
+                textarea.style.minHeight = textarea.clientHeight +
+                "px"; // Tetapkan min-height sesuai ukuran awal
+
+                textarea.addEventListener("input", function() {
+                    this.style.height = this.style
+                    .minHeight; // Pastikan tidak lebih kecil dari ukuran awal
+                    this.style.height = this.scrollHeight + "px"; // Sesuaikan tinggi dengan konten
+                });
+            });
+        });
+    </script>
 
 @endsection
