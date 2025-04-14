@@ -37,9 +37,9 @@
             <td class="px-6 py-3 border-b border-r border-gray-200">Hendra</td>
             <td class="px-6 py-3 border-b border-r border-gray-200">2</td>
             <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
-            k@if (auth()->user()->role == 'doctor')
-            <td class="px-6 py-3 border-b border-gray-200">
-                <div class="flex justify-center items-center gap-2 h-10">
+            @if (auth()->user()->role == 'doctor')
+                <td class="px-6 py-3 border-b border-gray-200">
+                    <div class="flex justify-center items-center gap-2 h-10">
                         <div class="h-10 mt-2">
                             @include('components.modal-inpatient', [
                                 'title' => 'Rawat Inap',
@@ -49,8 +49,8 @@
                             class="font-bold text-md py-4 px-3 mt-2 rounded-md text-white bg-primary flex items-center justify-center h-9">
                             Selesai Rawat Inap
                         </button>
-                    @endif
-                </div>
+            @endif
+            </div>
             </td>
         </tr>
     </tbody>

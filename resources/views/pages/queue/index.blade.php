@@ -32,8 +32,6 @@
             <th scope="col" class="px-6 py-3 border-r border-gray-200">No. Telp</th>
             @if (auth()->user()->role != 'doctor')
                 <th scope="col" class="px-6 py-3 font-semibold border-r border-gray-200">Status</th>
-                <th scope="col" class="px-6 py-3 font-semibold border-r border-gray-200" style="font-size: 0.81rem">
-                    Dokter</th>
             @endif
             <th scope="col" class="px-6 py-3 font-semibold border-r border-gray-100 text-center">Aksi</th>
         </tr>
@@ -41,7 +39,7 @@
     <tbody class="font-medium">
         @foreach ($queues as $item)
             <tr>
-                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">{{ $loop->iteration  }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200 text-center">{{ $loop->iteration }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->record }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200">
                     <div>
@@ -61,13 +59,12 @@
                             <x-icons.waiting />
                         @endif
                     </td>
-                    <td class="px-6 py-3 border-b border-r border-gray-200 text-center">{{ $item->doctor->name }}</td>
                 @endif
 
                 <td class="px-6 py-3 border-b border-gray-200 text-center">
                     <div class="flex justify-center items-center gap-2">
                         @if (auth()->user()->role == 'doctor')
-                            <a href="{{ route('queue.edit',1) }}">
+                            <a href="{{ route('queue.edit', 1) }}">
                                 <x-icons.stethoscope2 />
                             </a>
                         @endif
@@ -91,4 +88,4 @@
             </select>
 
         </div>
-@endsection
+    @endsection

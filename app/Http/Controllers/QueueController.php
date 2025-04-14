@@ -14,7 +14,7 @@ class QueueController extends Controller
      */
     public function index()
     {
-        $queues = Checkup::where('queued', true)->with(['patient', 'doctor'])->get();
+        $queues = Checkup::where('queued', true)->with(['patient'])->get();
         return view('pages.queue.index', compact('queues'));
     }
 

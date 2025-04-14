@@ -9,27 +9,18 @@ use Illuminate\Http\Request;
 
 class MasterDiagnoseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $diagnoses = Diagnose::with('animal')->get();
         return view('pages.diagnose.index', compact('diagnoses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Request $request)
     {
         $animals = Animal::all();
         return view('pages.diagnose.create', compact('animals'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try {
@@ -48,19 +39,6 @@ class MasterDiagnoseController extends Controller
         }
     }
 
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Diagnose $diagnose)
     {
         $animals = Animal::all();
@@ -68,9 +46,6 @@ class MasterDiagnoseController extends Controller
         return view('pages.diagnose.edit', compact('diagnose', 'animals', 'selectedAnimal'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Diagnose $diagnose)
     {
         try {
@@ -81,9 +56,6 @@ class MasterDiagnoseController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Diagnose $diagnose)
     {
         $che = Checkup::whereJsonContains('diagnoses', $diagnose->id)->count();

@@ -46,10 +46,6 @@ class Checkup extends Model
     {
         return $this->hasOne(Invoice::class);
     }
-    public function doctor()
-    {
-        return $this->belongsTo(User::class);
-    }
     public function patient()
     {
         return $this->belongsTo(Patient::class)->with(['owner', 'animal']);

@@ -30,7 +30,6 @@ class CheckupFactory extends Factory
             "services" => $services,
             "diagnoses" => $diagnoses,
             "drugs" => $drugs,
-            "doctor_id" => fake()->numberBetween(1, 10)
         ];
     }
 }

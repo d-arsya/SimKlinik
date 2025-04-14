@@ -38,7 +38,7 @@
                     <div>{{ $patient->type->name }}</div>
                     <div>{{ $patient->color->name }}</div>
                     <div class="text-klinikBlue underline"><a href="#">{{ $patient->owner->name }}</a></div>
-                    <div>{{ $patient->vaccine->name }}</div>
+                    <div>{{ $patient->vaccine }}</div>
                 </div>
             </div>
         </div>

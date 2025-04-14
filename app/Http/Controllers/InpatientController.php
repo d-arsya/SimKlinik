@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checkup;
 use Illuminate\Http\Request;
 
 class InpatientController extends Controller
@@ -11,7 +12,8 @@ class InpatientController extends Controller
      */
     public function index()
     {
-        return view('pages.inpatient.index');
+        $inpatient = Checkup::whereFalse('queued')->get();
+        return view('pages.inpatient.index', compact('inpatient'));
     }
 
     /**
@@ -33,23 +35,23 @@ class InpatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Checkup $inpatient)
     {
-        return view('pages.inpatient.show');
+        return view('pages.inpatient.show', compact('inpatient'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Checkup $inpatient)
     {
-        return view('pages.inpatient.edit');
+        return view('pages.inpatient.edit', compact('inpatient'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Checkup $inpatient)
     {
         //
     }
@@ -57,7 +59,7 @@ class InpatientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Checkup $inpatient)
     {
         //
     }

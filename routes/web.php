@@ -34,14 +34,14 @@ Route::middleware('guest')->group(function () {
 });
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-    Route::resource('diagnose', MasterDiagnoseController::class);
-    Route::resource('type', MasterTypeController::class);
-    Route::resource('color', MasterColorController::class);
-    Route::resource('service', MasterServiceController::class);
-    Route::resource('animal', MasterAnimalController::class);
-    Route::resource('user', UserController::class);
+    Route::resource('diagnose', MasterDiagnoseController::class)->except(['show']);
+    Route::resource('type', MasterTypeController::class)->except(['show']);
+    Route::resource('color', MasterColorController::class)->except(['show']);
+    Route::resource('service', MasterServiceController::class)->except(['show']);
+    Route::resource('animal', MasterAnimalController::class)->except(['show']);
+    Route::resource('user', UserController::class)->except(['show']);
     Route::resource('queue', QueueController::class);
-    Route::resource('patient', PatientController::class);
+    Route::resource('patient', PatientController::class)->except(['store', 'create', 'destroy']);
     Route::resource('patient.diagnose', PatientDiagnoseController::class);
     Route::resource('owner', OwnerController::class);
     Route::resource('inpatient', InpatientController::class);
@@ -53,7 +53,3 @@ Route::middleware('auth')->group(function () {
         Route::put('profile/edit', 'profileUpdate')->name('profile.update');
     });
 });
-
-Route::get('/queue/checkup', function () {
-    return view('pages.queue.checkup');
-})->name('queue.checkup');

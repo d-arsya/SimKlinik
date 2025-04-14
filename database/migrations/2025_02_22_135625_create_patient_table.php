@@ -34,7 +34,6 @@ return new class extends Migration
         });
         Schema::create('checkups', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class, 'doctor_id')->constrained()->onDelete('restrict');
             $table->foreignIdFor(Patient::class)->constrained()->onDelete('restrict');
             $table->float('pulse');
             $table->float('temperature');
