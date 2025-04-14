@@ -20,6 +20,16 @@ class AnimalController extends Controller
         ];
         return response()->json($response, 200);
     }
+    public function show(Animal $animal)
+    {
+        $response = [
+            'success' => true,
+            'code' => 200,
+            'message' => 'Success retrieve animal data',
+            'data' => $animal
+        ];
+        return response()->json($response, 200);
+    }
     public function type(Animal $animal)
     {
         $types = $animal->types;

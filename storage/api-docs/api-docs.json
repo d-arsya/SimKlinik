@@ -1,0 +1,687 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Dokumentasi API",
+        "description": "Dokumentasi API SimKlinik",
+        "contact": {
+            "email": "kamaluddin.arsyad17@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api",
+            "description": "Dokumentasi API SimKlinik"
+        }
+    ],
+    "paths": {
+        "/animal": {
+            "get": {
+                "tags": [
+                    "Animal"
+                ],
+                "summary": "Get all animals data",
+                "operationId": "389d4aece2d7eecae289f219a67195a1",
+                "responses": {
+                    "200": {
+                        "description": "Success retrieve animals data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResponseSchema"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/AnimalList"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/animal/{id}": {
+            "get": {
+                "tags": [
+                    "Animal"
+                ],
+                "summary": "Get specific animal data",
+                "operationId": "e7e4a6b622502cf75d836b81efdc64e2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the animal to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success retrieve animal data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResponseSchema"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/AnimalSchema"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/animal/{id}/type": {
+            "get": {
+                "tags": [
+                    "Animal"
+                ],
+                "summary": "Get all animal types data",
+                "operationId": "0298146bbe3a76f01cd229e97d0f2abf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the animal to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success retrieve animal types data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResponseSchema"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/TypeList"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/color": {
+            "get": {
+                "tags": [
+                    "Animal"
+                ],
+                "summary": "Get all animals colors data",
+                "operationId": "4f2ef2b316e00ef6689b53a15fa73fa7",
+                "responses": {
+                    "200": {
+                        "description": "Success retrieve animals colors data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResponseSchema"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/ColorList"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/checkup": {
+            "post": {
+                "tags": [
+                    "Checkup"
+                ],
+                "summary": "Store new checkup data",
+                "operationId": "a26cbc92ee6fd3da6bc16a69d0dc8af8",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/checkup/{id}": {
+            "get": {
+                "tags": [
+                    "Checkup"
+                ],
+                "summary": "Get checkup data",
+                "operationId": "1c2eb0c8f96dbb2b24025f518cac3d7a",
+                "responses": {
+                    "200": {
+                        "description": "Success retrieve checkup data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResponseSchema"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/CheckupSchema"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Checkup"
+                ],
+                "summary": "Update checkup data",
+                "operationId": "4ad4857a4fa96d31b8c093aadc135c12",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/province": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Get all provinces data",
+                "operationId": "f849166fc5d5c75b1fac3b40ffa504fe",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/city/{province}": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Get all cities data on province",
+                "operationId": "466ae4121aa448dc6502b8b602011c12",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/district/{city}": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Get all districts data on city",
+                "operationId": "78275b32ee4e129a41de839cb81456a6",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/village/{district}": {
+            "get": {
+                "tags": [
+                    "Location"
+                ],
+                "summary": "Get all villages data on district",
+                "operationId": "b231923a8939c703dae61350043674d1",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/owner": {
+            "get": {
+                "tags": [
+                    "Owner"
+                ],
+                "summary": "Get all owners data",
+                "operationId": "87feeaafc600153292c76e63cd2c1984",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Owner"
+                ],
+                "summary": "Store new owner data",
+                "operationId": "3094b995194d48dadf9105508232c21e",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/owner/{id}": {
+            "get": {
+                "tags": [
+                    "Owner"
+                ],
+                "summary": "Get owner data",
+                "operationId": "82a30909150c323e0893f3e4c93cfcbe",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Owner"
+                ],
+                "summary": "Update owner data",
+                "operationId": "3772bc562fe8ca5cc12c76a304579ff6",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Owner"
+                ],
+                "summary": "Delete owner data",
+                "operationId": "ad49718b81c3c54675f950f2b4295039",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/patient": {
+            "get": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Get all patients data",
+                "operationId": "fef43be7184fb06eb9f3e04e626e9461",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Store new patient data",
+                "operationId": "49892ed325c6fe28903cff207edd5477",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/patient/{id}": {
+            "get": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Get patient data",
+                "operationId": "2a021c01b8f46d880001549247495f2d",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Update patient data",
+                "operationId": "a1d8da13a56031ccc7bef374aa287c95",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Delete patient data",
+                "operationId": "b9c9e602f2c11328ca3e5b0a9f1ae591",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/service": {
+            "get": {
+                "tags": [
+                    "Service"
+                ],
+                "summary": "Get all services data",
+                "operationId": "b36e582a12261a5b4c7086ac0bf0788b",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AnimalSchema": {
+                "title": "Animal",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "ANM-0001"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Marsudi Ian Pangestu M.Farm"
+                    },
+                    "pulse": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 73.9
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 58
+                    },
+                    "breath": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 75.9
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-20T06:02:55.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-20T06:02:55.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "AnimalList": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/AnimalSchema"
+                }
+            },
+            "ColorSchema": {
+                "title": "Color",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "CLR-0001"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Blue"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-20T06:02:55.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-20T06:02:55.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "ColorList": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/ColorSchema"
+                }
+            },
+            "TypeSchema": {
+                "title": "Type",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "CLR-0001"
+                    },
+                    "animal_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Blue"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-20T06:02:55.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-20T06:02:55.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "TypeList": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/TypeSchema"
+                }
+            },
+            "CreateCheckupSchema": {
+                "title": "Checkup",
+                "properties": {
+                    "patient_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "pulse": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 73.9
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 73.9
+                    },
+                    "breath": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 73.9
+                    },
+                    "weight": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 73.9
+                    },
+                    "vaccine_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "service": {
+                        "type": "jsoin"
+                    }
+                },
+                "type": "object"
+            },
+            "CheckupSchema": {
+                "title": "Checkup",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "ANM-0001"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Marsudi Ian Pangestu M.Farm"
+                    },
+                    "pulse": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 73.9
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 58
+                    },
+                    "breath": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 75.9
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-20T06:02:55.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-20T06:02:55.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "CheckupList": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/CheckupSchema"
+                }
+            },
+            "ResponseSchema": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "code": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Success message"
+                    },
+                    "data": {
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Animal",
+            "description": "Animal"
+        },
+        {
+            "name": "Checkup",
+            "description": "Checkup"
+        },
+        {
+            "name": "Location",
+            "description": "Location"
+        },
+        {
+            "name": "Owner",
+            "description": "Owner"
+        },
+        {
+            "name": "Patient",
+            "description": "Patient"
+        },
+        {
+            "name": "Service",
+            "description": "Service"
+        }
+    ]
+}

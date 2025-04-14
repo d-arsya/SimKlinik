@@ -21,7 +21,8 @@ Route::name('api.')->group(function () {
     });
     Route::controller(AnimalController::class)->group(function () {
         Route::get('animal', 'animal')->name('animal');
-        Route::get('animal/{animal}', 'type')->name('type');
+        Route::get('animal/{animal}', 'show')->name('show');
+        Route::get('animal/{animal}/type', 'type')->name('type');
         Route::get('color', 'color')->name('animal');
     });
     Route::get('service', [ServiceController::class, 'index'])->name('service');
