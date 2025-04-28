@@ -10,7 +10,7 @@
     });
 </script>
 
-<div x-data="{
+<div id="modal-add-queue" x-data="{
         openModal: false,
         activeTab: 'lama',
         step: 1,
@@ -83,7 +83,7 @@
                         <x-modal-add-queue.table-old-owner />
                     </div>
                     <div x-show="activeTab === 'baru'">
-                        <x-modal-add-queue.form-new-owner />
+                        <x-modal-add-queue.form-new-owner-new />
                     </div>
                 </div>
 

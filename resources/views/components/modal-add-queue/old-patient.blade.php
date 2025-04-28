@@ -5,7 +5,8 @@
             open: false,
             step: 1,
             prevStep: 1,
-            activeTab: 'lama'
+            activeTab: 'lama',
+            selectedOwnerId: null
         });
     });
 </script>
@@ -26,7 +27,15 @@
             this.prevStep = this.step;
             this.step = newStep;
         }
-    }">
+    }"
+    x-init="
+        window.addEventListener('next-step', () => {
+            prevStep = step;
+            step = 2;
+        });
+    "
+>
+
 
     <button @click="toggleModal(true); step = 1"
         class="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-all duration-300">

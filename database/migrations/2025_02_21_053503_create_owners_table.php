@@ -31,10 +31,10 @@ return new class extends Migration
             // $table->foreignIdFor(City::class)->constrained()->onDelete('restrict');
             // $table->foreignIdFor(District::class)->constrained()->onDelete('restrict');
             // $table->foreignIdFor(Village::class)->constrained()->onDelete('restrict');
-            $table->foreignIdFor(Location::class, 'province')->constrained()->onDelete('restrict');
-            $table->foreignIdFor(Location::class, 'city')->constrained()->onDelete('restrict');
-            $table->foreignIdFor(Location::class, 'district')->constrained()->onDelete('restrict');
-            $table->foreignIdFor(Location::class, 'village')->constrained()->onDelete('restrict');
+            $table->string( 'province');
+            $table->string( 'city');
+            $table->string( 'district');
+            $table->string( 'village');
             $table->string('name');
             $table->enum('gender', ['Laki-Laki', 'Perempuan']);
             $table->string('address');

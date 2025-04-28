@@ -28,18 +28,18 @@ class OwnerController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            "province_id" => 'required|integer|exists:provinces,id',
-            "city_id" => 'required|integer|exists:cities,id',
-            "district_id" => 'required|integer|exists:districts,id',
-            "village_id" => 'required|integer|exists:villages,id',
-            "name" => 'required|string|max:255',
-            "gender" => 'required|string|in:Laki-Laki,Perempuan',
-            "address" => 'required|string|max:300',
-            "phone" => 'required|unique:owners,phone',
-        ]);
+        // $data = $request->validate([
+        //     "province_id" => 'required|string|exists:locations,province',
+        //     "city_id" => 'required|string|exists:locations,city',
+        //     "district_id" => 'required|string|exists:locations,district',
+        //     "village_id" => 'required|string|exists:locations,village',
+        //     "name" => 'required|string|max:255',
+        //     "gender" => 'required|string|in:Laki-Laki,Perempuan',
+        //     "address" => 'required|string|max:300',
+        //     "phone" => 'required|unique:owners,phone',
+        // ]);
         try {
-            $owner = Owner::create($data);
+            $owner = Owner::create(attributes: $request->all());
             $response = [
                 'success' => true,
                 'code' => 200,
@@ -49,8 +49,8 @@ class OwnerController extends Controller
             return response()->json($response, 200);
         } catch (\Throwable $th) {
             $response = [
-                'success' => true,
-                'code' => 200,
+                'success' => false,
+                'code' => 400,
                 'message' => 'Failed store owner data',
                 'error' => $th->getMessage()
             ];

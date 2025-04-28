@@ -3,9 +3,8 @@
         <x-icons.search />
     </div>
 
-<form class="space-y-3" id="ownerForms" action="{{route('api.owner.store')}}" method="post">
+<form class="space-y-3" id="ownerForm">
     <!-- Nama -->
-    @csrf
     <div>
         <label class="block text-sm font-medium text-gray-700">Nama</label>
         <input type="text" name="name" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300"
@@ -34,7 +33,7 @@
     <!-- Provinsi -->
     <div>
         <label class="block text-sm font-medium text-gray-700">Provinsi</label>
-        <select name="province" id="province" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300" required>
+        <select name="province_id" id="provinces" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300" required>
             <option value="" disabled selected>Pilih Provinsi</option>
         </select>
     </div>
@@ -43,14 +42,14 @@
     <div class="grid grid-cols-2 gap-3">
         <div>
             <label class="block text-sm font-medium text-gray-700">Kota</label>
-            <select name="city" id="cities" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300" required>
+            <select name="city_id" id="city" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300" required>
                 <option value="" disabled selected>Pilih Kota</option>
             </select>
         </div>
 
         <div>
             <label class="block text-sm font-medium text-gray-700">Kecamatan</label>
-            <select name="district" id="districts" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300" required>
+            <select name="district_id" id="district" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300" required>
                 <option value="" disabled selected>Pilih Kecamatan</option>
             </select>
         </div>
@@ -59,7 +58,7 @@
     <!-- Desa -->
     <div>
         <label class="block text-sm font-medium text-gray-700">Desa</label>
-        <select name="village" id="villages" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300" required>
+        <select name="village_id" id="village" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300" required>
             <option value="" disabled selected>Pilih Desa</option>
         </select>
     </div>
@@ -82,7 +81,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     // Load API saat halaman pertama kali dimuat
-    loadProvince();
+    loadProvinces();
 
     // Tambahkan event listener untuk tombol pasien baru & pasien lama
     // document.getElementById("pasienBaruButton")?.addEventListener("click", function () {
@@ -97,8 +96,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Fungsi untuk memuat provinsi dari API
-function loadProvince() {
-    const provinceSelect = document.getElementById("province");
+function loadProvinces() {
+    const provinceSelect = document.getElementById("provinces");
     if (!provinceSelect) return;
 
     provinceSelect.innerHTML = '<option value="" disabled selected>Pilih Provinsi</option>';
@@ -120,8 +119,8 @@ function loadProvince() {
 }
 
 // Event listener untuk memuat kota saat provinsi dipilih
-document.getElementById("province").addEventListener("change", function () {
-    const citySelect = document.getElementById("cities");
+document.getElementById("provinces").addEventListener("change", function () {
+    const citySelect = document.getElementById("city");
     citySelect.innerHTML = '<option value="" disabled selected>Pilih Kota</option>';
 
     fetch(`/api/city/${this.value}`)
@@ -135,8 +134,8 @@ document.getElementById("province").addEventListener("change", function () {
 });
 
 // Event listener untuk memuat kecamatan saat kota dipilih
-document.getElementById("cities").addEventListener("change", function () {
-    const districtSelect = document.getElementById("districts");
+document.getElementById("city").addEventListener("change", function () {
+    const districtSelect = document.getElementById("district");
     districtSelect.innerHTML = '<option value="" disabled selected>Pilih Kecamatan</option>';
 
     fetch(`/api/district/${this.value}`)
@@ -150,8 +149,8 @@ document.getElementById("cities").addEventListener("change", function () {
 });
 
 // Event listener untuk memuat desa saat kecamatan dipilih
-document.getElementById("districts").addEventListener("change", function () {
-    const villageSelect = document.getElementById("villages");
+document.getElementById("district").addEventListener("change", function () {
+    const villageSelect = document.getElementById("village");
     villageSelect.innerHTML = '<option value="" disabled selected>Pilih Desa</option>';
 
     fetch(`/api/village/${this.value}`)
@@ -165,10 +164,10 @@ document.getElementById("districts").addEventListener("change", function () {
 });
 
 // Event listener untuk submit form
-document.getElementById("ownerForms").addEventListener("submit", function (e) {
+document.getElementById("ownerForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
-    let formData = new FormData(e.target);
+    let formData = new FormData(this);
 
     fetch('/api/owner', {
         method: 'POST',
@@ -178,14 +177,12 @@ document.getElementById("ownerForms").addEventListener("submit", function (e) {
         }
     })
     .then(response => response.json())
-
     .then(data => {
-        console.log(data)
         if (data.success) {
             alert("Data berhasil disimpan!");
-            window.dispatchEvent(new CustomEvent('next-step')); 
+            location.reload();
         } else {
-            alert("Gagal menyimpan data: " + data.error);
+            alert("Gagal menyimpan data: " + data.message);
         }
     })
     .catch(error => console.error("Error:", error));

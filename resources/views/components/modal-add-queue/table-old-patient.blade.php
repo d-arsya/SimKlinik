@@ -1,6 +1,4 @@
-<div x-data="{ patients: [] }" x-init="fetch('/api/patient')
-    .then(res => res.json())
-    .then(data => patients = data.data)">
+<div x-data="fetchPatients" x-init="fetchPatients()">
 
     <div class="flex justify-between">
         <h3 class="text-lg font-semibold flex justify-center">Cari Pasien Lama</h3>
@@ -38,9 +36,13 @@
                         <td class="px-6 py-3 border border-gray-200"
                             x-text="patient.owner ? patient.owner.phone : 'Tidak Ada'"></td>
                         <td class="px-6 py-3 border border-gray-200">
-                            <button @click="openModal = true; step = 3">
+                            <button @click="
+                            Alpine.store('modal').selectedOwnerId = patients.owners ? patients.owners.Id : null;
+                            $dispatch('next-step')
+                            ">
                                 <x-icons.add />
                             </button>
+                            <button @click="console.log(Alpine.store('modal').selectedOwnerId)">Cek Owner Terpilih</button>
                         </td>
                     </tr>
                 </template>
