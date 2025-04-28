@@ -15,6 +15,11 @@
         activeTab: 'lama',
         step: 1,
         prevStep: 1,
+        init() {
+            window.addEventListener('input-new-patient', () => {
+                this.changeStep(2);
+            });
+        },
         toggleModal(status) {
             this.openModal = status;
             document.body.classList.toggle('overflow-hidden', status);
