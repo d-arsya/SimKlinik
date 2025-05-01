@@ -52,8 +52,8 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700">Kecamatan</label>
-            <select name="district" id="district"
-                class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300" required>
+            <select name="district" id="district" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300"
+                required>
                 <option value="" disabled selected>Pilih Kecamatan</option>
             </select>
         </div>
@@ -184,7 +184,11 @@
             .then(data => {
                 if (data.success) {
                     alert("Data berhasil disimpan!");
-                    window.dispatchEvent(new CustomEvent('input-new-patient'));
+                    window.dispatchEvent(new CustomEvent('input-new-patient', {
+                        detail: {
+                            ownerId: data.data.id
+                        }
+                    }));
                 } else {
                     alert("Gagal menyimpan data: " + data.message);
                 }

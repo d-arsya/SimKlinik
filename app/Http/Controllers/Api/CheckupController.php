@@ -31,7 +31,6 @@ class CheckupController extends Controller
     {
         try {
             $data = $request->validate([
-                'doctor_id' => 'required|integer|exists:users,id',
                 'patient_id' => 'required|integer|exists:patients,id',
                 'pulse' => 'required|numeric|min:0',
                 'temperature' => 'required|numeric|min:0',

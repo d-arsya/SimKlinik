@@ -1,22 +1,21 @@
-<form class="space-y-3" action="{{route('api.patient.store')}}" method="post" id="patientForm">
+<form  class="space-y-3" action="{{route('api.patient.store')}}" method="post" id="patientForm">
     @csrf
-
     <!-- Name Patient -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
         <label for="" class="text-sm font-medium leading-6 text-gray-700">Nama</label>
-        <input type="type" name="" value="Dogy"
+        <input type="type" name="name" value="Dogy"
             class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
     </div>
 
     <!-- Gender Patient -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
         <label for="" class="text-sm font-medium leading-6 text-gray-700">Gender</label>
-        <select name="" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
+        <select name="gender" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
             <option class="text-sm font-medium leading-6 text-gray-700" value="">-</option>
-            <option class="text-sm font-medium leading-6 text-gray-700" value="">
+            <option class="text-sm font-medium leading-6 text-gray-700" value="Jantan">
                 Jantan
             </option>
-            <option class="text-sm font-medium leading-6 text-gray-700" value="">
+            <option class="text-sm font-medium leading-6 text-gray-700" value="Betina">
                 Betina
             </option>
         </select>
@@ -25,13 +24,13 @@
     <!-- Age Patient -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
         <label for="" class="text-sm font-medium leading-6 text-gray-700">Umur</label>
-        <input type="number" name="" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
+        <input type="date" name="birth" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
     </div>
 
     <!-- Animal -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4 ">
         <label for="" class="text-sm font-medium leading-6 text-gray-700">Jenis Hewan</label>
-        <select name="name" id="animals" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
+        <select name="animal_id" id="animals" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
             <option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Jenis
                 Hewan</option>
         </select>
@@ -40,7 +39,7 @@
     <!-- type of Animal -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4 ">
         <label for="" class="text-sm font-medium leading-6 text-gray-700">Ras</label>
-        <select name="" id="types" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
+        <select name="type_id" id="types" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
             <option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Ras Hewan
             </option>
         </select>
@@ -49,7 +48,7 @@
     <!-- Color -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4 ">
         <label for="" class="text-sm font-medium leading-6 text-gray-700">Warna</label>
-        <select name="" id="color" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
+        <select name="color_id" id="color" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
             <option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Warna Hewan
             </option>
         </select>
@@ -128,6 +127,13 @@
         e.preventDefault();
 
         let formData = new FormData(this);
+        formData.append('owner_id', localStorage.getItem('new-owner-id'));
+
+        // Debugging: Log data yang akan dikirim
+        console.log("Form Data yang Dikirim:");
+        for (let [key, value] of formData.entries()) {
+            console.log(key + ": " + value);
+        }
 
         fetch('/api/patient', {
                 method: 'POST',
@@ -138,13 +144,23 @@
             })
             .then(response => response.json())
             .then(data => {
+                // Debugging: Log respon dari API
+                console.log("Respon dari API:", data);
+
                 if (data.success) {
                     alert("Data berhasil disimpan!");
-                    console.log("Data masuk");
+                    window.dispatchEvent(new CustomEvent('input-examination', {
+                        detail: {
+                            patientId: data.data.id
+                        }
+                    }));
                 } else {
                     alert("Gagal menyimpan data: " + data.message);
                 }
             })
-            .catch(error => console.error("Error:", error));
+            .catch(error => {
+                // Debugging: Log error
+                console.error("Error:", error);
+            });
     });
 </script>
