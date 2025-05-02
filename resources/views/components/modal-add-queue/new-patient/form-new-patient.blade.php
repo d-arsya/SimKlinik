@@ -1,4 +1,4 @@
-<form  class="space-y-3" action="{{route('api.patient.store')}}" method="post" id="patientForm">
+<form class="space-y-3" action="{{ route('api.patient.store') }}" method="post" id="patientForm">
     @csrf
     <!-- Name Patient -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
@@ -49,7 +49,8 @@
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4 ">
         <label for="" class="text-sm font-medium leading-6 text-gray-700">Warna</label>
         <select name="color_id" id="color" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
-            <option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Warna Hewan
+            <option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Warna
+                Hewan
             </option>
         </select>
     </div>
@@ -110,7 +111,8 @@
         const colorSelect = document.getElementById("color")
         if (!colorSelect) return;
 
-        colorSelect.innerHTML = '<option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Warna Hewan</option>'
+        colorSelect.innerHTML =
+            '<option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Warna Hewan</option>'
 
         fetch('api/color')
             .then(response => response.json())
@@ -149,6 +151,7 @@
 
                 if (data.success) {
                     alert("Data berhasil disimpan!");
+                    localStorage.setItem('new-patient-id', data.data.id)
                     window.dispatchEvent(new CustomEvent('input-examination', {
                         detail: {
                             patientId: data.data.id

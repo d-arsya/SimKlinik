@@ -1,4 +1,4 @@
-<form class="space-y-3" action="{{ route('api.checkup.store') }}" method="post" id="precheckupForm">
+<form class="space-y-3" method="post" id="precheckupFormNew">
     @csrf
     <!-- Berat Badan -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
@@ -23,8 +23,8 @@
 
     <!-- Breathe -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
-        <label for="breathe" class="text-sm font-medium leading-6 text-gray-700">Frekuensi Napas</label>
-        <input type="number" id="breathe" name="breathe"
+        <label for="breath" class="text-sm font-medium leading-6 text-gray-700">Frekuensi Napas</label>
+        <input type="number" id="breath" name="breath"
             class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" min="0">
     </div>
 
@@ -34,7 +34,8 @@
     <div class="grid items-start w-full grid-cols-[1fr_3fr] gap-4 mb-4">
         <label class="text-sm font-medium leading-6 text-gray-700">Layanan</label>
         <select name="service_id" id="service" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
-            <option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Jenis Layanan</option>
+            <option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Jenis
+                Layanan</option>
         </select>
     </div>
 
@@ -74,7 +75,8 @@
         const serviceSelect = document.getElementById("service");
         if (!serviceSelect) return;
 
-        serviceSelect.innerHTML = '<option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Jenis Layanan</option>';
+        serviceSelect.innerHTML =
+            '<option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Jenis Layanan</option>';
         fetch(`api/service`)
             .then(response => {
                 if (!response.ok) throw new Error("HTTP error " + response.status);
@@ -91,7 +93,7 @@
             });
     }
 
-    document.getElementById("precheckupForm").addEventListener("submit", function(e) {
+    document.getElementById("precheckupFormNew").addEventListener("submit", function(e) {
         e.preventDefault();
 
         let formData = new FormData(this);
@@ -99,34 +101,28 @@
         // Tambahkan patient_id dari localStorage
         formData.append('patient_id', localStorage.getItem('new-patient-id'));
 
-        // Pastikan checkbox di-handle dengan benar
-        const vaccinated = document.querySelector('input[name="vaccinated"]').checked ? 1 : 0;
-        formData.set('vaccinated', vaccinated);
-
-        // Konversi FormData ke objek biasa
-        let jsonObject = {};
-        formData.forEach((value, key) => {
-            jsonObject[key] = value;
-        });
-
         fetch(`/api/checkup/`, {
-            method: 'POST',
-            body: JSON.stringify(jsonObject),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("Data berhasil disimpan!");
-                window.dispatchEvent(new CustomEvent('preview-precheckup'));
-            } else {
-                alert("Gagal menyimpan data: " + data.message);
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
+                method: 'POST',
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Data berhasil disimpan!");
+                    window.dispatchEvent(new CustomEvent('preview-precheckup', {
+                        detail: {
+                            precheckupId: data.data.id
+                        }
+                    }));
+                } else {
+                    alert("Gagal menyimpan data: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
     });
 </script>

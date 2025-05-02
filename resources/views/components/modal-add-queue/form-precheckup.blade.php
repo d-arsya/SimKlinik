@@ -1,4 +1,4 @@
-<form class="space-y-3" action="{{ route('api.checkup.store') }}" method="post">
+<form id="precheckupForm" class="space-y-3" action="{{ route('api.checkup.store') }}" method="post">
     @csrf
     <!-- Berat Badan -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
@@ -23,8 +23,8 @@
 
     <!-- Breathe -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
-        <label for="breathe" class="text-sm font-medium leading-6 text-gray-700">Frekuensi Napas</label>
-        <input type="number" id="breathe" name="breathe"
+        <label for="breath" class="text-sm font-medium leading-6 text-gray-700">Frekuensi Napas</label>
+        <input type="number" id="breath" name="breath"
             class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" min="0">
     </div>
 
@@ -55,7 +55,7 @@
     <!-- Vaccination Type -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
         <label for="" class="text-sm font-medium leading-6 text-gray-700">Jenis Vaksin</label>
-        <input type="text" name="" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
+        <input type="text" name="vaccine" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
     </div>
 
     <!-- Submit Button -->
@@ -96,7 +96,7 @@
     }
 
     // Event listener untuk submit form
-    document.getElementById("precheckupForm").addEventListener("submit", function(e)) {
+    document.getElementById("precheckupForm").addEventListener("submit", function(e) {
         e.preventDefault();
 
         let formData = new FormData(this);
@@ -108,22 +108,21 @@
             console.log(key + ": " + value);
         }
 
-        fetch(`/api/checkup/`, {
-            method: 'POST',
-            body: JSON.stringify(Object.fromEntries(formData)),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
+        fetch(`/api/checkup`, {
+                method: 'POST',
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
             .then(data => {
                 // Debugging: Log respon dari API
                 console.log("Respon dari API:", data);
 
                 if (data.success) {
                     alert("Data berhasil disimpan!");
-                    window.dispatchEvent(new CustomEvent('preview-precheckup', {
-                    }));
+                    window.dispatchEvent(new CustomEvent('preview-precheckup', {}));
                 } else {
                     alert("Gagal menyimpan data: " + data.message);
                 }
@@ -132,5 +131,5 @@
                 // Debugging: Log error
                 console.error("Error:", error);
             });
-    }
+    })
 </script>

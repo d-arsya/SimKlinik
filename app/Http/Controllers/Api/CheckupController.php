@@ -36,11 +36,14 @@ class CheckupController extends Controller
                 'temperature' => 'required|numeric|min:0',
                 'breath' => 'required|numeric|min:0',
                 'weight' => 'required|numeric|min:0',
-                'services' => 'required|json',
+                'service_id' => 'integer|exists:services,id',
             ]);
-            if ($request->vaccine_id) {
+            $data["services"] = json_encode([["id" => $data["service_id"], "days" => 1]]);
+            $data["status"] = "menunggu";
+            unset($data["service_id"]);
+            if ($request->vaccine) {
                 $vaccine = $request->validate([
-                    'vaccine_id' => 'required|integer|exists:vaccines,id',
+                    'vaccine' => 'required|string',
                 ]);
                 Patient::find($request->patient_id)->update($vaccine);
             }
