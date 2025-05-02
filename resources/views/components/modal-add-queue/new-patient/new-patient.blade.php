@@ -27,6 +27,11 @@
             console.log('Patient ID dari Alpine:',localStorage.getItem('new-patient-id'));
             this.changeStep(3);
         });
+        window.addEventListener('preview-precheckup', (event) => {
+            localStorage.setItem('precheckup-id',event.detail.precheckupId)
+            console.log('precheckup-id:')
+            this.changeStep(5);
+        });
     },
     toggleModal(status) {
         this.openModal = status;
@@ -91,10 +96,10 @@
                     x-transition:enter-start="opacity-0 -translate-x-5"
                     x-transition:enter-end="opacity-100 translate-x-0">
                     <div x-show="activeTab === 'lama'">
-                        <x-modal-add-queue.table-old-owner />
+                        <x-modal-add-queue.new-patient.table-old-owner />
                     </div>
                     <div x-show="activeTab === 'baru'">
-                        <x-modal-add-queue.form-new-owner-new />
+                        <x-modal-add-queue.new-patient.form-new-owner />
                     </div>
                 </div>
 
@@ -102,7 +107,7 @@
                 <div x-show="step === 2" x-transition:enter="transition ease-out duration-300 transform"
                     x-transition:enter-start="opacity-0 -translate-y-5 scale-95"
                     x-transition:enter-end="opacity-100 translate-y-0 scale-100">
-                    <x-modal-add-queue.form-new-patient />
+                    <x-modal-add-queue.new-patient.form-new-patient />
                 </div>
 
                 <!-- Step 3: Konfirmasi -->
@@ -121,14 +126,14 @@
                 <div x-show="step === 4" x-transition:enter="transition ease-out duration-100 transform"
                     x-transition:enter-start="opacity-0 translate-y-5 scale-95"
                     x-transition:enter-end="opacity-100 translate-y-0 scale-100">
-                    <x-modal-add-queue.form-precheckup />
+                    <x-modal-add-queue.new-patient.form-precheckup />
                 </div>
 
                 <!-- Step 5: Preview Pemeriksaan Awal -->
                 <div x-show="step === 5" x-transition:enter="transition ease-out duration-100 transform"
                     x-transition:enter-start="opacity-0 translate-y-5 scale-95"
                     x-transition:enter-end="opacity-100 translate-y-0 scale-100">
-                    <x-modal-add-queue.preview-precheckup />
+                    <x-modal-add-queue.new-patient.preview-precheckup />
                 </div>
             </div>
         </div>

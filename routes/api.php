@@ -25,6 +25,8 @@ Route::name('api.')->group(function () {
         Route::get('animal/{animal}/type', 'type')->name('type');
         Route::get('color', 'color')->name('color');
     });
+
+    
     Route::get('service', [ServiceController::class, 'index'])->name('service');
     Route::apiResource('owner', OwnerController::class)->only(['store', 'index']);
     Route::apiResource('patient', PatientController::class)->only(['store', 'index']);

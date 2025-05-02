@@ -1,4 +1,4 @@
-<form class="space-y-3" action="{{ route('api.checkup.store') }}" method="post">
+<form class="space-y-3" action="{{ route('api.checkup.store') }}" method="post" id="precheckupForm">
     @csrf
     <!-- Berat Badan -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
@@ -33,9 +33,8 @@
     <!-- Service Type -->
     <div class="grid items-start w-full grid-cols-[1fr_3fr] gap-4 mb-4">
         <label class="text-sm font-medium leading-6 text-gray-700">Layanan</label>
-        <select name="service_id" id="services" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
-            <option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Jenis
-                Layanan</option>
+        <select name="service_id" id="service" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
+            <option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Jenis Layanan</option>
         </select>
     </div>
 
@@ -72,11 +71,10 @@
     });
 
     function loadService() {
-        const serviceSelectCoba = document.getElementById("services")
-        if (!serviceSelectCoba) return;
+        const serviceSelect = document.getElementById("service");
+        if (!serviceSelect) return;
 
-        serviceSelectCoba.innerHTML =
-            '<option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Jenis Layanan</option>'
+        serviceSelect.innerHTML = '<option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Jenis Layanan</option>';
         fetch(`api/service`)
             .then(response => {
                 if (!response.ok) throw new Error("HTTP error " + response.status);
@@ -84,53 +82,51 @@
             })
             .then(data => {
                 data.data.forEach(service => {
-                    let option = new Option(service.name, service.id)
-                    serviceSelectCoba.appendChild(option)
-                    console.log(service)
-                })
-                console.log(data)
+                    let option = new Option(service.name, service.id);
+                    serviceSelect.appendChild(option);
+                });
             })
             .catch(error => {
                 console.error("Fetch error:", error);
             });
     }
 
-    // Event listener untuk submit form
-    document.getElementById("precheckupForm").addEventListener("submit", function(e)) {
+    document.getElementById("precheckupForm").addEventListener("submit", function(e) {
         e.preventDefault();
 
         let formData = new FormData(this);
-        formData.append('patient_id', localStorage.getItem('new-patient-id'))
 
-        // Debugging: Log data yang akan dikirim
-        console.log("Form Data yang Dikirim:");
-        for (let [key, value] of formData.entries()) {
-            console.log(key + ": " + value);
-        }
+        // Tambahkan patient_id dari localStorage
+        formData.append('patient_id', localStorage.getItem('new-patient-id'));
+
+        // Pastikan checkbox di-handle dengan benar
+        const vaccinated = document.querySelector('input[name="vaccinated"]').checked ? 1 : 0;
+        formData.set('vaccinated', vaccinated);
+
+        // Konversi FormData ke objek biasa
+        let jsonObject = {};
+        formData.forEach((value, key) => {
+            jsonObject[key] = value;
+        });
 
         fetch(`/api/checkup/`, {
             method: 'POST',
-            body: JSON.stringify(Object.fromEntries(formData)),
+            body: JSON.stringify(jsonObject),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         .then(response => response.json())
-            .then(data => {
-                // Debugging: Log respon dari API
-                console.log("Respon dari API:", data);
-
-                if (data.success) {
-                    alert("Data berhasil disimpan!");
-                    window.dispatchEvent(new CustomEvent('preview-precheckup', {
-                    }));
-                } else {
-                    alert("Gagal menyimpan data: " + data.message);
-                }
-            })
-            .catch(error => {
-                // Debugging: Log error
-                console.error("Error:", error);
-            });
-    }
+        .then(data => {
+            if (data.success) {
+                alert("Data berhasil disimpan!");
+                window.dispatchEvent(new CustomEvent('preview-precheckup'));
+            } else {
+                alert("Gagal menyimpan data: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    });
 </script>

@@ -13,7 +13,7 @@
         'buttonText' => 'Pasien Lama',
         'title' => 'Pemilik Hewan Peliharaan Baru',
     ])
-    @include('components.modal-add-queue.new-patient', [
+    @include('components.modal-add-queue.new-patient.new-patient', [
         'buttonText' => 'Pasien Baru',
         'title' => 'Pemilik Hewan Peliharaan Baru',
     ])
