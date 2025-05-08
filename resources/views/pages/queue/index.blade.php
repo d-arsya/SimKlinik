@@ -37,7 +37,7 @@
         </tr>
     </thead>
     <tbody class="font-medium">
-        @foreach ($queues as $item)
+        @foreach ($queues->sortByDesc('created_at') as $item)
             <tr>
                 <td class="px-6 py-3 border-b border-r border-gray-200 text-center">{{ $loop->iteration }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->record }}</td>
@@ -64,7 +64,7 @@
                 <td class="px-6 py-3 border-b border-gray-200 text-center">
                     <div class="flex justify-center items-center gap-2">
                         @if (auth()->user()->role == 'doctor')
-                            <a href="{{ route('queue.edit', 1) }}">
+                            <a href="{{ route('patient.diagnose.edit', [$item->patient->id,$item->id]) }}">
                                 <x-icons.stethoscope2 />
                             </a>
                         @endif

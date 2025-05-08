@@ -111,10 +111,18 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert("Data berhasil disimpan!");
+                    let inputData = {};
+                    this.querySelectorAll("input, select").forEach(input => {
+                        if (input.type === "checkbox") {
+                            inputData[input.name] = input.checked;
+                        } else {
+                            inputData[input.name] = input.value;
+                        }
+                    });
                     window.dispatchEvent(new CustomEvent('preview-precheckup', {
                         detail: {
-                            precheckupId: data.data.id
+                            precheckupId: data.data.id,
+                            formData: inputData
                         }
                     }));
                 } else {

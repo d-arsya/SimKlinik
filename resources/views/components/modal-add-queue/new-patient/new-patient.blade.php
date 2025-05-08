@@ -22,14 +22,16 @@
             console.log('Owner ID dari Alpine:',localStorage.getItem('new-owner-id'));
             this.changeStep(2);
         });
-        window.addEventListener('input-examination', (event) => {
+        window.addEventListener('input-precheckup', (event) => {
             localStorage.setItem('new-patient-id',event.detail.patientId)
             console.log('Patient ID dari Alpine:',localStorage.getItem('new-patient-id'));
             this.changeStep(3);
         });
         window.addEventListener('preview-precheckup', (event) => {
             localStorage.setItem('precheckup-id',event.detail.precheckupId)
-            console.log('precheckup-id:')
+            localStorage.setItem('form-data',event.detail.formData)
+            console.log('precheckup-id:',localStorage.getItem('precheckup-id'));
+            console.log('preview:',JSON.stringify(localStorage.getItem('form-data'), null, 2));
             this.changeStep(5);
         });
     },
