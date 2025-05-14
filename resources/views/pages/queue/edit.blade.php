@@ -43,8 +43,8 @@
                             <label class="block text-gray-700 font-medium">Diagnosa</label>
                             <div class="flex gap-2 mt-2">
                                 <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">
-                                    <option value="" class="text-[#000]" disabled selected>Pilih Layanan</option>
-                                    @foreach ($diagnoses as $item)
+                                    <option value="" class="text-[#000]" disabled selected>Pilih Diagnosa</option>
+                                    @foreach ($diagnose as $item)
                                         <option value="{{ $item->id }}" class="text-[#000]">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
@@ -58,8 +58,10 @@
                             <label class="block text-gray-700 font-medium">Layanan</label>
                             <div class="flex gap-2 mt-2">
                                 <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">
-                                    <option value="" class="text-[#000]">-</option>
-                                    <option value="test" class="text-[#000]">Test</option>
+                                    <option value="" class="text-[#000]" disabled selected>Pilih Layanan</option>
+                                    @foreach ($service as $item)
+                                        <option value="{{ $item->id }}" class="text-[#000]">{{ $item->name }}</option>
+                                    @endforeach
                                 </select>
                                 <button type="button" onclick="addLayanan()">
                                     <x-icons.add />
@@ -144,10 +146,11 @@
             newRow.classList.add('row-diagnosa', 'flex', 'gap-2', 'mt-2');
 
             newRow.innerHTML = `
-        <select class="w-full border rounded-lg bg-gray-100 h-10">
-            <option value="">Pilih Diagnosa</option>
-            <option value="diagnosa1">Diagnosa 1</option>
-            <option value="diagnosa2">Diagnosa 2</option>
+        <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">
+            <option value="" class="text-[#000]" disabled selected>Pilih Layanan</option>
+            @foreach ($diagnose as $item)
+                <option value="{{ $item->id }}" class="text-[#000]">{{ $item->name }}</option>
+            @endforeach
         </select>
         <button type="button" onclick="removeDiagnosa(this)">
             <x-icons.redcancel />
@@ -166,13 +169,15 @@
             let newSelect = document.createElement('div');
             newSelect.innerHTML = `
             <div class="flex gap-2 mt-2">
-                <select class="w-full border rounded-lg bg-gray-100 h-10">
-                    <option value="">Pilih Layanan</option>
-                    <option value="test">Test</option>
+                <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">
+                    <option value="" class="text-[#000]" disabled selected>Pilih Layanan</option>
+                    @foreach ($service as $item)
+                        <option value="{{ $item->id }}" class="text-[#000]">{{ $item->name }}</option>
+                    @endforeach
                 </select>
-                 <button type="button" onclick="removeElement(this)">
+                <button type="button" onclick="removeElement(this)">
                     <x-icons.redcancel/>
-                    </button>
+                </button>
             </div>
         `;
             container.appendChild(newSelect);
