@@ -18,6 +18,19 @@ class SimbatApi extends Controller
         return abort(403);
     }
 
+    public static function getDrug($id)
+    {
+        $token = self::token();
+        $response = Http::withToken($token)->get(self::$endpoint . 'drugs/' . $id);
+        $drugs = json_decode($response->body(), true)['data'];
+        $drugs = [
+            'id'    => $drugs['id'],
+            'name'  => $drugs['name'],
+            'price' => $drugs['last_price'],
+            'type'  => $drugs['category']['name'],
+        ];
+        return $drugs;
+    }
     public static function getDrugs()
     {
         $token = self::token();
@@ -30,6 +43,20 @@ class SimbatApi extends Controller
                 'name'  => $item->name,
                 'price' => $item->price,
                 'stock' => $item->stock,
+            ];
+        }, $drugs);
+        return $drugs;
+    }
+    public function getDrugsByCategory($category)
+    {
+        $token = self::token();
+        $response = Http::withToken($token)->get(self::$endpoint . 'categories/' . $category);
+        $drugs = json_decode($response->body())->data->drugs;
+        $drugs = array_map(function ($item) {
+            return [
+                'id'  => $item->id,
+                'name'  => $item->name,
+                'price' => $item->last_price,
             ];
         }, $drugs);
         return $drugs;

@@ -56,6 +56,7 @@ return new class extends Migration
             $table->integer('discount');
             $table->dateTime('paid')->nullable();
             $table->enum('method', ['cash', 'credit', 'transfer']);
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }

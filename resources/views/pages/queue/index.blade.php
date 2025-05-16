@@ -64,12 +64,14 @@
                 <td class="px-6 py-3 border-b border-gray-200 text-center">
                     <div class="flex justify-center items-center gap-2">
                         @if (auth()->user()->role == 'doctor')
-                            <a href="{{ route('patient.diagnose.edit', [$item->patient->id,$item->id]) }}">
+                            <a href="{{ route('patient.diagnose.edit', [$item->patient->id, $item->id]) }}">
                                 <x-icons.stethoscope2 />
                             </a>
                         @endif
+                        <a href="{{ route('patient.diagnose.show', [$item->patient->id, $item->id]) }}">
+                            <x-icons.view />
+                        </a>
 
-                        <x-icons.view />
                     </div>
                 </td>
             </tr>

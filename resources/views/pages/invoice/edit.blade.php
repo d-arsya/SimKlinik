@@ -99,8 +99,8 @@
                     </h2>
                     <div class="space-y-2">
                         <label class="flex items-center border border-white p-4 rounded-lg cursor-pointer h-[45px]">
-                            <input class="form-radio text-white hover:text-[#252F4A] hover:bg-[#252F4A]" name="payment"
-                                type="radio" />
+                            <input value="credit" class="form-radio text-white hover:text-[#252F4A] hover:bg-[#252F4A]"
+                                name="method" type="radio" />
                             <span class="ml-4 flex items-center">
                                 <svg width="30" height="22" class="me-3" viewBox="0 0 30 22" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -118,8 +118,8 @@
                             </span>
                         </label>
                         <label class="flex items-center border border-white p-4 rounded-lg cursor-pointer h-[45px]">
-                            <input class="form-radio text-white hover:text-[#252F4A] hover:bg-[#252F4A]" name="payment"
-                                type="radio" />
+                            <input value="cash" class="form-radio text-white hover:text-[#252F4A] hover:bg-[#252F4A]"
+                                name="method" type="radio" />
                             <span class="ml-4 flex items-center">
                                 <svg width="30" height="20" class="me-3" viewBox="0 0 30 20" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -131,8 +131,8 @@
                             </span>
                         </label>
                         <label class="flex items-center border border-white p-4 rounded-lg cursor-pointer h-[45px]">
-                            <input class="form-radio text-white hover:text-[#252F4A] hover:bg-[#252F4A]" name="payment"
-                                type="radio" />
+                            <input value="transfer" class="form-radio text-white hover:text-[#252F4A] hover:bg-[#252F4A]"
+                                name="method" type="radio" />
                             <span class="ml-4 flex items-center">
                                 <svg width="26" height="22" class="me-3" viewBox="0 0 26 22" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -143,7 +143,7 @@
                                 E-wallet
                             </span>
                         </label>
-                        <input
+                        <input name="notes" value="{{ $invoice->notes }}"
                             class="w-full mt-4 h-[30px] p-2 rounded-lg bg-white text-cadet text-[8px] placeholder-gray-400"
                             placeholder="-- Tulis Keterangan Pembayaran --" type="text" />
                     </div>
@@ -157,7 +157,7 @@
                     <div class="flex justify-between items-baseline">
                         <label>
                             <div>
-                                <input class="form-radio text-black" name="discount" type="radio" />
+                                <input class="form-radio text-black" name="discount" type="checkbox" />
                                 <span class="ml-2 text-[12.43px]">
                                     Potongan Harga (Persen)
                                 </span>
@@ -167,7 +167,7 @@
                                 placeholder="cth : 30" type="text" />
                         </label>
                         <label>
-                            <input class="form-radio text-black" name="discount" type="radio" />
+                            <input class="form-radio text-black" name="discount" type="checkbox" />
                             <span class="ml-2 text-[12.43px]">
                                 Gratis biaya pemeriksaan
                             </span>

@@ -262,4 +262,50 @@ class CheckupController extends Controller
             ]);
         }
     }
+    public function drugEdit(Checkup $checkup, string $drug, string $amount)
+    {
+        try {
+            $drugs = json_decode($checkup->drugs, true) ?? [];
+            $drugId = (int) $drug;
+            $amount = (int) $amount;
+
+            // Cari index berdasarkan id
+            $index = collect($drugs)->search(function ($item) use ($drugId) {
+                return isset($item['id']) && $item['id'] == $drugId;
+            });
+
+            if ($index !== false) {
+                // Jika sudah ada, hapus
+                unset($drugs[$index]);
+                $drugs = array_values($drugs); // reset index array
+            } else {
+                $drug = SimbatApi::getDrug($drugId);
+                $drugs[] = [
+                    'id' => $drugId,
+                    'amount' => $amount,
+                    'name' => $drug["name"],
+                    'type' => $drug["type"],
+                    'price' => $drug["price"],
+                    'notes' => ""
+                ];
+            }
+
+            $checkup->drugs = json_encode($drugs);
+            $checkup->save();
+
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => 'Drugs updated successfully.',
+                'data' => $drugs
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => $th->getMessage(),
+                'data' => null
+            ]);
+        }
+    }
 }

@@ -19,7 +19,9 @@
             </div>
         </div>
 
-        <form method="post" id="checkup">
+        <form method="post" id="checkup"
+            action="{{ route('patient.diagnose.update', [$checkup->patient->id, $checkup->id]) }}">
+            @method('PUT')
             <div class="overflow-auto max-h-[70vh] p-4">
                 <form action="" method="">
                     @csrf
@@ -28,14 +30,14 @@
                             <label class="block text-gray-700 font-medium">Anamnesa</label>
                             <textarea name="anamnesis" style="overflow-y: auto !important;"
                                 class="w-full p-2 border rounded-lg bg-gray-100 h-24 overflow-y-auto resize-none mt-2"
-                                placeholder="Ketik anamnesa..."></textarea>
+                                placeholder="Ketik anamnesa...">{{ $checkup->anamnesis }}</textarea>
                         </div>
 
                         <div>
                             <label class="block text-gray-700 font-medium">Gejala</label>
                             <textarea name="symptom" style="overflow-y: auto !important;"
                                 class="w-full p-2 border rounded-lg bg-gray-100 h-16 overflow-y-auto resize-none mt-2"
-                                placeholder="Ketik gejala..."></textarea>
+                                placeholder="Ketik gejala...">{{ $checkup->symptom }}</textarea>
                         </div>
                     </div>
 
@@ -57,7 +59,7 @@
                                     <x-icons.add />
                                 </button>
                             </div>
-                            <div id="diagnosa-container">
+                            <div id="diagnose-container">
                                 @foreach ($diagnoses as $item)
                                     <div class="flex gap-2">
                                         <h1 data-id="{{ $item->id }}"
@@ -114,7 +116,8 @@
                                 <!-- Jenis Obat -->
                                 <div>
                                     <label class="block text-gray-700 font-medium">Jenis Obat</label>
-                                    <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2">
+                                    <select id="drug-category"
+                                        class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2">
                                         <option value="">Jenis Obat</option>
                                         @foreach ($categories as $item)
                                             <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
@@ -125,9 +128,8 @@
                                 <!-- Nama Obat -->
                                 <div>
                                     <label class="block text-gray-700 font-medium">Nama Obat</label>
-                                    <select class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2">
-                                        <option value="">-</option>
-                                        <option value="test">Test</option>
+                                    <select id="drug-option"
+                                        class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2">
                                     </select>
                                 </div>
 
@@ -135,33 +137,46 @@
                                 <div>
                                     <label class="block text-gray-700 font-medium">Jumlah</label>
                                     <div class="flex">
-                                        <input
+                                        <input id="drug-quantity"
                                             class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2 p-2 max-w-[80%]"></input>
-                                        <button type="button" onclick="addObat()">
+                                        <button type="button" onclick="addDrug()">
                                             <x-icons.add></x-icons.add>
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div id="obat-container"></div>
+                            <div id="obat-container">
+                                @foreach ($drugs as $item)
+                                    <div class="flex gap-2">
+                                        <h1 data-id="{{ $item->id }}"
+                                            class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">
+                                            {{ $item->name }} ({{ $item->amount }} pcs)
+                                        </h1>
+                                        <button type="button" class="" onclick="removeDrug(this)">
+                                            <x-icons.redcancel />
+                                        </button>
+
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
 
                         <!-- Kolom Kanan (Alternatif Obat) -->
                         <div class="w-full">
                             <label class="block text-gray-700 font-medium">Alternatif</label>
-                            <textarea class="w-full p-2 border rounded-lg bg-gray-100 h-24 mt-2 overflow-y-auto resize-none"
-                                placeholder="Ketik obat alternatif ..."></textarea>
+                            <textarea name="alternativeDrugs" class="w-full p-2 border rounded-lg bg-gray-100 h-24 mt-2 overflow-y-auto resize-none"
+                                placeholder="Ketik obat alternatif ...">{{ $checkup->alternativeDrugs }}</textarea>
                         </div>
                     </div>
 
                     <hr class="border-gray-200 my-4">
 
                     <div class="flex justify-end gap-4">
-                        <button type="button" id="btn-inpatient">
+                        <button name="inpatient" value="true" type="submit" id="btn-inpatient">
                             <x-icons.add-to-inpatient />
                         </button>
-                        <button type="button" id="btn-submit">
+                        <button name="inpatient" value="false" type="submit" id="btn-submit">
                             <x-icons.submit />
                         </button>
                     </div>
@@ -170,6 +185,52 @@
     </div>
     </form>
     <script>
+        let drugCategory = document.getElementById('drug-category');
+        const drugContainer = document.getElementById('drug-option');
+        drugCategory.addEventListener('change', function(e) {
+            const category = e.target.value;
+            fetch('/api/drugs/category/' + category)
+                .then(e => e.json())
+                .then(e => {
+                    drugContainer.innerHTML = ""
+                    e.forEach(element => {
+                        drugContainer.innerHTML +=
+                            `<option value="${element.id}-${element.name}">${element.name}</option>`
+                    });
+                })
+        })
+
+        function addDrug() {
+            let newRow = document.createElement('div');
+            let value = document.getElementById('drug-option').value.split('-')
+            let amount = document.getElementById('drug-quantity').value
+
+            newRow.classList.add('flex', 'gap-2');
+
+            newRow.innerHTML = `<h1 data-id="${value[0]}" class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">${value[1]} (${amount} pcs)</h1>
+            <button type="button" class="" onclick="removeDrug(this)">
+                <x-icons.redcancel />
+            </button>`;
+
+            fetch('/api/checkup/{{ $checkup->id }}/drug/' + value[0] + '/' + value)
+                .then(e => e.json())
+                .then(e => {
+                    document.getElementById('obat-container').appendChild(newRow);
+                    document.getElementById('drug-option').value = null;
+                    document.getElementById('drug-quantity').value = null;
+                })
+        }
+
+        function removeDrug(btn) {
+            const container = btn.parentElement
+            const h1 = container.querySelector('h1');
+            let id = h1.dataset.id
+            fetch('/api/checkup/{{ $checkup->id }}/drug/' + id + '/2')
+                .then(e => e.json())
+                .then(e => container.remove())
+
+        }
+
         function addDiagnosa() {
             let newRow = document.createElement('div');
             let value = document.getElementById('diagnoses-option').value.split('-')
@@ -185,7 +246,7 @@
                 .then(e => e.json())
                 .then(e => {
 
-                    document.getElementById('diagnosa-container').appendChild(newRow);
+                    document.getElementById('diagnose-container').appendChild(newRow);
                     document.getElementById('diagnoses-option').value = null;
                 })
         }
