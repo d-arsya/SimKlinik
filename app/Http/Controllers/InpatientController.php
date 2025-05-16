@@ -12,7 +12,7 @@ class InpatientController extends Controller
      */
     public function index()
     {
-        $inpatient = Checkup::whereFalse('queued')->get();
+        $inpatient = Checkup::whereQueued(false)->get();
         return view('pages.inpatient.index', compact('inpatient'));
     }
 

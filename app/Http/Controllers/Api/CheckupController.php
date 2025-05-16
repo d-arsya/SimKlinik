@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Checkup;
+use App\Models\Diagnose;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
@@ -195,6 +196,70 @@ class CheckupController extends Controller
                 'data' => null
             ];
             return response()->json($response, 404);
+        }
+    }
+
+    public function diagnoseEdit(Checkup $checkup, string $diagnose)
+    {
+        try {
+            $diagnoses = json_decode($checkup->diagnoses, true) ?? [];
+            if (in_array($diagnose, $diagnoses)) {
+                $diagnoses = array_values(array_diff($diagnoses, [$diagnose]));
+            } else {
+                $diagnoses[] = $diagnose;
+            }
+            $checkup->diagnoses = json_encode($diagnoses);
+            $checkup->save();
+
+            $response = [
+                'success' => true,
+                'code' => 200,
+                'message' => 'Diagnose updated successfully.',
+                'data' => $diagnoses
+            ];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'code' => 200,
+                'message' => $th->getMessage(),
+                'data' => null
+            ];
+            return response()->json($response);
+        }
+    }
+    public function serviceEdit(Checkup $checkup, string $service)
+    {
+        try {
+            $services = json_decode($checkup->services, true) ?? [];
+            $serviceId = (int) $service;
+            $index = collect($services)->search(function ($item) use ($serviceId) {
+                return isset($item['id']) && $item['id'] == $serviceId;
+            });
+
+            if ($index !== false) {
+                unset($services[$index]);
+                $services = array_values($services);
+            } else {
+                $services[] = ['id' => $serviceId, 'days' => 1];
+            }
+
+            $checkup->services = json_encode($services);
+            $checkup->save();
+
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => 'Services updated successfully.',
+                'data' => $services
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => $th->getMessage(),
+                'data' => null
+            ]);
         }
     }
 }

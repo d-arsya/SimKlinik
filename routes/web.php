@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\SimbatAuthentication;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InpatientController;
 use App\Http\Controllers\InvoiceController;

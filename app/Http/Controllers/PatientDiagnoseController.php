@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\SimbatApi;
 use App\Models\Checkup;
 use App\Models\Diagnose;
 use App\Models\Patient;
@@ -47,12 +48,15 @@ class PatientDiagnoseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, Patient $patient, Checkup $checkup)
+    public function edit(Request $request, Patient $patient, Checkup $diagnose)
     {
-        $checkup = Checkup::find($checkup);
+        $checkup = $diagnose;
         $diagnose = $patient->animal->diagnoses;
+        $diagnoses = Diagnose::whereIn('id', json_decode($checkup->diagnoses) ?? [])->get();
         $service = Service::all();
-        return view('pages.queue.edit', compact('diagnose', 'patient','checkup','service'));
+        $services = $checkup->servicesData();
+        $categories = SimbatApi::getDrugCategories();
+        return view('pages.queue.edit', compact('diagnose', 'patient', 'checkup', 'service', 'diagnoses', 'services', 'categories'));
     }
 
     /**

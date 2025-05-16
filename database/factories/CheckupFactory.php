@@ -30,6 +30,7 @@ class CheckupFactory extends Factory
             "services" => $services,
             "diagnoses" => $diagnoses,
             "drugs" => $drugs,
+            "alternativeDrugs" => fake()->sentence(5)
         ];
     }
 }

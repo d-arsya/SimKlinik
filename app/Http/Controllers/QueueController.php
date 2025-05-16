@@ -6,6 +6,7 @@ use App\Models\Checkup;
 use App\Models\Patient;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QueueController extends Controller
 {
@@ -14,7 +15,11 @@ class QueueController extends Controller
      */
     public function index()
     {
-        $queues = Checkup::where('queued', true)->with(['patient'])->get();
+        if (Auth::user()->role == 'doctor') {
+            $queues = Checkup::with(['patient'])->whereQueued(true)->where('status', 'menunggu')->get();
+        } else {
+            $queues = Checkup::with(['patient'])->whereQueued(true)->get();
+        }
         return view('pages.queue.index', compact('queues'));
     }
 

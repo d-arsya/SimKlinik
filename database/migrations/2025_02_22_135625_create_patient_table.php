@@ -42,6 +42,7 @@ return new class extends Migration
             $table->json('services')->nullable();
             $table->json('diagnoses')->nullable();
             $table->json('drugs')->nullable();
+            $table->string('alternativeDrugs')->nullable();
             $table->enum('status', ['diperiksa', 'menunggu', 'dibatalkan']);
             $table->boolean('queued')->default(true);
             $table->string('anamnesis')->nullable();
