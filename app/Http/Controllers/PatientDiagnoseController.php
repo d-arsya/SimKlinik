@@ -55,7 +55,7 @@ class PatientDiagnoseController extends Controller
         $diagnoses = Diagnose::whereIn('id', json_decode($checkup->diagnoses) ?? [])->get();
         $service = Service::all();
         $services = $checkup->servicesData();
-        $drugs = $checkup->drugsData();
+        $drugs = $checkup->drugsData() ?? [];
         $categories = SimbatApi::getDrugCategories();
         return view('pages.queue.edit', compact('diagnose', 'patient', 'checkup', 'service', 'diagnoses', 'services', 'categories', 'drugs'));
     }
@@ -66,11 +66,12 @@ class PatientDiagnoseController extends Controller
     public function update(Request $request, Patient $patient, Checkup $diagnose)
     {
         $diagnose->update($request->only('symtomp', 'alternativeDrugs', 'anamnesis'));
-        $diagnose->update(["queued" => !json_decode($request->inpatient), "status" => "diperiksa"]);
+        $diagnose->update(["queued" => !json_decode($request->inpatient)]);
         if ($diagnose->queued) {
+            $diagnose->status = "diperiksa";
+            $diagnose->save();
             return redirect()->route('invoice.edit', $diagnose->id);
         } else {
-
             return redirect()->route('queue.index');
         }
     }

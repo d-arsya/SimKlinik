@@ -24,66 +24,42 @@
         </tr>
     </thead>
     <tbody class="font-medium">
-        <tr>
-            <td class="px-6 py-3 border-b border-r border-gray-200">1</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">09/01/24</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">RM-2</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">
-                <div>
-                    <p class="font-semibold">Kimo</p>
-                    <p>Kucing</p>
+        @foreach ($inpatient as $key => $item)
+            <tr>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $key }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">
+                    {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('D MMMM') }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->record }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">
+                    <div>
+                        <p class="font-semibold">{{ $item->patient->name }}</p>
+                        <p>{{ $item->patient->animal->name }}</p>
+                    </div>z
+                </td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->owner->name }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->calcAge() }}</td>
+                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->owner->phone }}</td>
+                @if (auth()->user()->role == 'doctor')
+                    <td class="px-6 py-3 border-b border-gray-200">
+                        <div class="flex justify-center items-center gap-2 h-10">
+                            <div class="h-10 mt-2">
+                                @include('components.modal-inpatient', [
+                                    'title' => 'Rawat Inap',
+                                ])
+                            </div>
+                            <form action="{{ route('inpatient.update', $item->id) }}" method="post">
+                                @method('PUT')
+                                @csrf
+                                <input type="hidden" name="selesai" value="1">
+                                <button
+                                    class="font-bold text-md py-4 px-3 mt-2 rounded-md text-white bg-primary flex items-center justify-center h-9">
+                                    Selesai Rawat Inap
+                                </button>
+                            </form>
+                @endif
                 </div>
-            </td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">Hendra</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">2</td>
-            <td class="px-6 py-3 border-b border-r border-gray-200">085532127698</td>
-            @if (auth()->user()->role == 'doctor')
-                <td class="px-6 py-3 border-b border-gray-200">
-                    <div class="flex justify-center items-center gap-2 h-10">
-                        <div class="h-10 mt-2">
-                            @include('components.modal-inpatient', [
-                                'title' => 'Rawat Inap',
-                            ])
-                        </div>
-                        <button onclick="confirmSelesaiRawatInap(event)"
-                            class="font-bold text-md py-4 px-3 mt-2 rounded-md text-white bg-primary flex items-center justify-center h-9">
-                            Selesai Rawat Inap
-                        </button>
-            @endif
-            </div>
-            </td>
-        </tr>
+                </td>
+            </tr>
+        @endforeach
     </tbody>
 @endsection
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-    function confirmSelesaiRawatInap(event) {
-        event.preventDefault(); // Mencegah aksi default jika tombol dalam <a href>
-
-        Swal.fire({
-            title: "Konfirmasi",
-            text: "Yakin pasien ini sudah selesai rawat inap?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Ya, Selesai!",
-            cancelButtonText: "Batal"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Berhasil!",
-                    text: "Pasien telah selesai rawat inap.",
-                    icon: "success",
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-
-                setTimeout(() => {
-                    window.location.href = "{{ route('inpatient.index') }}";
-                }, 2000);
-            }
-        });
-    }
-</script>

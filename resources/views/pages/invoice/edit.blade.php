@@ -157,17 +157,18 @@
                     <div class="flex justify-between items-baseline">
                         <label>
                             <div>
-                                <input class="form-radio text-black" name="discount" type="checkbox" />
+                                <input id="discount-check" class="form-radio text-black" name="discount" type="checkbox" />
                                 <span class="ml-2 text-[12.43px]">
                                     Potongan Harga (Persen)
                                 </span>
                             </div>
-                            <input
+                            <input id="discount-value"
                                 class="w-full p-2 rounded-lg text-[8px] h-[20px] bg-white text-cadet placeholder-gray-400"
-                                placeholder="cth : 30" type="text" />
+                                placeholder="cth : 30" type="number" disabled />
                         </label>
                         <label>
-                            <input class="form-radio text-black" name="discount" type="checkbox" />
+                            <input class="form-radio text-black" name="discount" id="gratis-pemeriksaan"
+                                type="checkbox" />
                             <span class="ml-2 text-[12.43px]">
                                 Gratis biaya pemeriksaan
                             </span>
@@ -192,7 +193,7 @@
                         <span>
                             Diskon
                         </span>
-                        <span>
+                        <span id="disc-val">
                             {{ $invoice->discount ?? 0 }}%
                         </span>
                     </div>
@@ -201,8 +202,8 @@
                         <span class="font-semibold text-[13px]">
                             Total Harga
                         </span>
-                        <span class="text-2xl font-bold">
-                            Rp {{ ($invoice->total() * (100 - $invoice->discount)) / 100 }}
+                        <span id="total-harga" class="text-2xl font-bold">
+                            Rp {{ number_format($invoice->total(), 0, ',', '.') }}
                         </span>
                     </div>
                 </div>
@@ -214,3 +215,44 @@
     </div>
 @endsection
 @section('scripts')
+    <script>
+        const gratisPemeriksaan = document.querySelector('#gratis-pemeriksaan')
+        const discountCheck = document.querySelector('#discount-check')
+        const discountValue = document.querySelector('#discount-value')
+        const totalHargaAsli = @json($invoice->total());
+        const totalHarga = document.querySelector('#total-harga')
+        let servicesData = @json($checkup->servicesData());
+        const total = servicesData.reduce((sum, item) => {
+            return sum + item.price * (item.days ?? 1); // default to 1 if days is undefined
+        }, 0);
+        gratisPemeriksaan.addEventListener('change', function(e) {
+            if (e.target.checked) {
+                totalHarga.innerHTML =
+                    `Rp ${(totalHargaAsli - total).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`
+            } else {
+                totalHarga.innerHTML = `Rp ${totalHargaAsli.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`
+            }
+        })
+        discountCheck.addEventListener('change', function(e) {
+            if (e.target.checked) {
+                discountValue.disabled = false
+            } else {
+                discountValue.disabled = true
+                discountValue.value = null
+            }
+        })
+        discountValue.addEventListener('input', function(e) {
+            let disVal = e.target.value
+            document.querySelector('#disc-val').innerHTML = disVal + '%'
+            if (gratisPemeriksaan.checked) {
+                let disc = totalHargaAsli - (totalHargaAsli * disVal / 100)
+                totalHarga.innerHTML =
+                    `Rp ${totalHargaAsli-disc-total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`
+
+            } else {
+                let disc = totalHargaAsli - (totalHargaAsli * disVal / 100)
+                totalHarga.innerHTML = `Rp ${disc.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`
+            }
+        })
+    </script>
+@endsection

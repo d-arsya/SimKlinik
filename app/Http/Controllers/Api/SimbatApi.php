@@ -4,18 +4,26 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class SimbatApi extends Controller
 {
-    protected static $endpoint = 'https://simbat.disyfa.site/api/v1/';
+    protected static $endpoint = 'https://simbat.madanateknologi.web.id/api/v1/';
     public static function token()
     {
-        $response = Http::post(self::$endpoint . 'login', ['email' => env('SIMKLINIK_EMAIL'), 'password' => env('SIMKLINIK_PASS')]);
-        if ($response->status() == 200 && !$response->redirect()) {
-            return json_decode($response->body())->data->token;
-        }
-        return abort(403);
+        return Cache::remember('simklinik_token', 60, function () {
+            $response = Http::post(self::$endpoint . 'login', [
+                'email' => env('SIMKLINIK_EMAIL'),
+                'password' => env('SIMKLINIK_PASS'),
+            ]);
+
+            if ($response->status() == 200 && !$response->redirect()) {
+                return json_decode($response->body())->data->token;
+            }
+
+            abort(403);
+        });
     }
 
     public static function getDrug($id)
@@ -33,19 +41,20 @@ class SimbatApi extends Controller
     }
     public static function getDrugs()
     {
-        $token = self::token();
-        $response = Http::withToken($token)->get(self::$endpoint . 'repacks');
-        $total = json_decode($response->body())->data->total;
-        $response = Http::withToken($token)->get(self::$endpoint . 'repacks?per_page=' . $total);
-        $drugs = json_decode($response->body())->data->data;
-        $drugs = array_map(function ($item) {
-            return [
-                'name'  => $item->name,
-                'price' => $item->price,
-                'stock' => $item->stock,
-            ];
-        }, $drugs);
-        return $drugs;
+        return Cache::remember('simklinik_drug_all', 10, function () {
+            $token = self::token();
+            $response = Http::withToken($token)->get(self::$endpoint . 'repacks');
+            $total = json_decode($response->body())->data->total;
+            $response = Http::withToken($token)->get(self::$endpoint . 'repacks?per_page=' . $total);
+            $drugs = json_decode($response->body())->data->data;
+            return array_map(function ($item) {
+                return [
+                    'name'  => $item->name,
+                    'price' => $item->price,
+                    'stock' => $item->stock,
+                ];
+            }, $drugs);
+        });
     }
     public function getDrugsByCategory($category)
     {
@@ -63,17 +72,24 @@ class SimbatApi extends Controller
     }
     public static function getDrugCategories()
     {
-        $token = self::token();
-        $response = Http::withToken($token)->get(self::$endpoint . 'categories');
-        $total = json_decode($response->body())->data->total;
-        $response = Http::withToken($token)->get(self::$endpoint . 'categories?per_page=' . $total);
-        $categories = json_decode($response->body())->data->data;
-        $categories = array_map(function ($item) {
-            return [
-                'name'  => $item->name,
-                'id'  => $item->id,
-            ];
-        }, $categories);
-        return $categories;
+        return Cache::remember('simklinik_drug_categories', 10, function () {
+            $token = self::token();
+
+            // Ambil total data
+            $response = Http::withToken($token)->get(self::$endpoint . 'categories');
+            $total = json_decode($response->body())->data->total;
+
+            // Ambil semua data
+            $response = Http::withToken($token)->get(self::$endpoint . 'categories?per_page=' . $total);
+            $categories = json_decode($response->body())->data->data;
+
+            // Format ulang data
+            return array_map(function ($item) {
+                return [
+                    'name' => $item->name,
+                    'id'   => $item->id,
+                ];
+            }, $categories);
+        });
     }
 }

@@ -12,7 +12,7 @@ class InpatientController extends Controller
      */
     public function index()
     {
-        $inpatient = Checkup::whereQueued(false)->get();
+        $inpatient = Checkup::whereQueued(false)->whereStatus('menunggu')->get();
         return view('pages.inpatient.index', compact('inpatient'));
     }
 
@@ -53,7 +53,11 @@ class InpatientController extends Controller
      */
     public function update(Request $request, Checkup $inpatient)
     {
-        //
+        if ($request->selesai) {
+            $inpatient->status = 'diperiksa';
+            $inpatient->save();
+            return redirect()->route('invoice.edit', $inpatient->id);
+        }
     }
 
     /**
