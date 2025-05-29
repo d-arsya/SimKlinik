@@ -43,7 +43,7 @@
         <div class="col-span-2 flex justify-between">
             <div>
                 <h2 class="text-xl font-medium">Dashboard</h2>
-                <p class="text-[#4B5675]">Central Hub for Personal Customization</p>
+                <p class="text-[#4B5675]">Pemeriksaan Dokter Hewan</p>
             </div>
             <a href="{{ route('profile') }}"
                 class="bg-white text-[#4B5675] h-8 px-4 text-xs border border-1 border-[#DBDFE9] hover:bg-[#DBDFE9] place-self-center content-center rounded-md">View
@@ -61,14 +61,14 @@
                             <div
                                 class=" bg-[#DFFFEA] shadow border border-[#F1F1F4] rounded-lg p-4 max-w-[128.92px] max-h-[117.2px] min-w-40">
                                 <x-icons.stethoscope />
-                                <h3 class="mt-2 text-2xl font-medium text-[#17C653]">200</h3>
+                                <h3 class="mt-2 text-2xl font-medium text-[#17C653]">{{ $pemeriksaan }}</h3>
                                 <p class="mt-2 text-[10.16px] text-[#17C653]">Pemeriksan</p>
                             </div>
                             <!-- inpatient / Rawat Inap) -->
                             <div
                                 class=" bg-[#E9F3FF] shadow border border-[#F1F1F4] rounded-lg p-4 max-w-[128.92px] max-h-[117.2px] min-w-40">
                                 <x-icons.bed />
-                                <h3 class="mt-2 text-2xl font-medium text-[#1B84FF]">10</h3>
+                                <h3 class="mt-2 text-2xl font-medium text-[#1B84FF]">{{ $inap }}</h3>
                                 <p class="mt-1 text-[10.16px] text-[#1B84FF]">Rawat Inap</p>
                             </div>
                         </div>
@@ -82,8 +82,8 @@
             <div class="flex flex-col shadow h-full border rounded-xl justify-center p-10 bg-center bg-origin-content"
                 style="background-image: url('{{ asset('img/bg-dashboard.png') }}'); background-size: cover; z-index: -1;">
                 <img class="w-9 h-9 rounded-full border" src="img/dashboard-img.png" alt="Foto Dashboard">
-                <h2 class="text-[22px] mt-[14px] font-semibold">Selamat Datang, Gurdi!</h2>
-                <h4 class="text-base">Sebagai Super Admin</h4>
+                <h2 class="text-[22px] mt-[14px] font-semibold">Selamat Datang, {{ $user->name }}!</h2>
+                <h4 class="text-base">Sebagai {{ $user->role }}</h4>
                 <div class="max-w-[400px]">
                     <div class="text-sm mt-[14px] text-[#4B5675]">Pantau Kesehatan hewan, kelola jadwal perawatan, dan akses
                         rekam medis dengan mudah di sistem manajemen klinik hewan Anda.
@@ -105,40 +105,13 @@
 
                         <!-- Legend -->
                         <div class="w-40">
-                            <!-- ERP -->
-                            <div class="flex items-center mb-2">
-                                <div class="w-4 h-4 bg-blue-500 rounded mr-2"></div>
-                                <span class="text-gray-600 spangrafik">ERP</span>
-                                <span class="ml-auto spangrafik">85 pcs</span>
-                            </div>
-
-                            <!-- HRM -->
-                            <div class="flex items-center mb-2">
-                                <div class="w-4 h-4 bg-orange-500 rounded mr-2"></div>
-                                <span class="text-gray-600 spangrafik">HRM</span>
-                                <span class="ml-auto spangrafik">85 pcs</span>
-                            </div>
-
-                            <!-- DMS -->
-                            <div class="flex items-center mb-2">
-                                <div class="w-4 h-4 bg-green-500 rounded mr-2"></div>
-                                <span class="text-gray-600 spangrafik">DMS</span>
-                                <span class="ml-auto spangrafik">85 pcs</span>
-                            </div>
-
-                            <!-- CRM -->
-                            <div class="flex items-center mb-2">
-                                <div class="w-4 h-4 bg-purple-500 rounded mr-2"></div>
-                                <span class="text-gray-600 spangrafik">CRM</span>
-                                <span class="ml-auto spangrafik">85 pcs</span>
-                            </div>
-
-                            <!-- DAM -->
-                            <div class="flex items-center mb-2">
-                                <div class="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
-                                <span class="text-gray-600 spangrafik">DAM</span>
-                                <span class="ml-auto spangrafik">85 pcs</span>
-                            </div>
+                            @foreach ($drugTopSell as $item)
+                                <div class="flex items-center mb-2">
+                                    <div class="w-4 h-4 bg-blue-500 rounded mr-2"></div>
+                                    <span class="text-gray-600 spangrafik">{{ $item['name'] }}</span>
+                                    <span class="ml-auto spangrafik">{{ $item['quantity'] }} pcs</span>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

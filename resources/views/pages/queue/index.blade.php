@@ -3,8 +3,7 @@
 <!-- Header -->
 @section('title', 'Tabel Antrian Pasien')
 @section('desc')
-    <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">49,053</span></p>
-    <p class="text-cadet font-medium">Jumlah Dokter: <span class="text-[#252F4A]">724</span></p>
+    <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">{{ $patient }}</span></p>
 @endsection
 
 @section('buttons')
@@ -67,10 +66,11 @@
                             <a href="{{ route('patient.diagnose.edit', [$item->patient->id, $item->id]) }}">
                                 <x-icons.stethoscope2 />
                             </a>
+                        @elseif($item->status == 'diperiksa')
+                            <a href="{{ route('patient.diagnose.show', [$item->patient->id, $item->id]) }}">
+                                <x-icons.view />
+                            </a>
                         @endif
-                        <a href="{{ route('patient.diagnose.show', [$item->patient->id, $item->id]) }}">
-                            <x-icons.view />
-                        </a>
 
                     </div>
                 </td>

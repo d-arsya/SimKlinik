@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -91,5 +92,37 @@ class SimbatApi extends Controller
                 ];
             }, $categories);
         });
+    }
+    public static function getDrugTopSell()
+    {
+        // return Cache::remember('simklinik_drug_top_sell', 10, function () {
+        // });
+        $token = self::token();
+        $startDate = Carbon::now()->startOfMonth()->toDateString();
+        $endDate = Carbon::now()->endOfMonth()->toDateString();
+
+        // Make the request
+        $response = Http::withToken($token)->get(self::$endpoint . "transactions/top-selling", [
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'limit' => 10,
+        ]);
+
+        $total = json_decode($response->body())->data;
+        $data = [];
+        foreach ($total as $item) {
+            // Remove last 2 words from name
+            $nameWords = explode(' ', $item->name);
+            $trimmedName = implode(' ', array_slice($nameWords, 0, -2));
+
+            // Cast quantity to integer (e.g., 5.00 becomes 5)
+            $quantity = (int) $item->total_quantity;
+
+            $data[] = [
+                "name" => $trimmedName,
+                "quantity" => $quantity,
+            ];
+        }
+        return $data;
     }
 }

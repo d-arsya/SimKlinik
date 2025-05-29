@@ -3,8 +3,7 @@
 <!-- Header -->
 @section('title', 'Tabel Daftar Pasien')
 @section('desc')
-    <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">49,053</span></p>
-    <p class="text-cadet font-medium">Jumlah Dokter: <span class="text-[#252F4A]">724</span></p>
+    <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">{{ $patient }}</span></p>
 @endsection
 
 <!-- Table -->

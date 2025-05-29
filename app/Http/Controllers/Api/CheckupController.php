@@ -97,12 +97,6 @@ class CheckupController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // "diagnoses": "[9, 5, 5]",
-        // "drugs": "[{\"id\": 9, \"date\": \"1970-12-15\", \"name\": \"laboriosam\", \"type\": \"et\", \"notes\": \"Illum qui quia quo architecto expedita et porro.\", \"price\": 35000, \"amount\": 10}, {\"id\": 2, \"date\": \"1993-04-18\", \"name\": \"rerum\", \"type\": \"eaque\", \"notes\": \"Dolorem labore doloremque ut distinctio sapiente perspiciatis.\", \"price\": 83000, \"amount\": 6}, {\"id\": 8, \"date\": \"1973-05-27\", \"name\": \"sunt\", \"type\": \"autem\", \"notes\": \"Inventore ut voluptatem et optio velit.\", \"price\": 34000, \"amount\": 2}]",
-        // "status": "menunggu",
-        // "queued": true,
-        // "anamnesis": "Tempore cum est et voluptas autem quam et dolor possimus iure consectetur ad natus magni sequi sint fugit ex.",
-        // "symptom": "Quia in ut molestiae ut inventore repellat porro consequatur sit et ex debitis.",
         $checkup = Checkup::find($id);
         if ($checkup) {
             try {

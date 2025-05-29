@@ -3,8 +3,7 @@
 <!-- Header -->
 @section('title', 'Tabel Rawat Inap Pasien')
 @section('desc')
-    <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">49,053</span></p>
-    <p class="text-cadet font-medium">Jumlah Dokter: <span class="text-[#252F4A]">724</span></p>
+    <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">{{ $patient }}</span></p>
 @endsection
 
 <!-- Table -->
@@ -42,11 +41,10 @@
                 @if (auth()->user()->role == 'doctor')
                     <td class="px-6 py-3 border-b border-gray-200">
                         <div class="flex justify-center items-center gap-2 h-10">
-                            <div class="h-10 mt-2">
-                                @include('components.modal-inpatient', [
-                                    'title' => 'Rawat Inap',
-                                ])
-                            </div>
+                            <a
+                                href="{{ route('patient.diagnose.show', ['patient' => $item->patient->id, 'diagnose' => $item->id]) }}">
+                                <x-icons.detail-button />
+                            </a>
                             <form action="{{ route('inpatient.update', $item->id) }}" method="post">
                                 @method('PUT')
                                 @csrf

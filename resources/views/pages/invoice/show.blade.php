@@ -30,7 +30,6 @@
                     No. Reg : <br>
                     Perumahan Pakuwon Asri, Jl. Sadewa No.3, Karangtengah Lor, Karangtengah, <br>
                     Kec. Kaliwungu, Kabupaten Kendal, Jawa Tengah 51372 <br>
-                    Email: xxxxxxxxxx@gmail.com | Telp: 000000000000
                 </p>
             </div>
         </div>
@@ -98,6 +97,7 @@
                     <div class="text-left">
                         <p class="p-2 border-t border-gray-300">Sub-Total</p>
                         <p class="p-2 border-b border-gray-300">Diskon</p>
+                        <p class="p-2 border-b border-gray-300">Gratis Pelayanan</p>
                         <p class="p-2 font-bold border-b border-gray-300">Total</p>
                     </div>
 
@@ -105,8 +105,9 @@
                     <div class="text-right">
                         <p class="p-2 border-t border-gray-300">Rp {{ $invoice->total() }}</p>
                         <p class="p-2 border-b border-gray-300">{{ $invoice->discount ?? 0 }}%</p>
+                        <p class="p-2 border-b border-gray-300">{{ $invoice->free ? 'Ya' : 'Tidak' }}</p>
                         <p class="p-2 font-bold border-b border-gray-300">Rp
-                            {{ ($invoice->total() * (100 - $invoice->discount)) / 100 }}</p>
+                            {{ $invoice->realTotal() }}</p>
                     </div>
                 </div>
             </div>
@@ -115,7 +116,7 @@
         <div class="flex flex-col text-[#036CA1] mt-4 px-36 font-medium" style="font-size: 0.85rem">
             <p>Transaksi :</p>
             <p>- {{ \Carbon\Carbon::parse($invoice->paid)->isoFormat('d MMMM Y, hh:mm') }}</p>
-            <p class="px-2">Pembayaran Rp {{ ($invoice->total() * (100 - $invoice->discount)) / 100 }} (Bank Trasfer)</p>
+            <p class="px-2">Pembayaran Rp {{ $invoice->realTotal() }} (Bank Trasfer)</p>
         </div>
 
     </div>

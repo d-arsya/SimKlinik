@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Api\SimbatApi;
 use App\Models\Checkup;
 use App\Models\Diagnose;
+use App\Models\Invoice;
 use App\Models\Patient;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -42,7 +43,10 @@ class PatientDiagnoseController extends Controller
     {
         $diagnose = Checkup::find($diagnose);
         $patient = $diagnose->patient;
-        return view('pages.patient.diagnose.show', compact('diagnose', 'patient'));
+        $services = $diagnose->servicesData();
+        $drugs = $diagnose->drugsData();
+        $diagnoses = $diagnose->diagnosesData();
+        return view('pages.patient.diagnose.show', compact('diagnose', 'patient', 'services', 'drugs', 'diagnoses'));
     }
 
     /**
@@ -70,7 +74,10 @@ class PatientDiagnoseController extends Controller
         if ($diagnose->queued) {
             $diagnose->status = "diperiksa";
             $diagnose->save();
-            return redirect()->route('invoice.edit', $diagnose->id);
+            $invoice = Invoice::create([
+                "checkup_id" => $diagnose->id
+            ]);
+            return redirect()->route('invoice.edit', $invoice->id);
         } else {
             return redirect()->route('queue.index');
         }

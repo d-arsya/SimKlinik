@@ -1,6 +1,5 @@
 <div class="flex justify-between">
     <h3 class="text-lg font-semibold flex justify-center">Form Owner Baru</h3>
-    <x-icons.search />
 </div>
 
 <form class="space-y-3" id="ownerForm" action="{{ route('api.owner.store') }}" method="post">

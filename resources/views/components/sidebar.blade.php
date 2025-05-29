@@ -3,7 +3,7 @@
     aria-label="Sidebar">
     <div class="h-full px-5 py-4 overflow-y-auto bg-primary">
         <a href="#" class="flex items-center mb-5">
-            <img src="{{ asset('img/logo.png') }}" class="h-[90px]" alt="Drh. Hendrik TS Logo" />
+            <img src="{{ asset('img/logo.png') }}" class="h-[60px]" alt="Drh. Hendrik TS Logo" />
             <span class="self-center text-{17.51px} font-semibold text-white whitespace-nowrap ms-1">Praktek Mandiri
                 <br>Drh. Hendrik TS</span>
         </a>

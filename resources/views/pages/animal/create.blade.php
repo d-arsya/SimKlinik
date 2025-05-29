@@ -27,13 +27,22 @@
                 Nama Tambahkan Diagnosa
             </label>
             <div class="grid grid-cols-4 gap-2">
-                @foreach ($diagnoses as $item)
-                    <label class="flex items-center space-x-2 text-sm text-gray-600">
-                        <input type="checkbox" name="diagnose_name[]" value="{{ $item->name }}"
-                            class="w-4 h-4 text-primary border-gray-300 rounded">
-                        <span>{{ $item->name }}</span>
-                    </label>
-                @endforeach
+                @if ($diagnoses->count() > 0)
+
+                    @foreach ($diagnoses as $item)
+                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                            <input type="checkbox" name="diagnose_name[]" value="{{ $item->name }}"
+                                class="w-4 h-4 text-primary border-gray-300 rounded">
+                            <span>{{ $item->name }}</span>
+                        </label>
+                    @endforeach
+                @else
+                    <span class="flex flex-row items-center w-max gap-x-6">
+
+                        Belum ada diagnosa <a class="bg-primary rounded-md px-3 py-2 text-white text-center w-max"
+                            href="{{ route('diagnose.create') }}">Buat</a>
+                    </span>
+                @endif
             </div>
         </div>
         <div class="flex justify-end">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -16,7 +17,8 @@ class InvoiceController extends Controller
             'checkup.patient.animal',
             'checkup.patient.owner'
         ])->get();
-        return view('pages.invoice.index', compact('invoices'));
+        $patient = Patient::count();
+        return view('pages.invoice.index', compact('invoices', 'patient'));
     }
 
     /**
@@ -58,7 +60,13 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, Invoice $invoice)
     {
-        //
+        $invoice->update([
+            "method" => $request->method,
+            "notes" => $request->notes,
+            "discount" => $request->discount,
+            "free" => $request->free == "on"
+        ]);
+        return redirect()->route('invoice.show', $invoice->id);
     }
 
     /**

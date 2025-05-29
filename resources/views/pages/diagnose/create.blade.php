@@ -19,30 +19,38 @@
                 Nama Jenis Hewan
             </label>
             <div class="grid grid-cols-4 gap-2">
-                @foreach ($animals as $item)
-                    <label class="flex items-center space-x-2 text-sm text-gray-600">
-                        <input type="checkbox" name="animal_id[]" value="{{ $item->id }}"
-                            class="w-4 h-4 text-primary border-gray-300 rounded">
-                        <span>{{ $item->name }}</span>
-                    </label>
-                @endforeach
+                @if ($animals->count() > 0)
+                    @foreach ($animals as $item)
+                        <label class="flex items-center space-x-2 text-sm text-gray-600">
+                            <input type="checkbox" name="animal_id[]" value="{{ $item->id }}"
+                                class="w-4 h-4 text-primary border-gray-300 rounded">
+                            <span>{{ $item->name }}</span>
+                        </label>
+                    @endforeach
+                @else
+                    <span class="flex flex-row items-center w-max gap-x-6">
+
+                        Belum ada hewan <a class="bg-primary rounded-md px-3 py-2 text-white text-center w-max"
+                            href="{{ route('animal.create') }}">Buat</a>
+                    </span>
+                @endif
             </div>
         </div>
 
 
-            <style>
-                input[type="checkbox"]:checked+span {
-                    color: #036CA1;
-                    font-weight: 600;
-                }
-            </style>
+        <style>
+            input[type="checkbox"]:checked+span {
+                color: #036CA1;
+                font-weight: 600;
+            }
+        </style>
 
-            <!-- Submit button -->
-            <div class="flex justify-end">
-                <button type="submit" >
-                    <x-icons.submit />
-                </button>
-            </div>
+        <!-- Submit button -->
+        <div class="flex justify-end">
+            <button type="submit">
+                <x-icons.submit />
+            </button>
+        </div>
         </div>
     </form>
 

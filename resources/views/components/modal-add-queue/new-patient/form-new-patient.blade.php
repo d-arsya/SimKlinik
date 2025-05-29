@@ -3,8 +3,7 @@
     <!-- Name Patient -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
         <label for="" class="text-sm font-medium leading-6 text-gray-700">Nama</label>
-        <input type="type" name="name" value="Dogy"
-            class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
+        <input type="type" name="name" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
     </div>
 
     <!-- Gender Patient -->
