@@ -84,16 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Load API saat halaman pertama kali dimuat
     loadProvince();
 
-    // Tambahkan event listener untuk tombol pasien baru & pasien lama
-    // document.getElementById("pasienBaruButton")?.addEventListener("click", function () {
-    //     console.log("Pasien Baru diklik, memuat ulang provinsi...");
-    //     loadProvinces();
-    // });
 
-    // document.getElementById("pasienLamaButton")?.addEventListener("click", function () {
-    //     console.log("Pasien Lama diklik, memuat ulang provinsi...");
-    //     loadProvinces();
-    // });
 });
 
 // Fungsi untuk memuat provinsi dari API
@@ -165,29 +156,31 @@ document.getElementById("districts").addEventListener("change", function () {
 });
 
 // Event listener untuk submit form
-document.getElementById("ownerForms").addEventListener("submit", function (e) {
-    e.preventDefault();
+document.getElementById("ownerForms").addEventListener("submit", function(e) {
+        e.preventDefault();
 
-    let formData = new FormData(e.target);
+        let formData = new FormData(this);
 
-    fetch('/api/owner', {
-        method: 'POST',
-        body: JSON.stringify(Object.fromEntries(formData)),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-
-    .then(data => {
-        console.log(data)
-        if (data.success) {
-            alert("Data berhasil disimpan!");
-            window.dispatchEvent(new CustomEvent('next-step')); 
-        } else {
-            alert("Gagal menyimpan data: " + data.error);
-        }
-    })
-    .catch(error => console.error("Error:", error));
-});
+        fetch('/api/owner', {
+                method: 'POST',
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Data berhasil disimpan!");
+                    window.dispatchEvent(new CustomEvent('select-old-patient', {
+                        detail: {
+                            ownerId: data.data.id
+                        }
+                    }));
+                } else {
+                    alert("Gagal menyimpan data: " + data.message);
+                }
+            })
+            .catch(error => console.error("Error:", error));
+    });
 </script>

@@ -36,13 +36,8 @@
                         <td class="px-6 py-3 border border-gray-200"
                             x-text="patient.owner ? patient.owner.phone : 'Tidak Ada'"></td>
                         <td class="px-6 py-3 border border-gray-200">
-                            <button @click="
-                            Alpine.store('modal').selectedOwnerId = patients.owners ? patients.owners.Id : null;
-                            $dispatch('next-step')
-                            ">
-                                <x-icons.add />
-                            </button>
-                            <button @click="console.log(Alpine.store('modal').selectedOwnerId)">Cek Owner Terpilih</button>
+                            <button> <x-icons.add />
+                        </button>
                         </td>
                     </tr>
                 </template>

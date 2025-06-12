@@ -1,4 +1,4 @@
-<form id="precheckupForm" class="space-y-3" action="{{ route('api.checkup.store') }}" method="post">
+<form id="precheckupForm" class="space-y-3" method="post">
     @csrf
     <!-- Berat Badan -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
@@ -68,10 +68,10 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        loadService();
+        loadServices();
     });
 
-    function loadService() {
+    function loadServices() {
         const serviceSelectCoba = document.getElementById("services")
         if (!serviceSelectCoba) return;
 
@@ -100,15 +100,11 @@
         e.preventDefault();
 
         let formData = new FormData(this);
-        formData.append('patient_id', localStorage.getItem('new-patient-id'))
 
-        // Debugging: Log data yang akan dikirim
-        console.log("Form Data yang Dikirim:");
-        for (let [key, value] of formData.entries()) {
-            console.log(key + ": " + value);
-        }
+        // Tambahkan patient_id dari localStorage
+        formData.append('patient_id', localStorage.getItem('old-patient-id'));
 
-        fetch(`/api/checkup`, {
+        fetch(`/api/checkup/`, {
                 method: 'POST',
                 body: JSON.stringify(Object.fromEntries(formData)),
                 headers: {
@@ -117,19 +113,27 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Debugging: Log respon dari API
-                console.log("Respon dari API:", data);
-
                 if (data.success) {
-                    alert("Data berhasil disimpan!");
-                    window.dispatchEvent(new CustomEvent('preview-precheckup', {}));
+                    let inputData = {};
+                    this.querySelectorAll("input, select").forEach(input => {
+                        if (input.type === "checkbox") {
+                            inputData[input.name] = input.checked;
+                        } else {
+                            inputData[input.name] = input.value;
+                        }
+                    });
+                    window.dispatchEvent(new CustomEvent('preview-precheckup', {
+                        detail: {
+                            precheckupId: data.data.id,
+                            formData: inputData
+                        }
+                    }));
                 } else {
                     alert("Gagal menyimpan data: " + data.message);
                 }
             })
             .catch(error => {
-                // Debugging: Log error
                 console.error("Error:", error);
             });
-    })
+    });
 </script>

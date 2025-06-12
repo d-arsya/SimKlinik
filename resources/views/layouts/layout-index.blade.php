@@ -18,10 +18,17 @@
 
     <div class="flex m-2 border-2 rounded-xl">
 
-        <!-- Searh & Filter -->
+        <!-- Search & Filter -->
         <div class="relative w-full overflow-x-auto border-none sm:rounded-lg">
             <div class="flex items-center justify-between my-2 mx-4">
-                <x-icons.search />
+                <div class="relative w-full max-w-xs mx-2">
+                    <input type="text" id="tableSearch"
+                        class="w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+                        placeholder="Cari pasien...">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <x-icons.search />
+                    </div>
+                </div>
                 <x-icons.filter />
             </div>
         </div>
@@ -56,5 +63,18 @@
                 }
             });
         }
+        document.getElementById('tableSearch').addEventListener('input', function() {
+            const keyword = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#dataTable tbody tr');
+
+            rows.forEach(row => {
+                const rowText = row.innerText.toLowerCase();
+                if (rowText.includes(keyword)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
     </script>
 @endsection

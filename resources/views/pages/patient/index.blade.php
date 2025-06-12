@@ -7,48 +7,52 @@
     <p class="text-cadet font-medium">Jumlah Dokter: <span class="text-[#252F4A]">724</span></p>
 @endsection
 
+@section('search')
+
+@endsection
+
 <!-- Table -->
 @section('table')
-    <thead class="border-y border-gray-200 bg-[#FCFCFC]">
-        <tr>
-            <th scope="col" class="px-6 py-3 border-r border-gray-200">No. </th>
-            <th scope="col" class="px-6 py-3 border-r border-gray-200">No. RM</th>
-            <th scope="col" class="px-6 py-3 border-r border-gray-200">Nama</th>
-            <th scope="col" class="px-6 py-3 border-r border-gray-200">Owner</th>
-            <th scope="col" class="px-6 py-3 border-r border-gray-200">Umur</th>
-            <th scope="col" class="px-6 py-3 border-r border-gray-200">No. Telp</th>
-            <th scope="col" class="px-6 py-3 text-center border-r border-gray-100">Aksi</th>
-        </tr>
-    </thead>
-    <tbody class="font-medium">
-        @foreach ($patients as $item)
+        <thead class="border-y border-gray-200 bg-[#FCFCFC]">
             <tr>
-                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $loop->iteration }}</td>
-                <td class="px-6 py-3 border-b border-r border-gray-200 ">{{ $item->record }}</td>
-                <td class="px-6 py-3 border-b border-r border-gray-200 ">
-                    <div>
-                        <p class="font-semibold">{{ $item->name }}</a>
-                        <p>{{ $item->animal->name }}</p>
-                    </div>
-                </td>
-                <td class="px-6 py-3 border-b border-r border-gray-200">
-                    <a href="{{ route('owner.show', $item->owner->id) }}">
-                        {{ $item->owner->name }}
-                    </a>
-                </td>
-                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->calcAge() }}</td>
-                <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->owner->phone }}</td>
-                <td class="px-6 py-3 border-b border-gray-200">
-                    <div class="flex justify-center items-center gap-2 h-10">
-                        <a href="{{ route('patient.show', $item->id) }}">
-                            <x-icons.view />
-
-                        </a>
-                    </div>
-                </td>
+                <th scope="col" class="px-6 py-3 border-r border-gray-200">No. </th>
+                <th scope="col" class="px-6 py-3 border-r border-gray-200">No. RM</th>
+                <th scope="col" class="px-6 py-3 border-r border-gray-200">Nama</th>
+                <th scope="col" class="px-6 py-3 border-r border-gray-200">Owner</th>
+                <th scope="col" class="px-6 py-3 border-r border-gray-200">Umur</th>
+                <th scope="col" class="px-6 py-3 border-r border-gray-200">No. Telp</th>
+                <th scope="col" class="px-6 py-3 text-center border-r border-gray-100">Aksi</th>
             </tr>
+        </thead>
+        <tbody class="font-medium">
+            @foreach ($patients as $item)
+                <tr>
+                    <td class="px-6 py-3 border-b border-r border-gray-200">{{ $loop->iteration }}</td>
+                    <td class="px-6 py-3 border-b border-r border-gray-200 ">{{ $item->record }}</td>
+                    <td class="px-6 py-3 border-b border-r border-gray-200 ">
+                        <div>
+                            <p class="font-semibold">{{ $item->name }}</a>
+                            <p>{{ $item->animal->name }}</p>
+                        </div>
+                    </td>
+                    <td class="px-6 py-3 border-b border-r border-gray-200">
+                        <a href="{{ route('owner.show', $item->owner->id) }}">
+                            {{ $item->owner->name }}
+                        </a>
+                    </td>
+                    <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->calcAge() }}</td>
+                    <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->owner->phone }}</td>
+                    <td class="px-6 py-3 border-b border-gray-200">
+                        <div class="flex justify-center items-center gap-2 h-10">
+                            <a href="{{ route('patient.show', $item->id) }}">
+                                <x-icons.view />
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+        </tbody>
         @endforeach
-    </tbody>
+    </table>
 @endsection
 
 @section('pagination')
@@ -104,4 +108,7 @@
             </div>
         </div> --}}
     </div>
+@endsection
+
+@section('scripts')
 @endsection
