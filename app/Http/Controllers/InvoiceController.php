@@ -11,12 +11,12 @@ class InvoiceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $invoices = Invoice::with([
             'checkup.patient.animal',
             'checkup.patient.owner'
-        ])->get();
+        ])->paginate($request->unit ?? 10);
         $patient = Patient::count();
         return view('pages.invoice.index', compact('invoices', 'patient'));
     }
@@ -64,7 +64,8 @@ class InvoiceController extends Controller
             "method" => $request->method,
             "notes" => $request->notes,
             "discount" => $request->discount,
-            "free" => $request->free == "on"
+            "free" => $request->free == "on",
+            "paid" => now()
         ]);
         return redirect()->route('invoice.show', $invoice->id);
     }

@@ -3,7 +3,7 @@
 <!-- Header -->
 @section('title', 'Tabel Rawat Inap Pasien')
 @section('desc')
-    <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">{{ $patient }}</span></p>
+    <p class="text-cadet font-medium me-[14px]">Jumlah Rawat Inap: <span class="text-[#252F4A]">{{ $patient }}</span></p>
 @endsection
 
 <!-- Table -->
@@ -60,4 +60,17 @@
             </tr>
         @endforeach
     </tbody>
+@endsection
+
+@section('pagination')
+    <div class="flex items-center justify-between mx-4 my-2 text-sm text-gray-700">
+        <!-- Rows Per Page Selector -->
+        <select id="rowsPerPage" onchange="changeRowsPerPage()"
+            class="p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option {{ request('unit') == 10 ? 'selected' : '' }} value="10">10</option>
+            <option {{ request('unit') == 25 ? 'selected' : '' }} value="25">25</option>
+            <option {{ request('unit') == 50 ? 'selected' : '' }} value="50">50</option>
+        </select>
+        {{ $inpatient->appends(request()->query())->links() }}
+    </div>
 @endsection

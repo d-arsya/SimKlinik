@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 class MasterTypeController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $types = Type::all();
+        $types = Type::paginate($request->unit ?? 10);
         return view('pages.type.index', compact('types'));
     }
 

@@ -3,7 +3,7 @@
 <!-- Header -->
 @section('title', 'Tabel Antrian Pasien')
 @section('desc')
-    <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">{{ $patient }}</span></p>
+    <p class="text-cadet font-medium me-[14px]">Jumlah Antrian: <span class="text-[#252F4A]">{{ $queues->count() }}</span></p>
 @endsection
 
 @section('buttons')
@@ -20,14 +20,14 @@
 @endsection
 
 @section('search')
-<div class="relative w-full max-w-xs mx-2">
-    <input type="text" id="tableSearch"
-        class="w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
-        placeholder="Cari pasien...">
-    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-        <x-icons.search/>
+    <div class="relative w-full max-w-xs mx-2">
+        <input type="text" id="tableSearch"
+            class="w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+            placeholder="Cari pasien...">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <x-icons.search />
+        </div>
     </div>
-</div>
 @endsection
 
 <!-- Table -->
@@ -40,29 +40,11 @@
                 <th scope="col" class="px-6 py-3 border-r border-gray-200">Pasien</th>
                 <th scope="col" class="px-6 py-3 border-r border-gray-200">Owner Pasien</th>
                 <th scope="col" class="px-6 py-3 border-r border-gray-200">Umur</th>
-           <th scope="col" class="px-6 py-3 border-r border-gray-200">No. Telp</th>
+                <th scope="col" class="px-6 py-3 border-r border-gray-200">No. Telp</th>
                 @if (auth()->user()->role != 'doctor')
                     <th scope="col" class="px-6 py-3 font-semibold border-r border-gray-200">Status</th>
                 @endif
-<<<<<<< HEAD
                 <th scope="col" class="px-6 py-3 font-semibold border-r border-gray-100 text-center">Aksi</th>
-=======
-
-                <td class="px-6 py-3 border-b border-gray-200 text-center">
-                    <div class="flex justify-center items-center gap-2">
-                        @if (auth()->user()->role == 'doctor')
-                            <a href="{{ route('patient.diagnose.edit', [$item->patient->id, $item->id]) }}">
-                                <x-icons.stethoscope2 />
-                            </a>
-                        @elseif($item->status == 'diperiksa')
-                            <a href="{{ route('patient.diagnose.show', [$item->patient->id, $item->id]) }}">
-                                <x-icons.view />
-                            </a>
-                        @endif
-
-                    </div>
-                </td>
->>>>>>> c7bdffc43bb6737a0b56dda566e6dec4263e7299
             </tr>
         </thead>
         <tbody class="font-medium">
@@ -96,9 +78,24 @@
                                 <a href="{{ route('patient.diagnose.edit', [$item->patient->id, $item->id]) }}">
                                     <x-icons.stethoscope2 />
                                 </a>
+                            @else
+                                @if ($item->status == 'diperiksa')
+                                    @if ($item->invoice->paid)
+                                        <a href="{{ route('invoice.show', [$item->invoice->id]) }}">
+                                            <x-icons.invoice2 />
+                                        </a>
+                                    @else
+                                        <a href="{{ route('invoice.edit', [$item->invoice->id]) }}">
+                                            <x-icons.invoice2 />
+                                        </a>
+                                    @endif
+                                    <a href="{{ route('patient.diagnose.show', [$item->patient->id, $item->id]) }}"
+                                        color="blue"
+                                        class="inline-flex items-center w-[34.78px] h-8 px-2 py-2 mb-2 text-sm font-medium text-white bg-[#036CA1] rounded-lg shadow-lg">
+                                        <x-icons.detail-icon />
+                                    </a>
+                                @endif
                             @endif
-
-                  <x-icons.view />
                         </div>
                     </td>
                 </tr>
@@ -112,29 +109,10 @@
         <!-- Rows Per Page Selector -->
         <select id="rowsPerPage" onchange="changeRowsPerPage()"
             class="p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="10" selected>10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
+            <option {{ request('unit') == 10 ? 'selected' : '' }} value="10">10</option>
+            <option {{ request('unit') == 25 ? 'selected' : '' }} value="25">25</option>
+            <option {{ request('unit') == 50 ? 'selected' : '' }} value="50">50</option>
         </select>
-
+        {{ $queues->appends(request()->query())->links() }}
     </div>
 @endsection
-@section('scripts')
-<script>
-    document.getElementById('tableSearch').addEventListener('input', function () {
-        const keyword = this.value.toLowerCase();
-        const rows = document.querySelectorAll('#dataTable tbody tr');
-
-        rows.forEach(row => {
-            const rowText = row.innerText.toLowerCase();
-            if (rowText.includes(keyword)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
-</script>
-@endsection
-

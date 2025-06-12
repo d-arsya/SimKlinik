@@ -91,10 +91,19 @@
                             @endforeach
                         </td>
                         <td class="px-6 py-4 border-r">
-                            <a href="{{ route('invoice.show', $item->invoice->id) }}" color="blue"
-                                class="inline-flex items-center w-[34.78px] h-8 px-2 py-2 mb-2 text-sm font-medium text-white transition-all duration-200 ease-in-out transform bg-[#036CA1] rounded-lg shadow-lg focus:outline-none hover:bg-[#036CA1]-700 hover:scale-105 hover:shadow-xl dark:focus:ring-blue-900">
-                                <x-icons.invoice />
-                            </a>
+                            @if ($item->invoice)
+                                @if ($item->invoice->paid)
+                                    <a href="{{ route('invoice.show', $item->invoice->id) }}" color="blue"
+                                        class="inline-flex items-center w-[34.78px] h-8 px-2 py-2 mb-2 text-sm font-medium text-white transition-all duration-200 ease-in-out transform bg-[#036CA1] rounded-lg shadow-lg focus:outline-none hover:bg-[#036CA1]-700 hover:scale-105 hover:shadow-xl dark:focus:ring-blue-900">
+                                        <x-icons.invoice />
+                                    </a>
+                                @else
+                                    <a href="{{ route('invoice.edit', $item->invoice->id) }}" color="blue"
+                                        class="inline-flex items-center w-[34.78px] h-8 px-2 py-2 mb-2 text-sm font-medium text-white transition-all duration-200 ease-in-out transform bg-[#036CA1] rounded-lg shadow-lg focus:outline-none hover:bg-[#036CA1]-700 hover:scale-105 hover:shadow-xl dark:focus:ring-blue-900">
+                                        <x-icons.invoice />
+                                    </a>
+                                @endif
+                            @endif
                         </td>
                         <td class="px-6 py-4 border-r">
                             <a href="{{ route('patient.diagnose.show', ['patient' => $patient->id, 'diagnose' => $item->id]) }}"

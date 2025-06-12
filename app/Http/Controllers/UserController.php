@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $users = User::paginate($request->unit ?? 10);
         return view('pages.user.index', compact('users'));
     }
 

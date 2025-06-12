@@ -9,6 +9,7 @@ use App\Models\Invoice;
 use App\Models\Patient;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PatientDiagnoseController extends Controller
 {
@@ -39,10 +40,10 @@ class PatientDiagnoseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $diagnose)
+    public function show(string $patient, string $diagnose)
     {
         $diagnose = Checkup::find($diagnose);
-        $patient = $diagnose->patient;
+        $patient = Patient::find($patient);
         $services = $diagnose->servicesData();
         $drugs = $diagnose->drugsData();
         $diagnoses = $diagnose->diagnosesData();
@@ -77,7 +78,11 @@ class PatientDiagnoseController extends Controller
             $invoice = Invoice::create([
                 "checkup_id" => $diagnose->id
             ]);
-            return redirect()->route('invoice.edit', $invoice->id);
+            if (Auth::user()->role == 'doctor') {
+                return redirect()->route('queue.index');
+            } else {
+                return redirect()->route('invoice.edit', $invoice->id);
+            }
         } else {
             return redirect()->route('queue.index');
         }

@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class MasterColorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $colors = Color::all();
+        $colors = Color::paginate($request->unit ?? 10);
         return view('pages.color.index', compact('colors'));
     }
 

@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 class MasterAnimalController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $animals = Animal::all();
+        $animals = Animal::paginate($request->unit ?? 10);
         return view('pages.animal.index', compact('animals'));
     }
 

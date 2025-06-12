@@ -13,15 +13,15 @@ class QueueController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->unit ?? 10;
         if (Auth::user()->role == 'doctor') {
-            $queues = Checkup::with(['patient'])->whereQueued(true)->where('status', 'menunggu')->orderBy('created_at', 'asc')->get();
+            $queues = Checkup::with(['patient'])->whereQueued(true)->where('status', 'menunggu')->orderBy('created_at', 'asc')->paginate($perPage);
         } else {
-            $queues = Checkup::with(['patient'])->whereQueued(true)->orderBy('created_at', 'asc')->get();
+            $queues = Checkup::with(['patient'])->whereQueued(true)->orderBy('created_at', 'asc')->paginate($perPage);
         }
-        $patient = Patient::count();
-        return view('pages.queue.index', compact('queues', 'patient'));
+        return view('pages.queue.index', compact('queues'));
     }
 
     /**

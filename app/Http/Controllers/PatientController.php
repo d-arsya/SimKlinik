@@ -10,9 +10,10 @@ use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $patients = Patient::with(['animal', 'owner'])->get();
+        $perPage = $request->unit ?? 10;
+        $patients = Patient::with(['animal', 'owner'])->paginate($perPage);
         $patient = Patient::count();
         return view('pages.patient.index', compact('patients', 'patient'));
     }

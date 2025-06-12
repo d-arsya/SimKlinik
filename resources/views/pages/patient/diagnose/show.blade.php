@@ -25,7 +25,7 @@
     <div class="mb-7 border-2 rounded-xl">
         <div class="flex justify-between px-[30px] border-b-2">
             <h2 class="text-lg py-3 font-medium">About</h2>
-            <a href="{{ route('patient.edit', 1) }}" color="blue" class="self-center px-4 h-[30px]">Edit</a>
+            <a href="{{ route('patient.edit', $patient->id) }}" color="blue" class="self-center px-4 h-[30px]">Edit</a>
         </div>
         <div class="p-[30px] flex justify-start items-center">
             <div class="flex gap-7 text-sm">
@@ -168,15 +168,15 @@
             </thead>
             <tbody class="bg-white font-semibold text-sm">
                 @foreach ($diagnoses as $number => $item)
+                    <tr class=" border-b">
+                        <td class="px-6 py-4 border-r text-txtgray text-center">
+                            {{ $number + 1 }}
+                        </td>
+                        <td class="px-6 py-4 border-r">
+                            {{ $item->name }}
+                        </td>
+                    </tr>
                 @endforeach
-                <tr class=" border-b">
-                    <td class="px-6 py-4 border-r text-txtgray text-center">
-                        {{ $number + 1 }}
-                    </td>
-                    <td class="px-6 py-4 border-r">
-                        {{ $item->name }}
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>
@@ -220,7 +220,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white font-semibold text-sm">
-                @foreach ($services as $key => $item)
+                @foreach ($services as $number => $item)
                     <tr class=" border-b">
                         <td class="px-6 py-4 border-r text-txtgray text-center">
                             {{ $number + 1 }}

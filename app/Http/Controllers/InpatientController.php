@@ -12,10 +12,10 @@ class InpatientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $inpatient = Checkup::whereQueued(false)->whereStatus('menunggu')->get();
-        $patient = Patient::count();
+        $inpatient = Checkup::whereQueued(false)->whereStatus('menunggu')->paginate($request->unit ?? 10);
+        $patient = Checkup::whereQueued(false)->whereStatus('menunggu')->count();
         return view('pages.inpatient.index', compact('inpatient', 'patient'));
     }
 

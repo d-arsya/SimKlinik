@@ -18,7 +18,11 @@ class Checkup extends Model
     }
     public function diagnosesData()
     {
-        return Diagnose::whereIn('id', json_decode($this->diagnoses))->get();
+        if ($this->diagnoses) {
+            return Diagnose::whereIn('id', json_decode($this->diagnoses))->get();
+        } else {
+            return [];
+        }
     }
     public function servicesData()
     {
@@ -40,7 +44,7 @@ class Checkup extends Model
     }
     public function drugsData()
     {
-        return json_decode($this->drugs);
+        return json_decode($this->drugs) ?? [];
     }
     public function invoice()
     {

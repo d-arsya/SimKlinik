@@ -63,6 +63,18 @@
                 }
             });
         }
+
+        function changeRowsPerPage() {
+            const unit = document.getElementById('rowsPerPage').value;
+
+            const url = new URL(window.location.href);
+            const params = url.searchParams;
+
+            // Set or update only 'unit' param, keep 'page' as is
+            params.set('unit', unit);
+
+            window.location.href = `${url.pathname}?${params.toString()}`;
+        }
         document.getElementById('tableSearch').addEventListener('input', function() {
             const keyword = this.value.toLowerCase();
             const rows = document.querySelectorAll('#dataTable tbody tr');

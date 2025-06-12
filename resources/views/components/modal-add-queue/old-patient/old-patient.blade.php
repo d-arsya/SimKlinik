@@ -17,20 +17,20 @@
     prevStep: 1,
     init() {
         window.addEventListener('input-precheckup-old-patient', (event) => {
-            localStorage.setItem('old-patient-id',event.detail.patientId)
-            console.log('Old Patient ID dari Alpine:',localStorage.getItem('old-patient-id'));
+            localStorage.setItem('old-patient-id', event.detail.patientId)
+            console.log('Old Patient ID dari Alpine:', localStorage.getItem('old-patient-id'));
             this.changeStep(3);
         });
         window.addEventListener('preview-precheckup', (event) => {
-            localStorage.setItem('precheckup-id',event.detail.precheckupId)
-            localStorage.setItem('form-data',event.detail.formData)
-            console.log('precheckup-id:',localStorage.getItem('precheckup-id'));
-            console.log('preview:',JSON.stringify(localStorage.getItem('form-data'), null, 2));
+            localStorage.setItem('precheckup-id', event.detail.precheckupId)
+            localStorage.setItem('form-data', event.detail.formData)
+            console.log('precheckup-id:', localStorage.getItem('precheckup-id'));
+            console.log('preview:', JSON.stringify(localStorage.getItem('form-data'), null, 2));
             this.changeStep(5);
         });
         window.addEventListener('select-old-patient', (event) => {
-            localStorage.setItem('new-owner-id',event.detail.ownerId)
-            console.log('Owner ID dari Alpine:',localStorage.getItem('new-owner-id'));
+            localStorage.setItem('new-owner-id', event.detail.ownerId)
+            console.log('Owner ID dari Alpine:', localStorage.getItem('new-owner-id'));
             this.changeStep(2);
         });
     },
@@ -82,7 +82,7 @@
             </div>
 
             <!-- TAB NAVIGATION -->
-            <div class="sticky top-[60px] bg-white z-10 border-b flex justify-center p-2" x-show="step === 1">
+            {{-- <div class="sticky top-[60px] bg-white z-10 border-b flex justify-center p-2" x-show="step === 1">
                 <button @click="changeTab('lama')" class="px-4 py-2 transition-transform duration-300"
                     :class="activeTab === 'lama' ? 'border-b-2 border-blue-500 text-blue-600 font-semibold' :
                         'text-gray-600'">
@@ -93,7 +93,7 @@
                         'text-gray-600'">
                     Owner Baru
                 </button>
-            </div>
+            </div> --}}
 
             <!-- CONTENT TAB -->
             <div class="p-4">

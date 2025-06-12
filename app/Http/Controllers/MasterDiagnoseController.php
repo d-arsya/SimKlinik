@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class MasterDiagnoseController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $diagnoses = Diagnose::with('animal')->get();
+        $diagnoses = Diagnose::with('animal')->paginate($request->unit ?? 10);
         return view('pages.diagnose.index', compact('diagnoses'));
     }
 
