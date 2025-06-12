@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkup;
+use App\Models\Invoice;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class InpatientController extends Controller
@@ -12,8 +14,9 @@ class InpatientController extends Controller
      */
     public function index()
     {
-        $inpatient = Checkup::whereFalse('queued')->get();
-        return view('pages.inpatient.index', compact('inpatient'));
+        $inpatient = Checkup::whereQueued(false)->whereStatus('menunggu')->get();
+        $patient = Patient::count();
+        return view('pages.inpatient.index', compact('inpatient', 'patient'));
     }
 
     /**
@@ -53,7 +56,14 @@ class InpatientController extends Controller
      */
     public function update(Request $request, Checkup $inpatient)
     {
-        //
+        if ($request->selesai) {
+            $inpatient->status = 'diperiksa';
+            $inpatient->save();
+            $invoice = Invoice::create([
+                "checkup_id" => $inpatient->id
+            ]);
+            return redirect()->route('invoice.edit', $invoice->id);
+        }
     }
 
     /**

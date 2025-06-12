@@ -19,7 +19,8 @@ class InvoiceFactory extends Factory
         return [
             "discount" => fake()->numberBetween(0, 20),
             "paid" => fake()->randomElement([fake()->dateTime(), null]),
-            "method" => fake()->randomElement(['cash', 'credit', 'transfer'])
+            "method" => fake()->randomElement(['cash', 'credit', 'transfer']),
+            "notes" => fake()->sentence(4)
         ];
     }
 }

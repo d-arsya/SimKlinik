@@ -3,16 +3,15 @@
 @section('container')
     <div class="flex justify-between mb-7">
         <div class="flex items-center space-x-5">
-            <img class="w-[100px] h-[100px]" src="img/detail-owner-img.png" alt="detail-owner">
             <div class="space-y-1">
-                <div class="font-semibold text-lg">Andi</div>
+                <div class="font-semibold text-lg">{{ $owner->name }}</div>
             </div>
         </div>
     </div>
     <div class="mb-7 border-2 rounded-xl">
         <div class="flex justify-between px-[30px] border-b-2">
             <h2 class="text-lg py-3 font-medium">About</h2>
-            <a href="{{ route('owner.edit', 1) }}" color="blue" class="self-center px-4 h-[30px]">Edit</a>
+            <a href="{{ route('owner.edit', $owner->id) }}" color="blue" class="self-center px-4 h-[30px]">Edit</a>
         </div>
         <div class="p-[30px] justify-center items-start">
             <div class="flex gap-7 text-sm">
@@ -23,11 +22,10 @@
                     <div>Alamat:</div>
                 </div>
                 <div class="space-y-4 text-txtblack">
-                    <div>Andi</div>
-                    <div>Laki-laki</div>
-                    <div>081212292928</div>
-                    <div>Kaliurang St No.Km 15.5, Kledokan, Umbulmartani, Ngemplak, Sleman Regency, Special Region of
-                        Yogyakarta 55582</div>
+                    <div>{{ $owner->name }}</div>
+                    <div>{{ $owner->gender }}</div>
+                    <div>{{ $owner->phone }}</div>
+                    <div>{{ $owner->address }}</div>
                 </div>
             </div>
         </div>

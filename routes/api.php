@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\OwnerController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\ServiceController;
+use App\Http\Controllers\Api\SimbatApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +27,13 @@ Route::name('api.')->group(function () {
         Route::get('color', 'color')->name('color');
     });
 
-    
+
     Route::get('service', [ServiceController::class, 'index'])->name('service');
     Route::apiResource('owner', OwnerController::class)->only(['store', 'index']);
     Route::apiResource('patient', PatientController::class)->only(['store', 'index']);
     Route::apiResource('checkup', CheckupController::class)->only(['store', 'show', 'update']);
+    Route::get('checkup/{checkup}/diagnose/{diagnose}', [CheckupController::class, 'diagnoseEdit']);
+    Route::get('checkup/{checkup}/service/{service}', [CheckupController::class, 'serviceEdit']);
+    Route::get('checkup/{checkup}/drug/{drug}/{amount}', [CheckupController::class, 'drugEdit']);
+    Route::get('drugs/category/{category}', [SimbatApi::class, 'getDrugsByCategory']);
 });

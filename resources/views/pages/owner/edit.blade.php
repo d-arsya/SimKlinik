@@ -3,20 +3,20 @@
 @section('container')
     <div class="flex justify-between mb-7">
         <div class="flex items-center space-x-5">
-            <img class="w-[100px] h-[100px]" src="img/detail-owner-img.png" alt="detail-owner">
             <div class="space-y-1">
-                <div class="font-semibold text-lg">Andi</div>
+                <div class="font-semibold text-lg">{{ $owner->name }}</div>
             </div>
         </div>
     </div>
     <h2 class="text-lg py-3 font-medium">About</h2>
-    <form id="submitForm" action="{{ route('owner.store') }}" method="POST" enctype="multipart/form-data">
+    <form id="submitForm" action="{{ route('owner.update', $owner->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="gap-[10px]">
             <!-- Name Field -->
             <div class="flex items-center mb-5 space-x-8">
-                <label for="nama_owner">Nama</label>
-                <input type="text" name="nama_owner" placeholder="Ketikkan nama owner pasien..."
+                <label for="name">Nama</label>
+                <input type="text" name="name" value="{{ $owner->name }}" placeholder="Ketikkan nama owner pasien..."
                     class=" mt-2 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required>
             </div>
@@ -24,30 +24,30 @@
             <!-- Gender Field -->
             <div class="flex items-center mb-5 space-x-8">
                 <label for="gender">Gender</label>
-                <input type="text" name="gender" placeholder="cth : Perempuan"
-                    class=" mt-2 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required>
+                <select type="text" name="gender" placeholder="cth : Perempuan"
+                    class=" mt-2 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="Laki-Laki" {{ $owner->gender == 'Laki-Laki' ? 'selected' : '' }}>Laki-Laki</option>
+                    <option value="Perempuan" {{ $owner->gender == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                </select>
             </div>
 
             <!-- Phone Number Field -->
             <div class="flex items-center mb-5 space-x-8">
-                <label for="no_hp">Nomor Telepon</label>
-                <input type="text" name="no_hp" placeholder="cth : 08xxxx"
+                <label for="phone">Telepon</label>
+                <input type="text" value="{{ $owner->phone }}" name="phone" placeholder="cth : 08xxxx"
                     class=" mt-2 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required>
             </div>
 
             <!-- Address Field -->
             <div class="flex items-center mb-5 space-x-8">
-                <label for="alamat">Alamat</label>
-                <textarea name="alamat" placeholder="Alamat Domisili"
-                    class=" mt-2 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                <label for="address">Alamat</label>
+                <textarea name="address" placeholder="Alamat Domisili"
+                    class=" mt-2 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>{{ $owner->address }}</textarea>
             </div>
 
             <div class="flex space-x-3 place-self-end">
-                <button type="button" color="red" class="w-[137px]">
-                    Batal</button>
-                <button type="button" color="blue" class="w-[137px]">
+                <button type="submit" color="blue" class="bg-primary rounded-md p-2 text-white">
                     Submit</button>
             </div>
         </div>

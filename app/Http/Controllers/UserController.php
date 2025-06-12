@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\SimbatApi;
+use App\Models\Checkup;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +41,11 @@ class UserController extends Controller
     }
     public function dashboard()
     {
-        return view('pages.user.dashboard');
+        $drugTopSell = SimbatApi::getDrugTopSell();
+        $user = Auth::user();
+        $pemeriksaan = Checkup::whereDate('created_at', now())->count();
+        $inap = Checkup::whereQueued(false)->whereStatus('menunggu')->count();
+        return view('pages.user.dashboard', compact('user', 'pemeriksaan', 'inap', 'drugTopSell'));
     }
     public function profile()
     {

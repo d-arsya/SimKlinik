@@ -3,8 +3,7 @@
 <!-- Header -->
 @section('title', 'Tabel Antrian Pasien')
 @section('desc')
-    <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">49,053</span></p>
-    <p class="text-cadet font-medium">Jumlah Dokter: <span class="text-[#252F4A]">724</span></p>
+    <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">{{ $patient }}</span></p>
 @endsection
 
 @section('buttons')
@@ -45,7 +44,25 @@
                 @if (auth()->user()->role != 'doctor')
                     <th scope="col" class="px-6 py-3 font-semibold border-r border-gray-200">Status</th>
                 @endif
+<<<<<<< HEAD
                 <th scope="col" class="px-6 py-3 font-semibold border-r border-gray-100 text-center">Aksi</th>
+=======
+
+                <td class="px-6 py-3 border-b border-gray-200 text-center">
+                    <div class="flex justify-center items-center gap-2">
+                        @if (auth()->user()->role == 'doctor')
+                            <a href="{{ route('patient.diagnose.edit', [$item->patient->id, $item->id]) }}">
+                                <x-icons.stethoscope2 />
+                            </a>
+                        @elseif($item->status == 'diperiksa')
+                            <a href="{{ route('patient.diagnose.show', [$item->patient->id, $item->id]) }}">
+                                <x-icons.view />
+                            </a>
+                        @endif
+
+                    </div>
+                </td>
+>>>>>>> c7bdffc43bb6737a0b56dda566e6dec4263e7299
             </tr>
         </thead>
         <tbody class="font-medium">

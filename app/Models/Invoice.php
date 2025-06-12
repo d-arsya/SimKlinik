@@ -35,4 +35,15 @@ class Invoice extends Model
 
         return $service + $drug;
     }
+    public function realTotal()
+    {
+        $checkup = $this->checkup;
+
+        $service = collect($checkup->servicesData())->sum(fn($service) => $service['price'] * $service['days']);
+        $drug = collect($checkup->drugsData())->sum(fn($drug) => $drug->price * $drug->amount);
+        $total = $service + $drug;
+        $disc = ($total * ($this->discount)) / 100;
+        $free = $this->free ? $service : 0;
+        return $total - $disc - $free;
+    }
 }

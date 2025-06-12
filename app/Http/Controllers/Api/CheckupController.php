@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Checkup;
+use App\Models\Diagnose;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
@@ -96,12 +97,6 @@ class CheckupController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // "diagnoses": "[9, 5, 5]",
-        // "drugs": "[{\"id\": 9, \"date\": \"1970-12-15\", \"name\": \"laboriosam\", \"type\": \"et\", \"notes\": \"Illum qui quia quo architecto expedita et porro.\", \"price\": 35000, \"amount\": 10}, {\"id\": 2, \"date\": \"1993-04-18\", \"name\": \"rerum\", \"type\": \"eaque\", \"notes\": \"Dolorem labore doloremque ut distinctio sapiente perspiciatis.\", \"price\": 83000, \"amount\": 6}, {\"id\": 8, \"date\": \"1973-05-27\", \"name\": \"sunt\", \"type\": \"autem\", \"notes\": \"Inventore ut voluptatem et optio velit.\", \"price\": 34000, \"amount\": 2}]",
-        // "status": "menunggu",
-        // "queued": true,
-        // "anamnesis": "Tempore cum est et voluptas autem quam et dolor possimus iure consectetur ad natus magni sequi sint fugit ex.",
-        // "symptom": "Quia in ut molestiae ut inventore repellat porro consequatur sit et ex debitis.",
         $checkup = Checkup::find($id);
         if ($checkup) {
             try {
@@ -195,6 +190,116 @@ class CheckupController extends Controller
                 'data' => null
             ];
             return response()->json($response, 404);
+        }
+    }
+
+    public function diagnoseEdit(Checkup $checkup, string $diagnose)
+    {
+        try {
+            $diagnoses = json_decode($checkup->diagnoses, true) ?? [];
+            if (in_array($diagnose, $diagnoses)) {
+                $diagnoses = array_values(array_diff($diagnoses, [$diagnose]));
+            } else {
+                $diagnoses[] = $diagnose;
+            }
+            $checkup->diagnoses = json_encode($diagnoses);
+            $checkup->save();
+
+            $response = [
+                'success' => true,
+                'code' => 200,
+                'message' => 'Diagnose updated successfully.',
+                'data' => $diagnoses
+            ];
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            $response = [
+                'success' => false,
+                'code' => 200,
+                'message' => $th->getMessage(),
+                'data' => null
+            ];
+            return response()->json($response);
+        }
+    }
+    public function serviceEdit(Checkup $checkup, string $service)
+    {
+        try {
+            $services = json_decode($checkup->services, true) ?? [];
+            $serviceId = (int) $service;
+            $index = collect($services)->search(function ($item) use ($serviceId) {
+                return isset($item['id']) && $item['id'] == $serviceId;
+            });
+
+            if ($index !== false) {
+                unset($services[$index]);
+                $services = array_values($services);
+            } else {
+                $services[] = ['id' => $serviceId, 'days' => 1];
+            }
+
+            $checkup->services = json_encode($services);
+            $checkup->save();
+
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => 'Services updated successfully.',
+                'data' => $services
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => $th->getMessage(),
+                'data' => null
+            ]);
+        }
+    }
+    public function drugEdit(Checkup $checkup, string $drug, string $amount)
+    {
+        try {
+            $drugs = json_decode($checkup->drugs, true) ?? [];
+            $drugId = (int) $drug;
+            $amount = (int) $amount;
+
+            // Cari index berdasarkan id
+            $index = collect($drugs)->search(function ($item) use ($drugId) {
+                return isset($item['id']) && $item['id'] == $drugId;
+            });
+
+            if ($index !== false) {
+                // Jika sudah ada, hapus
+                unset($drugs[$index]);
+                $drugs = array_values($drugs); // reset index array
+            } else {
+                $drug = SimbatApi::getDrug($drugId);
+                $drugs[] = [
+                    'id' => $drugId,
+                    'amount' => $amount,
+                    'name' => $drug["name"],
+                    'type' => $drug["type"],
+                    'price' => $drug["price"],
+                    'notes' => ""
+                ];
+            }
+
+            $checkup->drugs = json_encode($drugs);
+            $checkup->save();
+
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => 'Drugs updated successfully.',
+                'data' => $drugs
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => $th->getMessage(),
+                'data' => null
+            ]);
         }
     }
 }
