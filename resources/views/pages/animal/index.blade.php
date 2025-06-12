@@ -57,6 +57,6 @@
                 <option {{ request('unit') == 25 ? 'selected' : '' }} value="25">25</option>
                 <option {{ request('unit') == 50 ? 'selected' : '' }} value="50">50</option>
             </select>
-            {{ $animalsa->appends(request()->query())->links() }}
+            {{ $animals->appends(request()->query())->links() }}
         </div>
     @endsection
