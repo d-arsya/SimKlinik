@@ -23,10 +23,12 @@ class OwnerFactory extends Factory
         } while (Owner::where('phone', $phone)->count() > 1);
         $kendal = Location::where('city', 'Kabupaten Kendal')->pluck('id')->toArray();
         $location = $kendal[fake()->numberBetween(0, count($kendal) - 1)];
+        $loc = Location::find($location);
+        $address = "{$loc['village']}, {$loc['district']}, {$loc['city']}, {$loc['province']} {$loc['postalcode']}";
         return [
             "name" => fake()->name(),
             "gender" => fake()->randomElement(['Laki-Laki', 'Perempuan']),
-            "address" => fake()->address(),
+            "address" => $address,
             "province" => $location,
             "city" => $location,
             "district" => $location,
