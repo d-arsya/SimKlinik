@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
         } else {
             $this->call([
                 LocationSeeder::class,
-                UserDeploySeeder::class,
+                UserSeeder::class,
+                DataDeploySeeder::class
             ]);
         }
     }
