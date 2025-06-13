@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checkup;
 use App\Models\Owner;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,9 @@ class OwnerController extends Controller
      */
     public function show(Owner $owner)
     {
-        return view('pages.owner.show', compact('owner'));
+        $patients = $owner->patients->pluck('id')->toArray();
+        $checkups = Checkup::whereIn('patient_id', $patients)->with('patient')->paginate(2);
+        return view('pages.owner.show', compact('owner', 'checkups'));
     }
 
     /**

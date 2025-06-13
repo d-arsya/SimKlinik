@@ -14,7 +14,7 @@ class InvoiceSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= Checkup::all()->count(); $i++) {
+        for ($i = 1; $i <= Checkup::count(); $i++) {
             Invoice::factory(1)->create(["checkup_id" => $i]);
         }
     }

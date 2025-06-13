@@ -38,7 +38,7 @@
                 <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->owner->name }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->calcAge() }}</td>
                 <td class="px-6 py-3 border-b border-r border-gray-200">{{ $item->patient->owner->phone }}</td>
-                @if (auth()->user()->role == 'doctor')
+                @if (in_array(auth()->user()->role, ['doctor', 'admin']))
                     <td class="px-6 py-3 border-b border-gray-200">
                         <div class="flex justify-center items-center gap-2 h-10">
                             <a

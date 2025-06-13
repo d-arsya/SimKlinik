@@ -21,7 +21,7 @@ class OwnerFactory extends Factory
         do {
             $phone = fake()->phoneNumber();
         } while (Owner::where('phone', $phone)->count() > 1);
-        $location = fake()->numberBetween(1, Location::count());
+        $location = fake()->numberBetween(38392, 38667);
         return [
             "name" => fake()->name(),
             "gender" => fake()->randomElement(['Laki-Laki', 'Perempuan']),
