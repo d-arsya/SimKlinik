@@ -13,7 +13,7 @@ class SimbatApi extends Controller
     public static function token()
     {
         return Cache::remember('simklinik_token', 60, function () {
-            $response = Http::post(config('SIMBAT_URL') . 'login', [
+            $response = Http::post(config('simbat_url') . 'login', [
                 'email' => env('SIMKLINIK_EMAIL'),
                 'password' => env('SIMKLINIK_PASS'),
             ]);
@@ -29,7 +29,7 @@ class SimbatApi extends Controller
     public static function getDrug($id)
     {
         $token = self::token();
-        $response = Http::withToken($token)->get(config('SIMBAT_URL') . 'drugs/' . $id);
+        $response = Http::withToken($token)->get(config('simbat_url') . 'drugs/' . $id);
         $drugs = json_decode($response->body(), true)['data'];
         $drugs = [
             'id'    => $drugs['id'],
@@ -43,9 +43,9 @@ class SimbatApi extends Controller
     {
         return Cache::remember('simklinik_drug_all', 10, function () {
             $token = self::token();
-            $response = Http::withToken($token)->get(config('SIMBAT_URL') . 'repacks');
+            $response = Http::withToken($token)->get(config('simbat_url') . 'repacks');
             $total = json_decode($response->body())->data->total;
-            $response = Http::withToken($token)->get(config('SIMBAT_URL') . 'repacks?per_page=' . $total);
+            $response = Http::withToken($token)->get(config('simbat_url') . 'repacks?per_page=' . $total);
             $drugs = json_decode($response->body())->data->data;
             return array_map(function ($item) {
                 return [
@@ -59,7 +59,7 @@ class SimbatApi extends Controller
     public function getDrugsByCategory($category)
     {
         $token = self::token();
-        $response = Http::withToken($token)->get(config('SIMBAT_URL') . 'categories/' . $category);
+        $response = Http::withToken($token)->get(config('simbat_url') . 'categories/' . $category);
         $drugs = json_decode($response->body())->data->drugs;
         $drugs = array_map(function ($item) {
             return [
@@ -76,11 +76,11 @@ class SimbatApi extends Controller
             $token = self::token();
 
             // Ambil total data
-            $response = Http::withToken($token)->get(config('SIMBAT_URL') . 'categories');
+            $response = Http::withToken($token)->get(config('simbat_url') . 'categories');
             $total = json_decode($response->body())->data->total;
 
             // Ambil semua data
-            $response = Http::withToken($token)->get(config('SIMBAT_URL') . 'categories?per_page=' . $total);
+            $response = Http::withToken($token)->get(config('simbat_url') . 'categories?per_page=' . $total);
             $categories = json_decode($response->body())->data->data;
 
             // Format ulang data
@@ -100,7 +100,7 @@ class SimbatApi extends Controller
             $endDate = Carbon::now()->endOfMonth()->toDateString();
 
             // Make the request
-            $response = Http::withToken($token)->get(config('SIMBAT_URL') . "transactions/top-selling", [
+            $response = Http::withToken($token)->get(config('simbat_url') . "transactions/top-selling", [
                 'start_date' => $startDate,
                 'end_date' => $endDate,
                 'limit' => 10,

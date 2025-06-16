@@ -13,7 +13,7 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-    'simbat_url' => env('SIMBAT_URL', 'https://default-url.com'),
+    'simbat_url' => env('SIMBAT_URL', 'https://simbat.disyfa.cloud/api/v1/'),
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
