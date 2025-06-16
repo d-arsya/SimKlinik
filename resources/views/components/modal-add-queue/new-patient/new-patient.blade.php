@@ -18,20 +18,20 @@
     ownerId: null,
     init() {
         window.addEventListener('input-new-patient', (event) => {
-            localStorage.setItem('new-owner-id',event.detail.ownerId)
-            console.log('Owner ID dari Alpine:',localStorage.getItem('new-owner-id'));
+            localStorage.setItem('new-owner-id', event.detail.ownerId)
+            console.log('Owner ID dari Alpine:', localStorage.getItem('new-owner-id'));
             this.changeStep(2);
         });
         window.addEventListener('input-precheckup', (event) => {
-            localStorage.setItem('new-patient-id',event.detail.patientId)
-            console.log('Patient ID dari Alpine:',localStorage.getItem('new-patient-id'));
+            localStorage.setItem('new-patient-id', event.detail.patientId)
+            console.log('Patient ID dari Alpine:', localStorage.getItem('new-patient-id'));
             this.changeStep(3);
         });
         window.addEventListener('preview-precheckup', (event) => {
-            localStorage.setItem('precheckup-id',event.detail.precheckupId)
-            localStorage.setItem('form-data',event.detail.formData)
-            console.log('precheckup-id:',localStorage.getItem('precheckup-id'));
-            console.log('preview:',JSON.stringify(localStorage.getItem('form-data'), null, 2));
+            localStorage.setItem('precheckup-id', event.detail.precheckupId)
+            localStorage.setItem('form-data', event.detail.formData)
+            console.log('precheckup-id:', localStorage.getItem('precheckup-id'));
+            console.log('preview:', JSON.stringify(localStorage.getItem('form-data'), null, 2));
             this.changeStep(5);
         });
     },
@@ -120,7 +120,8 @@
                         Lanjutkan?</p>
                     <div class="flex justify-center mt-4 gap-4">
                         <button @click="changeStep(1)" class="px-4 py-2 bg-gray-300 rounded-md">Batal</button>
-                        <button @click="changeStep(4)" class="px-4 py-2 bg-blue-600 text-white rounded-md">OK</button>
+                        <button id="confirm-add-button-new-patient" @click="changeStep(4)"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md">OK</button>
                     </div>
                 </div>
 
