@@ -94,6 +94,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $checkups->links() }}
     </div>
 @endsection
 @section('scripts')
