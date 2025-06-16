@@ -18,7 +18,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::redirect('/', '/patient');
+Route::redirect('/', '/dashboard');
 if (env('APP_ENV') == 'local') {
     Route::redirect('login', 'login/super')->name('login');
     Route::get('login/{role}', [AuthController::class, 'login']);
