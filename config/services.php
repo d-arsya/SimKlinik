@@ -13,7 +13,7 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-
+    'simbat_url' => env('SIMBAT_URL', 'https://default-url.com'),
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
