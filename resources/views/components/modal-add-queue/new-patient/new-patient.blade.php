@@ -113,7 +113,7 @@
                 </div>
 
                 <!-- Step 3: Konfirmasi -->
-                <div x-show="step === 3" x-transition:enter="transition ease-out duration-300 transform"
+                {{-- <div x-show="step === 3" x-transition:enter="transition ease-out duration-300 transform"
                     x-transition:enter-start="opacity-0 translate-y-5 scale-95"
                     x-transition:enter-end="opacity-100 translate-y-0 scale-100">
                     <p class="text-lg text-center font-semibold">Pasien akan masuk ke antrian pemeriksaan awal.
@@ -123,10 +123,10 @@
                         <button id="confirm-add-button-new-patient" @click="changeStep(4)"
                             class="px-4 py-2 bg-blue-600 text-white rounded-md">OK</button>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Step 4: Input Data Pasien Baru -->
-                <div x-show="step === 4" x-transition:enter="transition ease-out duration-100 transform"
+                <div x-show="step === 3" x-transition:enter="transition ease-out duration-100 transform"
                     x-transition:enter-start="opacity-0 translate-y-5 scale-95"
                     x-transition:enter-end="opacity-100 translate-y-0 scale-100">
                     <x-modal-add-queue.new-patient.form-precheckup />
