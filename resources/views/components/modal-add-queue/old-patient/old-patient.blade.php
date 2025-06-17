@@ -10,7 +10,7 @@
     });
 </script>
 
-<div x-data="{
+<div id="modal-old-patient" x-data="{
     openModal: false,
     activeTab: 'lama',
     step: 1,
