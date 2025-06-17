@@ -93,7 +93,7 @@
         // Tambahkan patient_id dari localStorage
         formData.append('patient_id', localStorage.getItem('old-patient-id'));
 
-        fetch(`/api/checkup/`, {
+        fetch(`/api/checkup`, {
                 method: 'POST',
                 body: JSON.stringify(Object.fromEntries(formData)),
                 headers: {
