@@ -1,4 +1,4 @@
-<form id="form-new-owner-new-patient" class="space-y-3" method="post" id="precheckupFormNew">
+<form id="form-new-owner-new-patient" class="space-y-3" method="post">
     @csrf
     <!-- Berat Badan -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
@@ -82,7 +82,7 @@
             });
     }
 
-    document.getElementById("precheckupFormNew").addEventListener("submit", function(e) {
+    document.getElementById("form-new-owner-new-patient").addEventListener("submit", function(e) {
         e.preventDefault();
 
         let formData = new FormData(this);
