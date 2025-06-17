@@ -1,4 +1,4 @@
-<form id="precheckupForm" class="space-y-3" method="post">
+<form id="old-patient-checkup" class="space-y-3" method="post">
     @csrf
     <!-- Berat Badan -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
@@ -85,7 +85,7 @@
     }
 
     // Event listener untuk submit form
-    document.getElementById("precheckupForm").addEventListener("submit", function(e) {
+    document.getElementById("old-patient-checkup").addEventListener("submit", function(e) {
         e.preventDefault();
 
         let formData = new FormData(this);

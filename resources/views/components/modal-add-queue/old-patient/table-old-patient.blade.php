@@ -7,7 +7,7 @@
 
     <!-- Table of Contents -->
     <div class="overflow-x-auto mt-4">
-        <table class="min-w-full text-sm text-[#99A1B7]" id="dataTable">
+        <table class="min-w-full text-sm text-[#99A1B7]" id="table-old-patient">
             <thead class="border border-gray-200 bg-[#FCFCFC]">
                 <tr>
                     <th scope="col" class="px-6 py-3 border border-gray-200">No. RM</th>
@@ -37,10 +37,10 @@
                             x-text="patient.owner ? patient.owner.phone : 'Tidak Ada'"></td>
                         <td class="px-6 py-3 border border-gray-200">
                             <button
-                            @click="window.dispatchEvent(new CustomEvent('input-precheckup-old-patient', { detail: { patientId: patient.id } }))"
-                            class="text-blue-600 hover:text-blue-800">
-                            <x-icons.add />
-                        </button>
+                                @click="window.dispatchEvent(new CustomEvent('input-precheckup-old-patient', { detail: { patientId: patient.id } }))"
+                                class="text-blue-600 hover:text-blue-800">
+                                <x-icons.add />
+                            </button>
                         </td>
                     </tr>
                 </template>
