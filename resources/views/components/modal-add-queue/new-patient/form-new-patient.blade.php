@@ -149,7 +149,7 @@
                 console.log("Respon dari API:", data);
 
                 if (data.success) {
-                    // alert("Data berhasil disimpan!");
+                    alert("Data berhasil disimpan!");
                     localStorage.setItem('new-patient-id', data.data.id)
                     triggerPreCheckupEvent(data.data.id);
                 } else {
