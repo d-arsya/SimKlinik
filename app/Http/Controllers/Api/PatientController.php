@@ -164,4 +164,11 @@ class PatientController extends Controller
             return response()->json($response, 404);
         }
     }
+
+    public function search(Request $request){
+        $query = $request->input('query');
+        $patients = Patient::where('name', 'like', value: "%{$query}%")->get();
+
+        return response()->json($patients);
+    }
 }

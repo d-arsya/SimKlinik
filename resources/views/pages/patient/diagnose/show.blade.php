@@ -87,7 +87,7 @@
             <div class="font-semibold text-base my-3">Obat</div>
             @if ($diagnose->status == 'menunggu')
                 <a href="{{ route('patient.diagnose.edit', ['patient' => $patient->id, 'diagnose' => $diagnose->id]) }}"
-                    class="font-medium rounded-lg text-sm px-3 py-3 focus:outline-none bg-primary">Tambah
+                    class="font-medium rounded-lg text-sm px-3 py-3 focus:outline-none bg-primary text-white">Tambah
                     Obat</a>
             @endif
         </div>
@@ -146,7 +146,7 @@
             <div class="font-semibold text-base my-3">Diagnosis</div>
             @if ($diagnose->status == 'menunggu')
                 <a href="{{ route('patient.diagnose.edit', ['patient' => $patient->id, 'diagnose' => $diagnose->id]) }}"
-                    class="font-medium rounded-lg text-sm px-3 py-3 focus:outline-none bg-primary">Tambah
+                    class="font-medium rounded-lg text-sm px-3 py-3 focus:outline-none bg-primary text-white">Tambah
                     Diagnosis</a>
             @endif
         </div>
@@ -187,7 +187,7 @@
             <div class="font-semibold text-base my-3">Layanan</div>
             @if ($diagnose->status == 'menunggu')
                 <a href="{{ route('patient.diagnose.edit', ['patient' => $patient->id, 'diagnose' => $diagnose->id]) }}"
-                    class="font-medium rounded-lg text-sm px-3 py-3 focus:outline-none bg-primary">Tambah
+                    class="font-medium rounded-lg text-sm px-3 py-3 focus:outline-none bg-primary text-white">Tambah
                     Layanan</a>
             @endif
         </div>

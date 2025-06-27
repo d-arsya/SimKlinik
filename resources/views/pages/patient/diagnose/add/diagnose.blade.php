@@ -40,7 +40,7 @@
     </div>
 
     <div class="container mx-auto p-4">
-        <h1 class="text-base font-bold mb-4">Tambah Diagnosa</h1>
+        <h1 class="text-white font-bold mb-4">Tambah Diagnosa</h1>
         <div class="grid grid-cols-1 md:grid-cols-8 gap-4">
             <label for="jenis-obat" class="block text-sm font-medium text-gray-700">Diagnosa</label>
             <select id="jenis-obat"

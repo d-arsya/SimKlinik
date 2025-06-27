@@ -30,6 +30,7 @@ Route::name('api.')->group(function () {
 
     Route::get('service', [ServiceController::class, 'index'])->name('service');
     Route::apiResource('owner', OwnerController::class)->only(['store', 'index']);
+    Route::get('patient/search', [PatientController::class, 'search']);
     Route::apiResource('patient', PatientController::class)->only(['store', 'index']);
     Route::apiResource('checkup', CheckupController::class)->only(['store', 'show', 'update']);
     Route::get('checkup/{checkup}/diagnose/{diagnose}', [CheckupController::class, 'diagnoseEdit']);
