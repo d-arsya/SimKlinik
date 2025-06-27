@@ -38,7 +38,7 @@ class OwnerController extends Controller
     public function show(Owner $owner)
     {
         $patients = $owner->patients->pluck('id')->toArray();
-        $checkups = Checkup::whereIn('patient_id', $patients)->with('patient')->paginate(2);
+        $checkups = Checkup::whereIn('patient_id', $patients)->with('patient')->paginate(10);
         return view('pages.owner.show', compact('owner', 'checkups'));
     }
 

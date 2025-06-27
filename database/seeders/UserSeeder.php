@@ -28,14 +28,14 @@ class UserSeeder extends Seeder
         ]);
         User::create([
             'name' => fake()->name(),
-            'email' => 'owner@owner.com',
-            'password' => Hash::make('owner'),
-            'role' => 'owner'
-        ]);
-        User::create([
-            'name' => fake()->name(),
             'email' => 'super@super.com',
             'password' => Hash::make('super'),
+            'role' => 'super'
+        ]);
+        User::create([
+            'name' => 'Kamaluddin Arsyad Fadllillah',
+            'email' => 'kamaluddin.arsyad05@gmail.com',
+            'password' => Hash::make('admin'),
             'role' => 'super'
         ]);
     }

@@ -10,7 +10,7 @@
     });
 </script>
 
-<div x-data="{
+<div id="modal-old-patient" x-data="{
     openModal: false,
     activeTab: 'lama',
     step: 1,
@@ -122,7 +122,7 @@
                     x-transition:enter-end="opacity-100 translate-y-0 scale-100">
                     <p class="text-lg text-center font-semibold">Pasien akan masuk ke antrian pemeriksaan awal.
                         Lanjutkan?</p>
-                    <div class="flex justify-center mt-4 gap-4">
+                    <div class="flex justify-center mt-4 gap-4" id="confirm-old-patient">
                         <button @click="changeStep(1)" class="px-4 py-2 bg-gray-300 rounded-md">Batal</button>
                         <button @click="changeStep(4)" class="px-4 py-2 bg-blue-600 text-white rounded-md">OK</button>
                     </div>

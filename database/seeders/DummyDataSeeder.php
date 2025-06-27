@@ -61,11 +61,13 @@ class DummyDataSeeder extends Seeder
                 ]);
                 if ($status == 'diperiksa') {
                     $paid = fake()->dateTimeBetween($time, '+6 days');
+                    $done = fake()->randomElement([$paid, null]);
                     Invoice::factory()->create([
                         "checkup_id" => $checkup->id,
-                        "paid" => fake()->randomElement([$paid, null]),
+                        "paid" => $done,
                         "created_at" => $paid,
                         "updated_at" => $paid,
+                        "discount" => $done == null ? null : fake()->numberBetween(0, 20)
                     ]);
                 }
             }

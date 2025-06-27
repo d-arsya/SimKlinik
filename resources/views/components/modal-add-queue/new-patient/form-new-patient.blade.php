@@ -151,11 +151,7 @@
                 if (data.success) {
                     alert("Data berhasil disimpan!");
                     localStorage.setItem('new-patient-id', data.data.id)
-                    window.dispatchEvent(new CustomEvent('input-precheckup', {
-                        detail: {
-                            patientId: data.data.id
-                        }
-                    }));
+                    triggerPreCheckupEvent(data.data.id);
                 } else {
                     alert("Gagal menyimpan data: " + data.message);
                 }
@@ -165,4 +161,13 @@
                 console.error("Error:", error);
             });
     });
+
+    function triggerPreCheckupEvent(patientId) {
+        const event = new CustomEvent('input-precheckup', {
+            detail: {
+                patientId
+            }
+        });
+        window.dispatchEvent(event);
+    }
 </script>

@@ -3,7 +3,7 @@
 <!-- Header -->
 @section('title', 'Tabel Antrian Pasien')
 @section('desc')
-    <p class="text-cadet font-medium me-[14px]">Jumlah Antrian: <span class="text-[#252F4A]">{{ $queues->count() }}</span></p>
+    <p class="text-cadet font-medium me-[14px]">Jumlah Antrian: <span class="text-[#252F4A]">{{ $antrian }}</span></p>
 @endsection
 
 @section('buttons')

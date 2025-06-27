@@ -243,7 +243,16 @@
             } else {
                 discountValue.disabled = true
                 discountValue.value = null
+                document.querySelector('#disc-val').innerHTML = '0' + '%'
             }
+            if (gratisPemeriksaan.checked) {
+                totalHarga.innerHTML =
+                    `Rp ${totalHargaAsli-total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`
+
+            } else {
+                totalHarga.innerHTML = `Rp ${totalHargaAsli.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`
+            }
+
         })
         discountValue.addEventListener('input', function(e) {
             let disVal = e.target.value

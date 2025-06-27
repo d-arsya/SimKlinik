@@ -21,7 +21,8 @@ class QueueController extends Controller
         } else {
             $queues = Checkup::with(['patient'])->whereQueued(true)->orderBy('created_at', 'asc')->paginate($perPage);
         }
-        return view('pages.queue.index', compact('queues'));
+        $antrian = Checkup::whereQueued(true)->where('status', 'menunggu')->get()->count();
+        return view('pages.queue.index', compact('queues', 'antrian'));
     }
 
     /**

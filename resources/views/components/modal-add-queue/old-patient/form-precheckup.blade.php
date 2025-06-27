@@ -1,4 +1,4 @@
-<form id="precheckupForm" class="space-y-3" method="post">
+<form id="old-patient-checkup" class="space-y-3" method="post">
     @csrf
     <!-- Berat Badan -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
@@ -85,7 +85,7 @@
     }
 
     // Event listener untuk submit form
-    document.getElementById("precheckupForm").addEventListener("submit", function(e) {
+    document.getElementById("old-patient-checkup").addEventListener("submit", function(e) {
         e.preventDefault();
 
         let formData = new FormData(this);
@@ -93,7 +93,7 @@
         // Tambahkan patient_id dari localStorage
         formData.append('patient_id', localStorage.getItem('old-patient-id'));
 
-        fetch(`/api/checkup/`, {
+        fetch(`/api/checkup`, {
                 method: 'POST',
                 body: JSON.stringify(Object.fromEntries(formData)),
                 headers: {
