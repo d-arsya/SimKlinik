@@ -10,6 +10,10 @@
 
 @endsection
 
+@section('sortir')
+    <x-icons.filter />
+@endsection
+
 <!-- Table -->
 @section('table')
     <thead class="border-y border-gray-200 bg-[#FCFCFC]">

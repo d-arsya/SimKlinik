@@ -1,15 +1,28 @@
-<div class="relative inline-block">
-    <!-- Filter Button Clicked -->
-    <button id="filterButton" onclick="toggleDropdown()"
-        class="flex items-center px-3 py-2 text-blue-600 border border-blue-200 rounded-lg bg-blue-50 hover:bg-blue-100">
-        <svg class="pe-1" width="20" height="19" viewBox="0 0 20 19" fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M4.45898 2.375H15.5423L7.47998 10.4373C7.34994 10.1037 7.13815 9.80805 6.86407 9.57758C6.68357 9.42083 6.43103 9.27913 5.92753 8.99492L3.6214 7.69658C2.87011 7.27462 2.49486 7.06325 2.28982 6.72283C2.08398 6.38162 2.08398 5.96996 2.08398 5.14821V4.60196C2.08398 3.55221 2.08398 3.02654 2.43232 2.70037C2.77907 2.375 3.33878 2.375 4.45898 2.375Z"
-                fill="#1B84FF" />
-            <path opacity="0.5"
-                d="M17.9166 5.149V4.60275C17.9166 3.553 17.9166 3.02733 17.5683 2.70117C17.2216 2.375 16.6618 2.375 15.5416 2.375L7.47852 10.4373C7.5181 10.5392 7.55003 10.6455 7.57431 10.7564C7.62497 10.982 7.62497 11.2464 7.62497 11.7745V13.8882C7.62497 14.6078 7.62497 14.968 7.82447 15.2483C8.02397 15.5293 8.37864 15.6679 9.08639 15.945C10.5739 16.526 11.3173 16.8166 11.8461 16.4857C12.375 16.1547 12.375 15.3995 12.375 13.8874V11.7737C12.375 11.2464 12.375 10.982 12.4248 10.7564C12.5245 10.2949 12.7752 9.87975 13.1373 9.57679C13.3171 9.42083 13.5688 9.27913 14.0731 8.99492L16.3792 7.69658C17.1297 7.27463 17.5058 7.06325 17.7108 6.72283C17.9166 6.38242 17.9166 5.97075 17.9166 5.149Z"
-                fill="#1B84FF" />
-        </svg>
-        <span id="filterText" style="font-size: 12px; font-weight: 600;">Filters</span>
+@php
+    $currentSort = request('sort', 'asc');
+    $nextSort = $currentSort === 'desc' ? 'asc' : 'desc';
+
+    $query = array_merge(request()->query(), ['sort' => $nextSort]);
+@endphp
+
+<a href="{{ route(Route::currentRouteName(), $query) }}"
+    title="Urutkan berdasarkan tanggal {{ $nextSort === 'desc' ? 'terbaru' : 'terlama' }}">
+    <button class="flex items-center px-3 py-2 text-blue-600 border border-blue-200 rounded-lg bg-blue-50 hover:bg-blue-100">
+        @if ($currentSort === 'desc')
+            {{-- Icon Panah Turun --}}
+            <svg class="w-4 h-4 me-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.19l3.71-3.96a.75.75 0 011.08 1.04l-4.25 4.54a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd" />
+            </svg>
+        @else
+            {{-- Icon Panah Naik --}}
+            <svg class="w-4 h-4 me-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                    d="M14.77 12.79a.75.75 0 01-1.06-.02L10 8.81l-3.71 3.96a.75.75 0 01-1.08-1.04l4.25-4.54a.75.75 0 011.08 0l4.25 4.54a.75.75 0 01-.02 1.06z"
+                    clip-rule="evenodd" />
+            </svg>
+        @endif
+        <span class="text-sm font-semibold">Sortir</span>
     </button>
+</a>

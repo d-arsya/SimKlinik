@@ -13,10 +13,15 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->unit ?? 10;
-        $patients = Patient::with(['animal', 'owner'])->paginate($perPage);
+        $sortOrder = $request->query('sort', 'asc');
+        $patients = Patient::with(['animal', 'owner'])
+            ->orderBy('created_at', $sortOrder)
+            ->paginate($perPage);
+
         $patient = Patient::count();
         return view('pages.patient.index', compact('patients', 'patient'));
     }
+
 
     public function show(Patient $patient)
     {

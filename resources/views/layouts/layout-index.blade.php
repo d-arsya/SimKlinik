@@ -29,8 +29,7 @@
                         <x-icons.search />
                     </div>
                 </div>
-                <x-icons.filter />
-            </div>
+                @yield('sortir')
         </div>
 
         <!-- Table of Contents -->
