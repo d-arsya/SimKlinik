@@ -23,6 +23,7 @@
         </div>
     </div>
     <x-toast></x-toast>
+    @yield('scripts')
 </body>
 
 </html>
