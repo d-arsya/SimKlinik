@@ -1,7 +1,7 @@
 @extends('layouts.layout-index')
 
 <!-- Header -->
-@section('title', 'Tabel Ivoice Pasien')
+@section('title', 'Tabel Invoice Pasien')
 @section('desc')
     <p class="text-cadet font-medium me-[14px]">Jumlah Pasien: <span class="text-[#252F4A]">{{ $patient }}</span></p>
 @endsection
