@@ -222,7 +222,7 @@ class CheckupController extends Controller
             return response()->json($response);
         }
     }
-    public function serviceEdit(Checkup $checkup, string $service)
+    public function serviceEdit(Checkup $checkup, string $service, string $days)
     {
         try {
             $services = json_decode($checkup->services, true) ?? [];
@@ -235,7 +235,7 @@ class CheckupController extends Controller
                 unset($services[$index]);
                 $services = array_values($services);
             } else {
-                $services[] = ['id' => $serviceId, 'days' => 1];
+                $services[] = ['id' => $serviceId, 'days' => (int) $days];
             }
 
             $checkup->services = json_encode($services);

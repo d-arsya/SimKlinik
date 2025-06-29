@@ -34,7 +34,7 @@ Route::name('api.')->group(function () {
     Route::apiResource('patient', PatientController::class)->only(['store', 'index']);
     Route::apiResource('checkup', CheckupController::class)->only(['store', 'show', 'update']);
     Route::get('checkup/{checkup}/diagnose/{diagnose}', [CheckupController::class, 'diagnoseEdit']);
-    Route::get('checkup/{checkup}/service/{service}', [CheckupController::class, 'serviceEdit']);
+    Route::get('checkup/{checkup}/service/{service}/{days}', [CheckupController::class, 'serviceEdit']);
     Route::get('checkup/{checkup}/drug/{drug}/{amount}', [CheckupController::class, 'drugEdit']);
     Route::get('drugs/category/{category}', [SimbatApi::class, 'getDrugsByCategory']);
 });

@@ -6,9 +6,9 @@
     <div class="border-2 rounded-xl p-4 bg-white shadow-md">
         @php
             // Ambil rata-rata dari tabel animals
-            $avgPulse = DB::table('animals')->avg('pulse');
-            $avgTemp = DB::table('animals')->avg('temperature');
-            $avgBreath = DB::table('animals')->avg('breath');
+            $avgPulse = $patient->animal->pulse;
+            $avgTemp = $patient->animal->temperature;
+            $avgBreath = $patient->animal->breath;
         @endphp
 
         <div class="sticky top-0 bg-white z-10 pt-4 ">
@@ -24,33 +24,33 @@
                 {{-- Pulse --}}
                 @php
                     $pulse = $checkup->pulse;
-                    $tolerance10 = $avgPulse * 0.1;
-                    $tolerance20 = $avgPulse * 0.2;
+                    $tolerance5 = 20;
+                    $tolerance10 = 60;
 
-                    if ($pulse >= $avgPulse - $tolerance10 && $pulse <= $avgPulse + $tolerance10) {
-                        $pulseColor = 'bg-green-500';
-                    } elseif ($pulse >= $avgPulse - $tolerance20 && $pulse <= $avgPulse + $tolerance20) {
-                        $pulseColor = 'bg-orange-500';
+                    if ($pulse >= $avgPulse - $tolerance5 && $pulse <= $avgPulse + $tolerance5) {
+                        $pulseColor = 'bg-green-500'; // Normal (±5)
+                    } elseif ($pulse >= $avgPulse - $tolerance10 && $pulse <= $avgPulse + $tolerance10) {
+                        $pulseColor = 'bg-orange-500'; // Warning (±10)
                     } else {
-                        $pulseColor = 'bg-red-500';
+                        $pulseColor = 'bg-red-500'; // Abnormal (> ±10)
                     }
                 @endphp
                 <span class="px-4 py-2 {{ $pulseColor }} text-white rounded-full text-sm">
-                    Pulsa: {{ $pulse }} bpm
+                    Pulsa: {{ $pulse }}
                 </span>
 
                 {{-- Suhu --}}
                 @php
                     $temp = $checkup->temperature;
-                    $tolerance10 = $avgTemp * 0.1;
-                    $tolerance20 = $avgTemp * 0.2;
+                    $tolerance5 = 5;
+                    $tolerance10 = 15;
 
-                    if ($temp >= $avgTemp - $tolerance10 && $temp <= $avgTemp + $tolerance10) {
-                        $tempColor = 'bg-green-500';
-                    } elseif ($temp >= $avgTemp - $tolerance20 && $temp <= $avgTemp + $tolerance20) {
-                        $tempColor = 'bg-orange-500';
+                    if ($temp >= $avgTemp - $tolerance5 && $temp <= $avgTemp + $tolerance5) {
+                        $tempColor = 'bg-green-500'; // Normal (±5)
+                    } elseif ($temp >= $avgTemp - $tolerance10 && $temp <= $avgTemp + $tolerance10) {
+                        $tempColor = 'bg-orange-500'; // Warning (±10)
                     } else {
-                        $tempColor = 'bg-red-500';
+                        $tempColor = 'bg-red-500'; // Abnormal (> ±10)
                     }
                 @endphp
                 <span class="px-4 py-2 {{ $tempColor }} text-white rounded-full text-sm">
@@ -60,15 +60,15 @@
                 {{-- Frekuensi napas --}}
                 @php
                     $breath = $checkup->breath;
-                    $tolerance10 = $avgBreath * 0.1;
-                    $tolerance20 = $avgBreath * 0.2;
+                    $tolerance5 = 20;
+                    $tolerance10 = 60;
 
-                    if ($breath >= $avgBreath - $tolerance10 && $breath <= $avgBreath + $tolerance10) {
-                        $breathColor = 'bg-green-500';
-                    } elseif ($breath >= $avgBreath - $tolerance20 && $breath <= $avgBreath + $tolerance20) {
-                        $breathColor = 'bg-orange-500';
+                    if ($breath >= $avgBreath - $tolerance5 && $breath <= $avgBreath + $tolerance5) {
+                        $breathColor = 'bg-green-500'; // Normal (±5)
+                    } elseif ($breath >= $avgBreath - $tolerance10 && $breath <= $avgBreath + $tolerance10) {
+                        $breathColor = 'bg-orange-500'; // Warning (±10)
                     } else {
-                        $breathColor = 'bg-red-500';
+                        $breathColor = 'bg-red-500'; // Abnormal (> ±10)
                     }
                 @endphp
                 <span class="px-4 py-2 {{ $breathColor }} text-white rounded-full text-sm">
@@ -134,7 +134,11 @@
                             </div>
                         </div>
                         <div>
-                            <label class="block text-gray-700 font-medium">Layanan</label>
+                            <div class="grid grid-cols-2 mt-2">
+                                <label class="block text-gray-700 font-medium">Layanan</label>
+                                <label class="block text-gray-700 font-medium">Jumlah</label>
+
+                            </div>
                             <div class="flex gap-2 mt-2">
                                 <select id="services-option"
                                     class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">
@@ -144,6 +148,8 @@
                                             {{ $item->name }}</option>
                                     @endforeach
                                 </select>
+                                <input id="services-day"
+                                    class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm p-2 max-w-[80%]"></input>
                                 <button type="button" onclick="addService()">
                                     <x-icons.add />
                                 </button>
@@ -153,7 +159,7 @@
                                     <div class="flex gap-2">
                                         <h1 data-id="{{ $item['id'] }}"
                                             class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">
-                                            {{ $item['name'] }}
+                                            {{ $item['name'] }} (x{{ $item['days'] }})
                                         </h1>
                                         <button type="button" class="" onclick="removeService(this)">
                                             <x-icons.redcancel />
@@ -179,7 +185,7 @@
                                         class="w-full border rounded-lg bg-gray-100 h-10 text-gray-700 text-sm mt-2">
                                         <option value="">Jenis Obat</option>
                                         @foreach ($categories as $item)
-                                            <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                            <option value="{{ $item['name'] }}">{{ $item['name'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -254,7 +260,7 @@
                     drugContainer.innerHTML = ""
                     e.forEach(element => {
                         drugContainer.innerHTML +=
-                            `<option value="${element.id}-${element.name}">${element.name}</option>`
+                            `<option value="${element.id}-${element.name}">${element.name} (Stok ${element.quantity})</option>`
                     });
                 })
         })
@@ -266,7 +272,7 @@
 
             newRow.classList.add('flex', 'gap-2');
 
-            newRow.innerHTML = `<h1 data-id="${value[0]}" class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">${value[1]} (${amount} pcs)</h1>
+            newRow.innerHTML = `<h1 data-id="${value[0]}" class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">${value[1]} (${amount})</h1>
             <button type="button" class="" onclick="removeDrug(this)">
                 <x-icons.redcancel />
             </button>`;
@@ -323,20 +329,22 @@
         function addService() {
             let newRow = document.createElement('div');
             let value = document.getElementById('services-option').value.split('-')
+            let days = document.getElementById('services-day').value
 
             newRow.classList.add('flex', 'gap-2');
 
-            newRow.innerHTML = `<h1 data-id="${value[0]}" class="row-service w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">${value[1]}</h1>
+            newRow.innerHTML = `<h1 data-id="${value[0]}" class="row-service w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">${value[1]} (x${days})</h1>
             <button type="button" class="" onclick="removeService(this)">
                 <x-icons.redcancel />
             </button>`;
 
-            fetch('/api/checkup/{{ $checkup->id }}/service/' + value[0])
+            fetch('/api/checkup/{{ $checkup->id }}/service/' + value[0] + '/' + days)
                 .then(e => e.json())
                 .then(e => {
 
                     document.getElementById('service-container').appendChild(newRow);
                     document.getElementById('services-option').value = null;
+                    document.getElementById('services-day').value = 1;
                 })
         }
 
@@ -344,7 +352,7 @@
             const container = btn.parentElement
             const h1 = container.querySelector('h1');
             let id = h1.dataset.id
-            fetch('/api/checkup/{{ $checkup->id }}/service/' + id)
+            fetch('/api/checkup/{{ $checkup->id }}/service/' + id + '/0')
                 .then(e => e.json())
                 .then(e => container.remove())
 

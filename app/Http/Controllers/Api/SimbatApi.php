@@ -59,16 +59,33 @@ class SimbatApi extends Controller
     public function getDrugsByCategory($category)
     {
         $token = self::token();
-        $response = Http::withToken($token)->get(config('services.simbat_url') . 'categories/' . $category);
-        $drugs = json_decode($response->body())->data->drugs;
-        $drugs = array_map(function ($item) {
+        $response = Http::withToken($token)->get(config('services.simbat_url') . 'inventory/clinic-stocks?per_page=10000');
+        $drugPrice = Http::withToken($token)->get(config('services.simbat_url') . 'inventory/drugs');
+        $drugPrice = json_decode($drugPrice)->data;
+        $drugs = json_decode($response->body())->data;
+        $drugs = array_filter($drugs, function ($drug) use ($category) {
+            return isset($drug->category) && strcasecmp($drug->category, $category) === 0;
+        });
+        $drugs = array_values($drugs);
+        $drugs = array_map(function ($item) use ($drugPrice) {
+            $dt = $this->getDrugPrice($drugPrice, $item->drug_code);
             return [
-                'id'  => $item->id,
-                'name'  => $item->name,
-                'price' => $item->last_price,
+                'id'  => $dt[0],
+                'quantity'  => $item->quantity,
+                'name'  => $item->drug_name,
+                'price' => $dt[1],
             ];
         }, $drugs);
         return $drugs;
+    }
+
+    private function getDrugPrice($prices, $drug)
+    {
+        foreach ($prices as $item) {
+            if ($item->code == $drug) {
+                return [$item->id, $item->last_price];
+            }
+        }
     }
     public static function getDrugCategories()
     {
