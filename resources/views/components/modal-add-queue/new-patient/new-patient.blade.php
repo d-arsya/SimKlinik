@@ -69,7 +69,7 @@
                 <h2 class="text-lg font-semibold">
                     <span x-show="step === 1">Tambah Antrian - Pasien Baru</span>
                     <span x-show="step === 2">Tambah Pasien Baru</span>
-                    <span x-show="step === 3">Konfirmasi</span>
+                    <span x-show="step === 3">Input Pemeriksaan Awal</span>
                     <span x-show="step === 4">Input Pemeriksaan Awal</span>
                     <span x-show="step === 5">Pemeriksaan Awal</span>
                 </h2>
@@ -80,16 +80,21 @@
             <!-- TAB NAVIGATION -->
             <div class="sticky top-[60px] bg-white z-10 border-b flex justify-center p-2" x-show="step === 1">
                 <button @click="changeTab('lama')" class="px-4 py-2 transition-transform duration-300"
-                    :class="activeTab === 'lama' ? 'border-b-2 bg-primary font-semibold' :
+                    :class="activeTab === 'lama'
+                        ?
+                        'border-b-2 border-primary font-semibold text-primary' :
                         'text-gray-600'">
                     Owner Lama
                 </button>
                 <button @click="changeTab('baru')" class="px-4 py-2 transition-transform duration-300"
-                    :class="activeTab === 'baru' ? 'border-b-2 bg-primary font-semibold' :
+                    :class="activeTab === 'baru'
+                        ?
+                        'border-b-2 border-primary font-semibold text-primary' :
                         'text-gray-600'">
                     Owner Baru
                 </button>
             </div>
+
 
             <!-- CONTENT TAB -->
             <div class="p-4">

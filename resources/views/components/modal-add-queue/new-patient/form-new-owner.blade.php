@@ -4,9 +4,10 @@
 
 <form class="space-y-3" id="ownerForm" action="{{ route('api.owner.store') }}" method="post">
     @csrf
+
     <!-- Nama -->
     <div>
-        <label class="block text-sm font-medium text-gray-700">Nama</label>
+        <label class="block text-sm font-medium text-gray-700">Nama <span class="text-red-500">*</span> </label>
         <input type="text" name="name" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300"
             placeholder="Ketikan nama owner pasien..." required>
     </div>
@@ -14,8 +15,8 @@
     <div class="grid grid-cols-2 gap-3">
         <!-- Gender -->
         <div>
-            <label class="block text-sm font-medium text-gray-700">Gender</label>
-            <select name="gender" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300" required>
+            <label class="block text-sm font-medium text-gray-700">Gender <span class="text-red-500">*</span> </label>
+            <select name="gender" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300 text-gray-400" required >
                 <option value="" disabled selected>Pilih Gender</option>
                 <option value="Perempuan">Perempuan</option>
                 <option value="Laki-Laki">Laki-laki</option>
@@ -24,7 +25,7 @@
 
         <!-- Nomor Telepon -->
         <div>
-            <label class="block text-sm font-medium text-gray-700">Nomor Telepon</label>
+            <label class="block text-sm font-medium text-gray-700">Nomor Telepon <span class="text-red-500">*</span> </label>
             <input type="text" name="phone" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300"
                 placeholder="cth: 08xxxx" required>
         </div>
@@ -32,8 +33,8 @@
 
     <!-- Provinsi -->
     <div>
-        <label class="block text-sm font-medium text-gray-700">Provinsi</label>
-        <select name="province" id="provinces" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300"
+        <label class="block text-sm font-medium text-gray-700">Provinsi  <span class="text-red-500">*</span></label>
+        <select name="province" id="provinces" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300 text-gray-400"
             required>
             <option value="" disabled selected>Pilih Provinsi</option>
         </select>
@@ -42,16 +43,16 @@
     <!-- Kota & Kecamatan -->
     <div class="grid grid-cols-2 gap-3">
         <div>
-            <label class="block text-sm font-medium text-gray-700">Kota</label>
-            <select name="city" id="city" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300"
+            <label class="block text-sm font-medium text-gray-700">Kota  <span class="text-red-500">*</span></label>
+            <select name="city" id="city" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300 text-gray-400"
                 required>
                 <option value="" disabled selected>Pilih Kota</option>
             </select>
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700">Kecamatan</label>
-            <select name="district" id="district" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300"
+            <label class="block text-sm font-medium text-gray-700">Kecamatan  <span class="text-red-500">*</span></label>
+            <select name="district" id="district" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300 text-gray-400"
                 required>
                 <option value="" disabled selected>Pilih Kecamatan</option>
             </select>
@@ -60,8 +61,8 @@
 
     <!-- Desa -->
     <div>
-        <label class="block text-sm font-medium text-gray-700">Desa</label>
-        <select name="village" id="village" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300"
+        <label class="block text-sm font-medium text-gray-700">Desa  <span class="text-red-500">*</span></label>
+        <select name="village" id="village" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300 text-gray-400"
             required>
             <option value="" disabled selected>Pilih Desa</option>
         </select>
@@ -69,13 +70,13 @@
 
     <!-- Alamat -->
     <div>
-        <label class="block text-sm font-medium text-gray-700">Alamat</label>
-        <input type="text" name="address" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300"
+        <label class="block text-sm font-medium text-gray-700">Alamat  <span class="text-red-500">*</span></label>
+        <input type="text" name="address" class="w-full border rounded-md p-2 focus:ring focus:ring-blue-300 text-gray-400"
             placeholder="Alamat Domisili" required>
     </div>
 
     <div class="flex justify-end mt-6">
-        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-700">
+        <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md shadow-md">
             Submit
         </button>
     </div>

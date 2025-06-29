@@ -86,17 +86,17 @@
                     @csrf
                     <div class="grid gap-4">
                         <div>
-                            <label class="block text-gray-700 font-medium">Anamnesa</label>
+                            <label class="block text-gray-700 font-medium">Anamnesa <span class="text-red-500">*</span></label>
                             <textarea name="anamnesis" style="overflow-y: auto !important;"
                                 class="w-full p-2 border rounded-lg bg-gray-100 h-24 overflow-y-auto resize-none mt-2 text-gray-400"
-                                placeholder="Ketik anamnesa...">{{ $checkup->anamnesis }}</textarea>
+                                placeholder="Ketik anamnesa..." required>{{ $checkup->anamnesis }}</textarea>
                         </div>
 
                         <div>
-                            <label class="block text-gray-700 font-medium">Gejala</label>
+                            <label class="block text-gray-700 font-medium">Gejala <span class="text-red-500">*</span></label>
                             <textarea name="symptom" style="overflow-y: auto !important;"
                                 class="w-full p-2 border rounded-lg bg-gray-100 h-16 overflow-y-auto resize-none mt-2 text-gray-400"
-                                placeholder="Ketik gejala...">{{ $checkup->symptom }}</textarea>
+                                placeholder="Ketik gejala..." required>{{ $checkup->symptom }}</textarea>
                         </div>
                     </div>
 
@@ -104,7 +104,7 @@
 
                     <div class="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-gray-700 font-medium">Diagnosa</label>
+                            <label class="block text-gray-700 font-medium">Diagnosa <span class="text-red-500">*</span></label>
                             <div class="flex gap-2 mt-2">
                                 <select id="diagnoses-option"
                                     class="w-full border rounded-lg bg-gray-100 h-10 text-gray-400 text-sm">
@@ -135,8 +135,8 @@
                         </div>
                         <div>
                             <div class="grid grid-cols-2 mt-2">
-                                <label class="block text-gray-700 font-medium">Layanan</label>
-                                <label class="block text-gray-700 font-medium">Jumlah</label>
+                                <label class="block text-gray-700 font-medium">Layanan <span class="text-red-500">*</span></label>
+                                <label class="block text-gray-700 font-medium">Jumlah <span class="text-red-500">*</span></label>
 
                             </div>
                             <div class="flex gap-2 mt-2">

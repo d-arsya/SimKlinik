@@ -214,7 +214,7 @@
         </div>
         <div class="place-self-end">
 
-            <button type="submit" class="bg-primary py-2 px-4 text-whites rounded-md">Cetak Invoice</button=>
+            <button type="submit" class="bg-primary py-2 px-4 text-whites rounded-md text-white">Cetak Invoice</button=>
         </div>
     </form>
 @endsection

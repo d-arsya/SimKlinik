@@ -2,38 +2,38 @@
     @csrf
     <!-- Berat Badan -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
-        <label for="weight" class="text-sm font-medium leading-6 text-gray-700">Berat Badan</label>
+        <label for="weight" class="text-sm font-medium leading-6 text-gray-700">Berat Badan <span class="text-red-500">*</span></label>
         <input type="number" id="weight" name="weight"
-            class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" min="0">
+            class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" min="0" required>
     </div>
 
     <!-- Pulse -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
-        <label for="pulse" class="text-sm font-medium leading-6 text-gray-700">Pulsus</label>
+        <label for="pulse" class="text-sm font-medium leading-6 text-gray-700">Pulsus <span class="text-red-500">*</span></label>
         <input type="number" id="pulse" name="pulse"
-            class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" min="0">
+            class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" min="0" required>
     </div>
 
     <!-- Temperature -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
-        <label for="temperature" class="text-sm font-medium leading-6 text-gray-700">temperature</label>
+        <label for="temperature" class="text-sm font-medium leading-6 text-gray-700">temperature <span class="text-red-500">*</span></label>
         <input type="number" id="temperature" name="temperature"
-            class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" min="0">
+            class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" min="0" required>
     </div>
 
     <!-- Breathe -->
     <div class="grid items-center w-full grid-cols-[1fr_3fr] gap-4 my-4">
-        <label for="breath" class="text-sm font-medium leading-6 text-gray-700">Frekuensi Napas</label>
+        <label for="breath" class="text-sm font-medium leading-6 text-gray-700">Frekuensi Napas <span class="text-red-500">*</span></label>
         <input type="number" id="breath" name="breath"
-            class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" min="0">
+            class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" min="0" required>
     </div>
 
     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
     <!-- Service Type -->
     <div class="grid items-start w-full grid-cols-[1fr_3fr] gap-4 mb-4">
-        <label class="text-sm font-medium leading-6 text-gray-700">Layanan</label>
-        <select name="service_id" id="service" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm">
+        <label class="text-sm font-medium leading-6 text-gray-700">Layanan <span class="text-red-500">*</span></label>
+        <select name="service_id" id="service" class="py-2 pl-3 pr-10 border border-gray-300 rounded-md shadow-sm" required>
             <option class="text-sm font-medium leading-6 text-gray-700" value="" disabled selected>Pilih Jenis
                 Layanan</option>
         </select>
@@ -49,7 +49,7 @@
 
     <!-- Submit Button -->
     <div class="flex justify-end mt-6">
-        <button class="bg-blue-600 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-700">
+        <button class="bg-primary text-white px-6 py-2 rounded-md shadow-md ">
             Submit
         </button>
     </div>
