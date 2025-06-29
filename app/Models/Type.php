@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Type extends Model
 {
-    /** @use HasFactory<\Database\Factories\TypeFactory> */
     use HasFactory;
-    protected $guarded = ["id", "created_at", "updated_at"];
+
+    protected $fillable = ['name', 'animal_id'];
+
     protected static function boot()
     {
         parent::boot();
@@ -20,6 +21,7 @@ class Type extends Model
             $item->code = $code;
         });
     }
+
     public function animal()
     {
         return $this->belongsTo(Animal::class);

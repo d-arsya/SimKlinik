@@ -52,7 +52,7 @@
 
 
     <button @click="toggleModal(true); step = 1"
-        class="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-all duration-300">
+        class="px-3 py-2 rounded-md text-white bg-primary transition-all duration-300">
         Pasien Lama
     </button>
 

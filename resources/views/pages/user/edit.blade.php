@@ -88,7 +88,10 @@
         </div>
 
         <!-- Submit Button -->
-        <x-icons.submit />
+        <button>
+            <x-icons.submit />
+        </button>
+        
     </form>
 @endsection
 @section('script')

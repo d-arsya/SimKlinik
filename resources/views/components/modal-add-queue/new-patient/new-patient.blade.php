@@ -48,7 +48,7 @@
     }
 }">
     <button @click="toggleModal(true); step = 1"
-        class="px-3 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-all duration-300">
+        class="px-3 py-2 rounded-md text-white bg-primary transition-all duration-300">
         Pasien Baru
     </button>
 
@@ -80,12 +80,12 @@
             <!-- TAB NAVIGATION -->
             <div class="sticky top-[60px] bg-white z-10 border-b flex justify-center p-2" x-show="step === 1">
                 <button @click="changeTab('lama')" class="px-4 py-2 transition-transform duration-300"
-                    :class="activeTab === 'lama' ? 'border-b-2 border-blue-500 text-blue-600 font-semibold' :
+                    :class="activeTab === 'lama' ? 'border-b-2 bg-primary font-semibold' :
                         'text-gray-600'">
                     Owner Lama
                 </button>
                 <button @click="changeTab('baru')" class="px-4 py-2 transition-transform duration-300"
-                    :class="activeTab === 'baru' ? 'border-b-2 border-blue-500 text-blue-600 font-semibold' :
+                    :class="activeTab === 'baru' ? 'border-b-2 bg-primary font-semibold' :
                         'text-gray-600'">
                     Owner Baru
                 </button>

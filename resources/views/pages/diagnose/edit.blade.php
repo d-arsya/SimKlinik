@@ -41,8 +41,9 @@
             }
         </style>
 
-        <!-- Submit button -->
-        <x-icons.submit />
+        <button type="submit">
+            <x-icons.submit />
+        </button>
         </div>
     </form>
 

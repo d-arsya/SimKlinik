@@ -6,17 +6,19 @@
     <p class="text-cadet font-medium me-[14px]">Jumlah Antrian: <span class="text-[#252F4A]">{{ $antrian }}</span></p>
 @endsection
 
+<!-- tambah antrean -->
 @section('buttons')
-    <!-- Tombol Modal -->
-    @include('components.modal-add-queue.old-patient.old-patient', [
-        'buttonText' => 'Pasien Lama',
-        'title' => 'Pemilik Hewan Peliharaan Baru',
-    ])
-    @include('components.modal-add-queue.new-patient.new-patient', [
-        'buttonText' => 'Pasien Baru',
-        'title' => 'Pemilik Hewan Peliharaan Baru',
-    ])
-
+    @if (auth()->user()->role === 'admin')
+        <!-- Tombol Modal HANYA untuk admin dan superadmin -->
+        @include('components.modal-add-queue.old-patient.old-patient', [
+            'buttonText' => 'Pasien Lama',
+            'title' => 'Pemilik Hewan Peliharaan Baru',
+        ])
+        @include('components.modal-add-queue.new-patient.new-patient', [
+            'buttonText' => 'Pasien Baru',
+            'title' => 'Pemilik Hewan Peliharaan Baru',
+        ])
+    @endif
 @endsection
 
 @section('search')

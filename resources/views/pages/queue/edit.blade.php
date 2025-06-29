@@ -4,18 +4,77 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <div class="border-2 rounded-xl p-4 bg-white shadow-md">
+        @php
+            // Ambil rata-rata dari tabel animals
+            $avgPulse = DB::table('animals')->avg('pulse');
+            $avgTemp = DB::table('animals')->avg('temperature');
+            $avgBreath = DB::table('animals')->avg('breath');
+        @endphp
+
         <div class="sticky top-0 bg-white z-10 pt-4 ">
             <h2 class="text-lg font-semibold text-center">
                 Pemeriksaan Pasien {{ $patient->name }}
             </h2>
             <div class="flex flex-wrap gap-2 md:flex-row justify-center items-center my-2">
-                <span class="px-4 py-2 bg-green-500 text-white rounded-full text-sm">Berat Badan: {{ $checkup->weight }}
-                    kg</span>
-                <span class="px-4 py-2 bg-green-500 text-white rounded-full text-sm">Pulsa: {{ $checkup->pulse }} bpm</span>
-                <span class="px-4 py-2 bg-green-500 text-white rounded-full text-sm">Frekuensi napas: {{ $checkup->breath }}
-                    rpm</span>
-                <span class="px-4 py-2 bg-red-500 text-white rounded-full text-sm">Suhu: {{ $checkup->temperature }}
-                    °C</span>
+
+                <span class="px-4 py-2 text-primary rounded-full text-sm border border-primary">
+                    Berat Badan: {{ $checkup->weight }} kg
+                </span>
+
+                {{-- Pulse --}}
+                @php
+                    $pulse = $checkup->pulse;
+                    $tolerance10 = $avgPulse * 0.1;
+                    $tolerance20 = $avgPulse * 0.2;
+
+                    if ($pulse >= $avgPulse - $tolerance10 && $pulse <= $avgPulse + $tolerance10) {
+                        $pulseColor = 'bg-green-500';
+                    } elseif ($pulse >= $avgPulse - $tolerance20 && $pulse <= $avgPulse + $tolerance20) {
+                        $pulseColor = 'bg-orange-500';
+                    } else {
+                        $pulseColor = 'bg-red-500';
+                    }
+                @endphp
+                <span class="px-4 py-2 {{ $pulseColor }} text-white rounded-full text-sm">
+                    Pulsa: {{ $pulse }} bpm
+                </span>
+
+                {{-- Suhu --}}
+                @php
+                    $temp = $checkup->temperature;
+                    $tolerance10 = $avgTemp * 0.1;
+                    $tolerance20 = $avgTemp * 0.2;
+
+                    if ($temp >= $avgTemp - $tolerance10 && $temp <= $avgTemp + $tolerance10) {
+                        $tempColor = 'bg-green-500';
+                    } elseif ($temp >= $avgTemp - $tolerance20 && $temp <= $avgTemp + $tolerance20) {
+                        $tempColor = 'bg-orange-500';
+                    } else {
+                        $tempColor = 'bg-red-500';
+                    }
+                @endphp
+                <span class="px-4 py-2 {{ $tempColor }} text-white rounded-full text-sm">
+                    Suhu: {{ $temp }} °C
+                </span>
+
+                {{-- Frekuensi napas --}}
+                @php
+                    $breath = $checkup->breath;
+                    $tolerance10 = $avgBreath * 0.1;
+                    $tolerance20 = $avgBreath * 0.2;
+
+                    if ($breath >= $avgBreath - $tolerance10 && $breath <= $avgBreath + $tolerance10) {
+                        $breathColor = 'bg-green-500';
+                    } elseif ($breath >= $avgBreath - $tolerance20 && $breath <= $avgBreath + $tolerance20) {
+                        $breathColor = 'bg-orange-500';
+                    } else {
+                        $breathColor = 'bg-red-500';
+                    }
+                @endphp
+                <span class="px-4 py-2 {{ $breathColor }} text-white rounded-full text-sm">
+                    Frekuensi napas: {{ $breath }} rpm
+                </span>
+
             </div>
         </div>
 
@@ -29,14 +88,14 @@
                         <div>
                             <label class="block text-gray-700 font-medium">Anamnesa</label>
                             <textarea name="anamnesis" style="overflow-y: auto !important;"
-                                class="w-full p-2 border rounded-lg bg-gray-100 h-24 overflow-y-auto resize-none mt-2"
+                                class="w-full p-2 border rounded-lg bg-gray-100 h-24 overflow-y-auto resize-none mt-2 text-gray-400"
                                 placeholder="Ketik anamnesa...">{{ $checkup->anamnesis }}</textarea>
                         </div>
 
                         <div>
                             <label class="block text-gray-700 font-medium">Gejala</label>
                             <textarea name="symptom" style="overflow-y: auto !important;"
-                                class="w-full p-2 border rounded-lg bg-gray-100 h-16 overflow-y-auto resize-none mt-2"
+                                class="w-full p-2 border rounded-lg bg-gray-100 h-16 overflow-y-auto resize-none mt-2 text-gray-400"
                                 placeholder="Ketik gejala...">{{ $checkup->symptom }}</textarea>
                         </div>
                     </div>
